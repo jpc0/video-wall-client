@@ -34,69 +34,54 @@ int main(void)
 
     if (glewInit() != GLEW_OK)
         std::cout << "Error!" << std::endl;
-    {
-        float positions[] = {
-            -1.0f, -1.0f, 0.0f, 0.0f,
-            1.0f, -1.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, 0.0f, 1.0f};
+    float positions[] = {
+        -1.0f, -1.0f, 0.0f, 0.0f,
+        1.0f, -1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 0.0f, 1.0f};
 
-        uint32_t indices[] = {
-            0, 1, 2,
-            2, 3, 0};
+    uint32_t indices[] = {
+        0, 1, 2,
+        2, 3, 0};
 
-        VertexArray va;
-        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-        VertexBufferLayout layout;
-        layout.Push<float>(2);
-        layout.Push<float>(2);
-        va.AddBuffer(vb, layout);
+    VertexArray va;
+    VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
+    layout.Push<float>(2);
+    va.AddBuffer(vb, layout);
 
-        IndexBuffer ib(indices, 6);
-        const std::string vs_source =
+    IndexBuffer ib(indices, 6);
+    const std::string vs_source =
 #include "../res/shaders/Basic.shader"
-            ;
-        Shader shader(vs_source, true);
+        ;
+    Shader shader(vs_source, true);
+    shader.Bind();
+
+    Texture texture("../..//res/textures/Image_created_with_a_mobile_phone.png");
+    texture.Bind();
+    shader.SetUniform1i("u_Texture", 0);
+
+    va.Unbind();
+    vb.Unbind();
+    ib.Unbind();
+    shader.Unbind();
+
+    Renderer renderer;
+    /* Loop until the user closes the window */
+    while (!glfwWindowShouldClose(window))
+    {
+        /* Render here */
+        renderer.Clear();
         shader.Bind();
-        shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
-        Texture texture("E:/devel/git/video-wall-client/res/textures/Image_created_with_a_mobile_phone.png");
-        texture.Bind();
-        shader.SetUniform1i("u_Texture", 0);
+        renderer.Draw(va, ib, shader);
 
-        va.Unbind();
-        vb.Unbind();
-        ib.Unbind();
-        shader.Unbind();
+        /* Swap front and back buffers */
+        glfwSwapBuffers(window);
 
-        Renderer renderer;
-
-        float r = 0.0f;
-        float increment = 0.05f;
-
-        /* Loop until the user closes the window */
-        while (!glfwWindowShouldClose(window))
-        {
-            /* Render here */
-            renderer.Clear();
-            shader.Bind();
-            shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-
-            renderer.Draw(va, ib, shader);
-
-            if (r > 1.0f)
-                increment = -0.05f;
-            else if (r < 0.0f)
-                increment = 0.05f;
-
-            r += increment;
-
-            /* Swap front and back buffers */
-            glfwSwapBuffers(window);
-
-            /* Poll for and process events */
-            glfwPollEvents();
-        }
+        /* Poll for and process events */
+        glfwPollEvents();
     }
     glfwTerminate();
     return 0;
