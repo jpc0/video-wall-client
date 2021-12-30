@@ -2,6 +2,7 @@
 glfw/3.3.6
 ffmpeg/4.4
 glew/2.2.0
+stb/cci.20210713
 
 [generators]
 cmake
