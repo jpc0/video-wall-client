@@ -1,10 +1,9 @@
 [requires]
 glfw/3.3.6
-ffmpeg/4.4
 glew/2.2.0
 stb/cci.20210713
 glm/0.9.9.8
-yaml-cpp/0.7.0
+libyaml/0.2.5
 
 [generators]
 cmake

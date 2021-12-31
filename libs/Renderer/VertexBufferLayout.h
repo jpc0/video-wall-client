@@ -34,28 +34,28 @@ public:
     void
     Push(uint32_t count)
     {
-        static_assert(false);
-    }
-
-    template <>
-    void Push<float>(uint32_t count)
-    {
-        _Elements.push_back({GL_FLOAT, count, GL_FALSE});
-        _Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT) * count;
-    }
-    template <>
-    void Push<uint32_t>(uint32_t count)
-    {
-        _Elements.push_back({GL_UNSIGNED_INT, count, GL_TRUE});
-        _Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT) * count;
-    }
-    template <>
-    void Push<uint8_t>(uint32_t count)
-    {
-        _Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
-        _Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE) * count;
+        // static_assert(false);
     }
 
     inline const std::vector<VertexBufferElement> GetElements() const { return _Elements; }
     inline uint32_t GetStride() const { return _Stride; }
 };
+
+template <>
+inline void VertexBufferLayout::Push<float>(uint32_t count)
+{
+    _Elements.push_back({GL_FLOAT, count, GL_FALSE});
+    _Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT) * count;
+}
+template <>
+inline void VertexBufferLayout::Push<uint32_t>(uint32_t count)
+{
+    _Elements.push_back({GL_UNSIGNED_INT, count, GL_TRUE});
+    _Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT) * count;
+}
+template <>
+inline void VertexBufferLayout::Push<uint8_t>(uint32_t count)
+{
+    _Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
+    _Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE) * count;
+}

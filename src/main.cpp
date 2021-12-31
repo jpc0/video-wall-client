@@ -5,23 +5,107 @@
 #include <fstream>
 #include <sstream>
 #include "Renderer.h"
-#include "GLM/glm.hpp"
-#include "GLM/gtc/matrix_transform.hpp"
-#include "yaml-cpp/yaml.h"
-
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "yaml.h"
 int main(void)
 {
-    YAML::Node config = YAML::LoadFile("../../config.yaml");
-    // TODO: Put this in a Yaml file
-    int _h_bezel = config["h_bezel"].as<int>(); // in pixels
-    int _v_bezel = config["v_bezel"].as<int>(); // in pixels
-    int _h_index = config["h_index"].as<int>(); // zero base, from bottom left
-    int _v_index = config["v_index"].as<int>(); // zero base, from bottom left
-    int _h_screens = config["h_screens"].as<int>();
-    int _v_screens = config["v_screens"].as<int>();
-    int _width = config["width"].as<int>();   // in pixels
-    int _height = config["height"].as<int>(); // in pixels
-    std::string _image_location{config["height"].as<std::string>()};
+
+    yaml_parser_t parser;
+    yaml_event_t event;
+
+    int done = 0;
+    yaml_parser_initialize(&parser);
+
+    FILE *input = fopen("../../config.yaml", "rb");
+
+    int _h_bezel;
+    int _v_bezel;
+    int _h_index;
+    int _v_index;
+    int _h_screens;
+    int _v_screens;
+    int _width;
+    int _height;
+    std::string _image_location{};
+
+    yaml_parser_set_input_file(&parser, input); // This seems to close the file handle for us... Who knew
+
+    // Let's not ask questions about whatever the hell is going on here, it works, it's nasty
+    while (!done)
+    {
+        if (!yaml_parser_parse(&parser, &event))
+        {
+            std::cout << "There was an error parsing the file" << std::endl;
+            return 1;
+        }
+
+        if (event.type == YAML_SCALAR_EVENT)
+        {
+            // Casting event.data.scalar.value to const char * does not = the same thing as this string
+            // but then turning it into a std::string it is equal...
+            if (std::string((const char *)event.data.scalar.value) == std::string("h_bezel"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _h_bezel = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("v_bezel"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _v_bezel = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("h_index"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _h_index = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("v_index"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _v_index = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("h_screens"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _h_screens = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("v_screens"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _v_screens = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("width"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _width = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("height"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _height = atoi((const char *)event.data.scalar.value);
+            }
+            else if (std::string((const char *)event.data.scalar.value) == std::string("image_location"))
+            {
+                yaml_parser_parse(&parser, &event);
+                _image_location = std::string((const char *)event.data.scalar.value);
+            }
+        }
+
+        done = (event.type == YAML_STREAM_END_EVENT);
+
+        yaml_event_delete(&event);
+    }
+
+    // // TODO: Put this in a Yaml file
+    // int _h_bezel = config["h_bezel"].as<int>(); // in pixels
+    // int _v_bezel = config["v_bezel"].as<int>(); // in pixels
+    // int _h_index = config["h_index"].as<int>(); // zero base, from bottom left
+    // int _v_index = config["v_index"].as<int>(); // zero base, from bottom left
+    // int _h_screens = config["h_screens"].as<int>();
+    // int _v_screens = config["v_screens"].as<int>();
+    // int _width = config["width"].as<int>();   // in pixels
+    // int _height = config["height"].as<int>(); // in pixels
+    // std::string _image_location{config["height"].as<std::string>()};
 
     // int _h_bezel = 0;
     // int _v_bezel = 0;
@@ -33,16 +117,17 @@ int main(void)
     // int _height = 720;
     // std::string _image_location{"../../res/textures/Image_created_with_a_mobile_phone.png"};
 
-    std::cout << "This is what was parsed from config: " << std::endl;
-    std::cout << _h_bezel << std::endl;
-    std::cout << _v_bezel << std::endl;
-    std::cout << _h_index << std::endl;
-    std::cout << _v_index << std::endl;
-    std::cout << _h_screens << std::endl;
-    std::cout << _v_screens << std::endl;
-    std::cout << _width << std::endl;
-    std::cout << _height << std::endl;
-    std::cout << _image_location << std::endl;
+    // std::cout
+    //     << "This is what was parsed from config: " << std::endl;
+    // std::cout << _h_bezel << std::endl;
+    // std::cout << _v_bezel << std::endl;
+    // std::cout << _h_index << std::endl;
+    // std::cout << _v_index << std::endl;
+    // std::cout << _h_screens << std::endl;
+    // std::cout << _v_screens << std::endl;
+    // std::cout << _width << std::endl;
+    // std::cout << _height << std::endl;
+    // std::cout << _image_location << std::endl;
 
     int _total_width = _width * _h_screens;
     int _total_height = _height * _v_screens;
