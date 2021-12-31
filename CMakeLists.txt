@@ -8,5 +8,5 @@ conan_basic_setup()
 add_subdirectory(libs/Renderer)
 
 add_executable(client src/main.cpp src/stbimage.cpp)
-target_link_libraries(client ${CONAN_LIBS} renderer )
+target_link_libraries(client ${CONAN_LIBS} renderer)
 target_include_directories(client PUBLIC ${CMAKE_SOURCE_DIR}/libs/Renderer)

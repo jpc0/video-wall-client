@@ -8,19 +8,23 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "yaml.h"
-int main(void)
+#include <boost/program_options.hpp>
+
+int main(int argc, char *argv[])
 {
 
-    yaml_parser_t parser;
-    yaml_event_t event;
-
-    int done = 0;
-    yaml_parser_initialize(&parser);
-
-    FILE *input = fopen("../../config.yaml", "rb");
-
-    int _h_bezel;
-    int _v_bezel;
+    std::string config_path;
+    // clang-format off
+    boost::program_options::options_description generic("Generic options");
+    generic.add_options()
+        ("help", "Show help message")
+        ("config, c", boost::program_options::value<std::string>(&config_path)->default_value("../../config.cfg"), 
+                                    "config file location");
+    // clang-format on
+    int _l_bezel;
+    int _r_bezel;
+    int _t_bezel;
+    int _b_bezel;
     int _h_index;
     int _v_index;
     int _h_screens;
@@ -28,74 +32,53 @@ int main(void)
     int _width;
     int _height;
     std::string _image_location{};
+    // clang-format off
+    boost::program_options::options_description config("Configuration");
+    config.add_options()
+        ("v_bezel", boost::program_options::value<int>(&_l_bezel)->default_value(0), "left bezel in px")
+        ("v_bezel", boost::program_options::value<int>(&_r_bezel)->default_value(0), "right bezel in px")
+        ("v_bezel", boost::program_options::value<int>(&_t_bezel)->default_value(0), "top bezel in px")
+        ("v_bezel", boost::program_options::value<int>(&_b_bezel)->default_value(0), "bottom bezel in px")
+        ("v_bezel", boost::program_options::value<int>(&_h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
+        ("v_bezel", boost::program_options::value<int>(&_v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
+        ("v_bezel", boost::program_options::value<int>(&_h_screens)->default_value(0), "Number of screens horizontally")
+        ("v_bezel", boost::program_options::value<int>(&_v_screens)->default_value(0), "Number of screens vertically")
+        ("v_bezel", boost::program_options::value<int>(&_width)->default_value(0), "width of each screen in px")
+        ("v_bezel", boost::program_options::value<int>(&_height)->default_value(0), "height of each screen in px")
+        ("v_bezel", boost::program_options::value<std::string>(&_image_location)->default_value(0), "location of default image")
+    ;
 
-    yaml_parser_set_input_file(&parser, input); // This seems to close the file handle for us... Who knew
+    boost::program_options::options_description cmdline_options;
+    cmdline_options.add(generic).add(config);
 
-    // Let's not ask questions about whatever the hell is going on here, it works, it's nasty
-    while (!done)
+    boost::program_options::options_description config_file_options;
+    config_file_options.add(config);
+
+    boost::program_options::options_description visible("Allowed options");
+        visible.add(generic).add(config);
+
+    // clang-format on
+
+    boost::program_options::variables_map args;
+    boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(cmdline_options).run(), args);
+
+    std::ifstream ifs(config_path.c_str());
+    if (!ifs)
     {
-        if (!yaml_parser_parse(&parser, &event))
-        {
-            std::cout << "There was an error parsing the file" << std::endl;
-            return 1;
-        }
-
-        if (event.type == YAML_SCALAR_EVENT)
-        {
-            // Casting event.data.scalar.value to const char * does not = the same thing as this string
-            // but then turning it into a std::string it is equal...
-            if (std::string((const char *)event.data.scalar.value) == std::string("h_bezel"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _h_bezel = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("v_bezel"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _v_bezel = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("h_index"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _h_index = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("v_index"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _v_index = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("h_screens"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _h_screens = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("v_screens"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _v_screens = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("width"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _width = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("height"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _height = atoi((const char *)event.data.scalar.value);
-            }
-            else if (std::string((const char *)event.data.scalar.value) == std::string("image_location"))
-            {
-                yaml_parser_parse(&parser, &event);
-                _image_location = std::string((const char *)event.data.scalar.value);
-            }
-        }
-
-        done = (event.type == YAML_STREAM_END_EVENT);
-
-        yaml_event_delete(&event);
+        std::cout << "Can not open config file: " << config_path << "\n";
+        return 0;
+    }
+    else
+    {
+        boost::program_options::store(boost::program_options::parse_config_file(ifs, config_file_options), args);
+        boost::program_options::notify(args);
     }
 
+    if (args.count("help"))
+    {
+        std::cout << visible << std::endl;
+        return 0;
+    }
     // // TODO: Put this in a Yaml file
     // int _h_bezel = config["h_bezel"].as<int>(); // in pixels
     // int _v_bezel = config["v_bezel"].as<int>(); // in pixels
@@ -129,8 +112,8 @@ int main(void)
     // std::cout << _height << std::endl;
     // std::cout << _image_location << std::endl;
 
-    int _total_width = _width * _h_screens;
-    int _total_height = _height * _v_screens;
+    int _total_width = (_width + _l_bezel + _r_bezel) * _h_screens;
+    int _total_height = (_height + _t_bezel + _b_bezel) * _v_screens;
     GLFWwindow *window;
 
     /* Initialize the library */
@@ -211,7 +194,7 @@ int main(void)
     // proj is the size of the local screen
     glm::mat4 proj = glm::ortho(0.0f, (float)_width, 0.0f, (float)_height, -1.0f, 1.0f);
     // We move the camera to where it should be in relation to the full array of screens
-    glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_width + _h_bezel) * _h_index), 0.0f - (float)((_height + _v_bezel) * _v_index), 0.0f});
+    glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_width + (_l_bezel + _r_bezel)) * _h_index), 0.0f - (float)((_height + (_t_bezel + _b_bezel)) * _v_index), 0.0f});
 
     glm::mat4 mvp = proj * view;
 
