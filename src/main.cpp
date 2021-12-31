@@ -5,9 +5,47 @@
 #include <fstream>
 #include <sstream>
 #include "Renderer.h"
+#include "GLM/glm.hpp"
+#include "GLM/gtc/matrix_transform.hpp"
+#include "yaml-cpp/yaml.h"
 
 int main(void)
 {
+    YAML::Node config = YAML::LoadFile("../../config.yaml");
+    // TODO: Put this in a Yaml file
+    int _h_bezel = config["h_bezel"].as<int>(); // in pixels
+    int _v_bezel = config["v_bezel"].as<int>(); // in pixels
+    int _h_index = config["h_index"].as<int>(); // zero base, from bottom left
+    int _v_index = config["v_index"].as<int>(); // zero base, from bottom left
+    int _h_screens = config["h_screens"].as<int>();
+    int _v_screens = config["v_screens"].as<int>();
+    int _width = config["width"].as<int>();   // in pixels
+    int _height = config["height"].as<int>(); // in pixels
+    std::string _image_location{config["height"].as<std::string>()};
+
+    // int _h_bezel = 0;
+    // int _v_bezel = 0;
+    // int _h_index = 0;
+    // int _v_index = 0;
+    // int _h_screens = 1;
+    // int _v_screens = 1;
+    // int _width = 1280;
+    // int _height = 720;
+    // std::string _image_location{"../../res/textures/Image_created_with_a_mobile_phone.png"};
+
+    std::cout << "This is what was parsed from config: " << std::endl;
+    std::cout << _h_bezel << std::endl;
+    std::cout << _v_bezel << std::endl;
+    std::cout << _h_index << std::endl;
+    std::cout << _v_index << std::endl;
+    std::cout << _h_screens << std::endl;
+    std::cout << _v_screens << std::endl;
+    std::cout << _width << std::endl;
+    std::cout << _height << std::endl;
+    std::cout << _image_location << std::endl;
+
+    int _total_width = _width * _h_screens;
+    int _total_height = _height * _v_screens;
     GLFWwindow *window;
 
     /* Initialize the library */
@@ -19,7 +57,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(_width, _height, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -30,15 +68,38 @@ int main(void)
     glfwMakeContextCurrent(window);
 
     glfwSwapInterval(1);
+
+    // Set alpha blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if (glewInit() != GLEW_OK)
         std::cout << "Error!" << std::endl;
+
+    // Load Texture
+    Texture texture(_image_location);
+
+    // Calculate the scale factor of the image, this will blow the image up to the size of the full array of screens
+    // and will correct for aspect ratio
+    float scale_factor;
+    if (((float)_total_width / (float)_total_height) > ((float)texture.GetWidth() / (float)texture.GetHeight()))
+        scale_factor = (float)_total_height / (float)texture.GetHeight();
+    else if (((float)_total_width / (float)_total_height) == ((float)texture.GetWidth() / (float)texture.GetHeight()))
+        scale_factor = (float)_total_height / (float)texture.GetHeight();
+    else if (((float)_total_width / (float)_total_height) < ((float)texture.GetWidth() / (float)texture.GetHeight()))
+        scale_factor = (float)_total_width / (float)texture.GetWidth();
+
+    // This is where the bottom left of the image will be, if the aspect ratio matches it will be 0,0
+    float x_origin = ((_total_width - (float)texture.GetWidth() * (float)scale_factor) / 2);
+    float y_origin = ((_total_height - (float)texture.GetHeight() * (float)scale_factor) / 2);
+
+    // Set the 4 vertices of the image, each vertex is x, y, (texture_x), (texture_y)
+    // We are creating a square that has the image on it, the image co-ords are from 0.0 to 1.0
+    // the square's co-ords are from 0.0 to the total_width of the array of screens
     float positions[] = {
-        -1.0f, -1.0f, 0.0f, 0.0f,
-        1.0f, -1.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 0.0f, 1.0f};
+        x_origin, y_origin, 0.0f, 0.0f,                                                                                                          // 1
+        ((float)texture.GetWidth() * (float)scale_factor) + x_origin, y_origin, 1.0f, 0.0f,                                                      // 2
+        ((float)texture.GetWidth() * (float)scale_factor) + x_origin, ((float)texture.GetHeight() * (float)scale_factor) + y_origin, 1.0f, 1.0f, // 3
+        x_origin, (float)texture.GetHeight() * (float)scale_factor + y_origin, 0.0f, 1.0f};                                                      // 4
 
     uint32_t indices[] = {
         0, 1, 2,
@@ -52,16 +113,24 @@ int main(void)
     va.AddBuffer(vb, layout);
 
     IndexBuffer ib(indices, 6);
+
     const std::string vs_source =
 #include "../res/shaders/Basic.shader"
         ;
     Shader shader(vs_source, true);
     shader.Bind();
 
-    Texture texture("../..//res/textures/Image_created_with_a_mobile_phone.png");
     texture.Bind();
     shader.SetUniform1i("u_Texture", 0);
 
+    // proj is the size of the local screen
+    glm::mat4 proj = glm::ortho(0.0f, (float)_width, 0.0f, (float)_height, -1.0f, 1.0f);
+    // We move the camera to where it should be in relation to the full array of screens
+    glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_width + _h_bezel) * _h_index), 0.0f - (float)((_height + _v_bezel) * _v_index), 0.0f});
+
+    glm::mat4 mvp = proj * view;
+
+    shader.SetUniformMat4f("u_MVP", mvp);
     va.Unbind();
     vb.Unbind();
     ib.Unbind();
