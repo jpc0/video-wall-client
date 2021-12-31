@@ -4,10 +4,11 @@
 #include "IndexBuffer.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "signal.h"
 
 #define ASSERT(x) \
     if (!(x))     \
-        __debugbreak();
+        raise(SIGTRAP);
 #define GLCall(x)   \
     GLClearError(); \
     x;              \

@@ -10,6 +10,13 @@
 #include "yaml.h"
 #include <boost/program_options.hpp>
 
+template <class T>
+std::ostream &operator<<(std::ostream &os, const std::vector<T> &v)
+{
+    copy(v.begin(), v.end(), std::ostream_iterator<T>(os, " "));
+    return os;
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -31,21 +38,21 @@ int main(int argc, char *argv[])
     int _v_screens;
     int _width;
     int _height;
-    std::string _image_location{};
+    std::string _image_location;
     // clang-format off
     boost::program_options::options_description config("Configuration");
     config.add_options()
-        ("v_bezel", boost::program_options::value<int>(&_l_bezel)->default_value(0), "left bezel in px")
-        ("v_bezel", boost::program_options::value<int>(&_r_bezel)->default_value(0), "right bezel in px")
-        ("v_bezel", boost::program_options::value<int>(&_t_bezel)->default_value(0), "top bezel in px")
-        ("v_bezel", boost::program_options::value<int>(&_b_bezel)->default_value(0), "bottom bezel in px")
-        ("v_bezel", boost::program_options::value<int>(&_h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
-        ("v_bezel", boost::program_options::value<int>(&_v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
-        ("v_bezel", boost::program_options::value<int>(&_h_screens)->default_value(0), "Number of screens horizontally")
-        ("v_bezel", boost::program_options::value<int>(&_v_screens)->default_value(0), "Number of screens vertically")
-        ("v_bezel", boost::program_options::value<int>(&_width)->default_value(0), "width of each screen in px")
-        ("v_bezel", boost::program_options::value<int>(&_height)->default_value(0), "height of each screen in px")
-        ("v_bezel", boost::program_options::value<std::string>(&_image_location)->default_value(0), "location of default image")
+        ("l_bezel", boost::program_options::value<int>(&_l_bezel)->default_value(0), "left bezel in px")
+        ("r_bezel", boost::program_options::value<int>(&_r_bezel)->default_value(0), "right bezel in px")
+        ("t_bezel", boost::program_options::value<int>(&_t_bezel)->default_value(0), "top bezel in px")
+        ("b_bezel", boost::program_options::value<int>(&_b_bezel)->default_value(0), "bottom bezel in px")
+        ("h_index", boost::program_options::value<int>(&_h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
+        ("v_index", boost::program_options::value<int>(&_v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
+        ("h_screens", boost::program_options::value<int>(&_h_screens)->default_value(0), "Number of screens horizontally")
+        ("v_screens", boost::program_options::value<int>(&_v_screens)->default_value(0), "Number of screens vertically")
+        ("width", boost::program_options::value<int>(&_width)->default_value(1280), "width of each screen in px")
+        ("height", boost::program_options::value<int>(&_height)->default_value(720), "height of each screen in px")
+        ("image_location", boost::program_options::value<std::string>(&_image_location)->default_value(""), "location of default image")
     ;
 
     boost::program_options::options_description cmdline_options;
@@ -61,6 +68,7 @@ int main(int argc, char *argv[])
 
     boost::program_options::variables_map args;
     boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(cmdline_options).run(), args);
+    boost::program_options::notify(args);
 
     std::ifstream ifs(config_path.c_str());
     if (!ifs)
@@ -187,8 +195,7 @@ int main(int argc, char *argv[])
         ;
     Shader shader(vs_source, true);
     shader.Bind();
-
-    texture.Bind();
+    GLCall(texture.Bind());
     shader.SetUniform1i("u_Texture", 0);
 
     // proj is the size of the local screen
