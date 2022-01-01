@@ -108,17 +108,19 @@ int main(int argc, char *argv[])
     // int _height = 720;
     // std::string _image_location{"../../res/textures/Image_created_with_a_mobile_phone.png"};
 
-    // std::cout
-    //     << "This is what was parsed from config: " << std::endl;
-    // std::cout << _h_bezel << std::endl;
-    // std::cout << _v_bezel << std::endl;
-    // std::cout << _h_index << std::endl;
-    // std::cout << _v_index << std::endl;
-    // std::cout << _h_screens << std::endl;
-    // std::cout << _v_screens << std::endl;
-    // std::cout << _width << std::endl;
-    // std::cout << _height << std::endl;
-    // std::cout << _image_location << std::endl;
+    std::cout
+        << "This is what was parsed from config: " << std::endl;
+    std::cout << _l_bezel << std::endl;
+    std::cout << _r_bezel << std::endl;
+    std::cout << _t_bezel << std::endl;
+    std::cout << _b_bezel << std::endl;
+    std::cout << _h_index << std::endl;
+    std::cout << _v_index << std::endl;
+    std::cout << _h_screens << std::endl;
+    std::cout << _v_screens << std::endl;
+    std::cout << _width << std::endl;
+    std::cout << _height << std::endl;
+    std::cout << _image_location << std::endl;
 
     int _total_width = (_width + _l_bezel + _r_bezel) * _h_screens;
     int _total_height = (_height + _t_bezel + _b_bezel) * _v_screens;
@@ -195,7 +197,7 @@ int main(int argc, char *argv[])
         ;
     Shader shader(vs_source, true);
     shader.Bind();
-    GLCall(texture.Bind());
+    texture.Bind();
     shader.SetUniform1i("u_Texture", 0);
 
     // proj is the size of the local screen
