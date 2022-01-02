@@ -1,3 +1,4 @@
 build/
 build-rpi/
 .vscode/
+_packages/

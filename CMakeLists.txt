@@ -3,7 +3,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED)
 project(video-wall-client VERSION 0.1.0 LANGUAGES CXX)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules")
 message("${CMAKE_MODULE_PATH}")
 find_package(SDL2 REQUIRED)
 find_package(Boost 1.67 REQUIRED OPTIONAL_COMPONENTS program_options)
@@ -24,3 +23,9 @@ target_include_directories(client PUBLIC
     ${SDL_INCLUDE_DIRS} 
     ${Boost_INCLUDE_DIRS}
     )
+
+install( TARGETS client DESTINATION bin)
+install( FILES ${CMAKE_SOURCE_DIR}/config.cfg DESTINATION /etc/${PROJECT_NAME})
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(Packing)
