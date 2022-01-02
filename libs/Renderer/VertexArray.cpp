@@ -1,5 +1,12 @@
 #include "VertexArray.h"
 #include "Renderer.h"
+// clang-format off
+#if __APPLE__
+    #define glGenVertexArrays(a, b) (glGenVertexArraysAPPLE(a,b))
+    #define glDeleteVertexArrays(a, b) (glDeleteVertexArraysAPPLE(a,b))
+    #define glBindVertexArray(a, b) (glBindVertexArrayAPPLE(a,b))
+#endif
+// clang-format on
 
 VertexArray::VertexArray()
 {

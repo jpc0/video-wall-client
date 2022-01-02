@@ -124,6 +124,7 @@ int main(int argc, char *argv[])
     SDL_GL_MakeCurrent(window, context);
 
     SDL_GL_SetSwapInterval(1);
+    glEnable(GL_TEXTURE_2D);
 
     // Set alpha blending
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
