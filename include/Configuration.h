@@ -14,7 +14,7 @@ namespace Configuration
     class ConfigData
     {
     public:
-        ConfigData(const int &argc, char *argv[]);
+        ConfigData(const int argc, char *argv[]);
         ~ConfigData() = default;
 
     public:

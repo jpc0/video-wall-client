@@ -13,27 +13,28 @@ std::ostream &operator<<(std::ostream &os, const std::vector<T> &v)
 
 namespace Configuration
 {
-    ConfigData::ConfigData(const int &argc, char *argv[])
+    ConfigData::ConfigData(const int argc, char *argv[])
     {
         // clang-format off
         boost::program_options::options_description generic("Generic options");
         generic.add_options()
             ("help", "Show help message")
-            ("config, c", boost::program_options::value<std::string>(&this->config_path)->default_value("../config.cfg"), 
+            ("config, c", boost::program_options::value<std::string>(&config_path)->default_value("../config.cfg"), 
                                         "config file location");
+
         boost::program_options::options_description config("Configuration");
         config.add_options()
-            ("l_bezel", boost::program_options::value<int>(&this->l_bezel)->default_value(0), "left bezel in px")
-            ("r_bezel", boost::program_options::value<int>(&this->r_bezel)->default_value(0), "right bezel in px")
-            ("t_bezel", boost::program_options::value<int>(&this->t_bezel)->default_value(0), "top bezel in px")
-            ("b_bezel", boost::program_options::value<int>(&this->b_bezel)->default_value(0), "bottom bezel in px")
-            ("h_index", boost::program_options::value<int>(&this->h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
-            ("v_index", boost::program_options::value<int>(&this->v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
-            ("h_screens", boost::program_options::value<int>(&this->h_screens)->default_value(0), "Number of screens horizontally")
-            ("v_screens", boost::program_options::value<int>(&this->v_screens)->default_value(0), "Number of screens vertically")
-            ("width", boost::program_options::value<int>(&this->width)->default_value(1280), "width of each screen in px")
-            ("height", boost::program_options::value<int>(&this->height)->default_value(720), "height of each screen in px")
-            ("image_location", boost::program_options::value<std::string>(&this->image_location)->default_value(""), "location of default image")
+            ("l_bezel", boost::program_options::value<int>(&l_bezel)->default_value(0), "left bezel in px")
+            ("r_bezel", boost::program_options::value<int>(&r_bezel)->default_value(0), "right bezel in px")
+            ("t_bezel", boost::program_options::value<int>(&t_bezel)->default_value(0), "top bezel in px")
+            ("b_bezel", boost::program_options::value<int>(&b_bezel)->default_value(0), "bottom bezel in px")
+            ("h_index", boost::program_options::value<int>(&h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
+            ("v_index", boost::program_options::value<int>(&v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
+            ("h_screens", boost::program_options::value<int>(&h_screens)->default_value(0), "Number of screens horizontally")
+            ("v_screens", boost::program_options::value<int>(&v_screens)->default_value(0), "Number of screens vertically")
+            ("width", boost::program_options::value<int>(&width)->default_value(1280), "width of each screen in px")
+            ("height", boost::program_options::value<int>(&height)->default_value(720), "height of each screen in px")
+            ("image_location", boost::program_options::value<std::string>(&image_location)->default_value(""), "location of default image")
         ;
 
         boost::program_options::options_description cmdline_options;
@@ -51,7 +52,7 @@ namespace Configuration
         boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(cmdline_options).run(), args);
         boost::program_options::notify(args);
 
-        std::ifstream ifs(this->config_path.c_str());
+        std::ifstream ifs(config_path.c_str());
         if (!ifs)
         {
             std::cout << "Can not open config file: " << config_path << "\n";
@@ -69,8 +70,8 @@ namespace Configuration
             throw Quit{};
         }
 
-        this->total_width = (this->width + this->l_bezel + this->r_bezel) * this->h_screens;
-        this->total_height = (this->height + this->t_bezel + this->b_bezel) * this->v_screens;
+        total_width = (width + l_bezel + r_bezel) * h_screens;
+        total_height = (height + t_bezel + b_bezel) * v_screens;
     }
 
 }
