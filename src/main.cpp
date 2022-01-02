@@ -1,14 +1,15 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "glad.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include "Renderer.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "yaml.h"
 #include <boost/program_options.hpp>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
 
 template <class T>
 std::ostream &operator<<(std::ostream &os, const std::vector<T> &v)
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
     boost::program_options::options_description generic("Generic options");
     generic.add_options()
         ("help", "Show help message")
-        ("config, c", boost::program_options::value<std::string>(&config_path)->default_value("../../config.cfg"), 
+        ("config, c", boost::program_options::value<std::string>(&config_path)->default_value("../config.cfg"), 
                                     "config file location");
     // clang-format on
     int _l_bezel;
@@ -87,71 +88,46 @@ int main(int argc, char *argv[])
         std::cout << visible << std::endl;
         return 0;
     }
-    // // TODO: Put this in a Yaml file
-    // int _h_bezel = config["h_bezel"].as<int>(); // in pixels
-    // int _v_bezel = config["v_bezel"].as<int>(); // in pixels
-    // int _h_index = config["h_index"].as<int>(); // zero base, from bottom left
-    // int _v_index = config["v_index"].as<int>(); // zero base, from bottom left
-    // int _h_screens = config["h_screens"].as<int>();
-    // int _v_screens = config["v_screens"].as<int>();
-    // int _width = config["width"].as<int>();   // in pixels
-    // int _height = config["height"].as<int>(); // in pixels
-    // std::string _image_location{config["height"].as<std::string>()};
-
-    // int _h_bezel = 0;
-    // int _v_bezel = 0;
-    // int _h_index = 0;
-    // int _v_index = 0;
-    // int _h_screens = 1;
-    // int _v_screens = 1;
-    // int _width = 1280;
-    // int _height = 720;
-    // std::string _image_location{"../../res/textures/Image_created_with_a_mobile_phone.png"};
-
-    std::cout
-        << "This is what was parsed from config: " << std::endl;
-    std::cout << _l_bezel << std::endl;
-    std::cout << _r_bezel << std::endl;
-    std::cout << _t_bezel << std::endl;
-    std::cout << _b_bezel << std::endl;
-    std::cout << _h_index << std::endl;
-    std::cout << _v_index << std::endl;
-    std::cout << _h_screens << std::endl;
-    std::cout << _v_screens << std::endl;
-    std::cout << _width << std::endl;
-    std::cout << _height << std::endl;
-    std::cout << _image_location << std::endl;
 
     int _total_width = (_width + _l_bezel + _r_bezel) * _h_screens;
     int _total_height = (_height + _t_bezel + _b_bezel) * _v_screens;
-    GLFWwindow *window;
+
+    SDL_Window *window;
+    uint32_t window_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP;
 
     /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+    if (SDL_Init(SDL_INIT_VIDEO))
+    {
+        std::cout << "Failed to init Video, error: " << SDL_GetError();
+    }
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(_width, _height, "Hello World", NULL, NULL);
+    window = SDL_CreateWindow(
+        "Video Wall Client",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        _width,
+        _height,
+        window_flags);
+
     if (!window)
     {
-        glfwTerminate();
+        std::cout << "Could not create windown: " << SDL_GetError() << std::endl;
         return -1;
     }
 
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    SDL_GLContext context = SDL_GL_CreateContext(window);
 
-    glfwSwapInterval(1);
+    gladLoadGL();
+
+    /* Make the window's context current */
+    SDL_GL_MakeCurrent(window, context);
+
+    SDL_GL_SetSwapInterval(1);
 
     // Set alpha blending
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    if (glewInit() != GLEW_OK)
-        std::cout << "Error!" << std::endl;
+    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Load Texture
     Texture texture(_image_location);
@@ -213,9 +189,11 @@ int main(int argc, char *argv[])
     ib.Unbind();
     shader.Unbind();
 
+    bool isRunning = true;
+    SDL_Event sdl_event;
     Renderer renderer;
     /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
+    while (isRunning)
     {
         /* Render here */
         renderer.Clear();
@@ -224,11 +202,16 @@ int main(int argc, char *argv[])
         renderer.Draw(va, ib, shader);
 
         /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+        SDL_GL_SwapWindow(window);
 
         /* Poll for and process events */
-        glfwPollEvents();
+        while (SDL_PollEvent(&sdl_event) != 0)
+        {
+            if (sdl_event.type == SDL_QUIT)
+                isRunning = false;
+        }
     }
-    glfwTerminate();
+    SDL_DestroyWindow(window);
+    SDL_Quit();
     return 0;
 }

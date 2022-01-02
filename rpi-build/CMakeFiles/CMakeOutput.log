@@ -1,0 +1,410 @@
+The target system is: Linux - 1 - armv7
+The host system is: Linux - 5.10.84-1-MANJARO - x86_64
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is GNU, found in "/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/3.22.1/CompilerIdCXX/a.out"
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_92b8d/fast && /usr/bin/make  -f CMakeFiles/cmTC_92b8d.dir/build.make CMakeFiles/cmTC_92b8d.dir/build
+make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -v -std=gnu++17 -o CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp
+Using built-in specs.
+COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++
+Target: arm-linux-gnueabihf
+Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c,c++,fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib
+Thread model: posix
+gcc version 8.3.0 (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/cc1plus -quiet -v -isysroot /opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -D_GNU_SOURCE /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mfloat-abi=hard -mfpu=vfp -mtls-dialect=gnu -marm -march=armv6+fp -auxbase-strip CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -std=gnu++17 -version -o /tmp/ccBj8NJy.s
+GNU C++17 (GCC) version 8.3.0 (arm-linux-gnueabihf)
+	compiled by GNU C version 8.4.0, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/sys-include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/arm-linux-gnueabihf
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/backward
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include
+End of search list.
+GNU C++17 (GCC) version 8.3.0 (arm-linux-gnueabihf)
+	compiled by GNU C version 8.4.0, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: f886a7b09326525c685c180e6fe4a442
+COLLECT_GCC_OPTIONS='-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/as -v -march=armv6 -mfloat-abi=hard -mfpu=vfp -meabi=5 -o CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccBj8NJy.s
+GNU assembler version 2.31.1 (arm-linux-gnueabihf) using BFD version (GNU Binutils) 2.31.1
+COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/
+LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+Linking CXX executable cmTC_92b8d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92b8d.dir/link.txt --verbose=1
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -v CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_92b8d 
+Using built-in specs.
+COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++
+COLLECT_LTO_WRAPPER=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper
+Target: arm-linux-gnueabihf
+Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c,c++,fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib
+Thread model: posix
+gcc version 8.3.0 (GCC) 
+COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/
+LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_92b8d' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/collect2 -plugin /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/liblto_plugin.so -plugin-opt=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccb4NwFI.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_92b8d /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0 -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_92b8d' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+make[1]: Leaving directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+
+
+
+Parsed CXX implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/arm-linux-gnueabihf]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/backward]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include]
+  end of search list found
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/include/c++/8.3.0]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/arm-linux-gnueabihf] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/include/c++/8.3.0/arm-linux-gnueabihf]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/backward] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/include/c++/8.3.0/backward]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include] ==> [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed] ==> [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/include]
+  implicit include dirs: [/opt/cross-pi-gcc/arm-linux-gnueabihf/include/c++/8.3.0;/opt/cross-pi-gcc/arm-linux-gnueabihf/include/c++/8.3.0/arm-linux-gnueabihf;/opt/cross-pi-gcc/arm-linux-gnueabihf/include/c++/8.3.0/backward;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed;/opt/cross-pi-gcc/arm-linux-gnueabihf/include]
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(arm-linux-gnueabihf-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_92b8d/fast && /usr/bin/make  -f CMakeFiles/cmTC_92b8d.dir/build.make CMakeFiles/cmTC_92b8d.dir/build]
+  ignore line: [make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -v -std=gnu++17 -o CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++]
+  ignore line: [Target: arm-linux-gnueabihf]
+  ignore line: [Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c c++ fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 8.3.0 (GCC) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  ignore line: [ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/cc1plus -quiet -v -isysroot /opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -D_GNU_SOURCE /usr/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mfloat-abi=hard -mfpu=vfp -mtls-dialect=gnu -marm -march=armv6+fp -auxbase-strip CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -std=gnu++17 -version -o /tmp/ccBj8NJy.s]
+  ignore line: [GNU C++17 (GCC) version 8.3.0 (arm-linux-gnueabihf)]
+  ignore line: [	compiled by GNU C version 8.4.0  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+  ignore line: []
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [ignoring nonexistent directory "/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/sys-include"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/arm-linux-gnueabihf]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include/c++/8.3.0/backward]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include]
+  ignore line: [End of search list.]
+  ignore line: [GNU C++17 (GCC) version 8.3.0 (arm-linux-gnueabihf)]
+  ignore line: [	compiled by GNU C version 8.4.0  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+  ignore line: []
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [Compiler executable checksum: f886a7b09326525c685c180e6fe4a442]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/as -v -march=armv6 -mfloat-abi=hard -mfpu=vfp -meabi=5 -o CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccBj8NJy.s]
+  ignore line: [GNU assembler version 2.31.1 (arm-linux-gnueabihf) using BFD version (GNU Binutils) 2.31.1]
+  ignore line: [COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/]
+  ignore line: [LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-std=gnu++17' '-o' 'CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  ignore line: [Linking CXX executable cmTC_92b8d]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92b8d.dir/link.txt --verbose=1]
+  ignore line: [/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -v CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_92b8d ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++]
+  ignore line: [COLLECT_LTO_WRAPPER=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper]
+  ignore line: [Target: arm-linux-gnueabihf]
+  ignore line: [Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c c++ fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 8.3.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/]
+  ignore line: [LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_92b8d' '-shared-libgcc'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  link line: [ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/collect2 -plugin /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/liblto_plugin.so -plugin-opt=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccb4NwFI.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_92b8d /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0 -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o]
+    arg [/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/collect2] ==> ignore
+    arg [-plugin] ==> ignore
+    arg [/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccb4NwFI.res] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [--sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib/ld-linux-armhf.so.3] ==> ignore
+    arg [-X] ==> ignore
+    arg [-m] ==> ignore
+    arg [armelf_linux_eabi] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_92b8d] ==> ignore
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o]
+    arg [-L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0] ==> dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0]
+    arg [-L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib] ==> dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib]
+    arg [-L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib] ==> dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib]
+    arg [-L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib] ==> dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib]
+    arg [CMakeFiles/cmTC_92b8d.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lc] ==> lib [c]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o]
+  collapse obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crt1.o]
+  collapse obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crti.o]
+  collapse obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crtn.o]
+  collapse library dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0] ==> [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0]
+  collapse library dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib]
+  collapse library dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib]
+  collapse library dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib]
+  implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+  implicit objs: [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crt1.o;/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crti.o;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o;/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crtn.o]
+  implicit dirs: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0;/opt/cross-pi-gcc/arm-linux-gnueabihf/lib;/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib;/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib]
+  implicit fwks: []
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_b89b8/fast && /usr/bin/make  -f CMakeFiles/cmTC_b89b8.dir/build.make CMakeFiles/cmTC_b89b8.dir/build
+make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b89b8.dir/CheckIncludeFile.cxx.o
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -std=gnu++17 -o CMakeFiles/cmTC_b89b8.dir/CheckIncludeFile.cxx.o -c /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+Linking CXX executable cmTC_b89b8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b89b8.dir/link.txt --verbose=1
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  CMakeFiles/cmTC_b89b8.dir/CheckIncludeFile.cxx.o -o cmTC_b89b8 
+make[1]: Leaving directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function pthread_create exists in the pthread passed with the following output:
+Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_5df96/fast && /usr/bin/make  -f CMakeFiles/cmTC_5df96.dir/build.make CMakeFiles/cmTC_5df96.dir/build
+make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5df96.dir/CheckFunctionExists.cxx.o
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -DCHECK_FUNCTION_EXISTS=pthread_create -std=gnu++17 -o CMakeFiles/cmTC_5df96.dir/CheckFunctionExists.cxx.o -c /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_5df96
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5df96.dir/link.txt --verbose=1
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  -DCHECK_FUNCTION_EXISTS=pthread_create  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  CMakeFiles/cmTC_5df96.dir/CheckFunctionExists.cxx.o -o cmTC_5df96  -lpthread 
+make[1]: Leaving directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/3.22.1/CompilerIdC/a.out"
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_99094/fast && /usr/bin/make  -f CMakeFiles/cmTC_99094.dir/build.make CMakeFiles/cmTC_99094.dir/build
+make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -v -o CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c
+Using built-in specs.
+COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc
+Target: arm-linux-gnueabihf
+Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c,c++,fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib
+Thread model: posix
+gcc version 8.3.0 (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/cc1 -quiet -v -isysroot /opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mfloat-abi=hard -mfpu=vfp -mtls-dialect=gnu -marm -march=armv6+fp -auxbase-strip CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccTLaPSW.s
+GNU C17 (GCC) version 8.3.0 (arm-linux-gnueabihf)
+	compiled by GNU C version 8.4.0, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/sys-include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include
+End of search list.
+GNU C17 (GCC) version 8.3.0 (arm-linux-gnueabihf)
+	compiled by GNU C version 8.4.0, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3, isl version isl-0.18-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: 0561f2442d77db4a93079578cd778727
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/as -v -march=armv6 -mfloat-abi=hard -mfpu=vfp -meabi=5 -o CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o /tmp/ccTLaPSW.s
+GNU assembler version 2.31.1 (arm-linux-gnueabihf) using BFD version (GNU Binutils) 2.31.1
+COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/
+LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+Linking C executable cmTC_99094
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_99094.dir/link.txt --verbose=1
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -v CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -o cmTC_99094 
+Using built-in specs.
+COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc
+COLLECT_LTO_WRAPPER=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper
+Target: arm-linux-gnueabihf
+Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c,c++,fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib
+Thread model: posix
+gcc version 8.3.0 (GCC) 
+COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/
+LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_99094'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/collect2 -plugin /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/liblto_plugin.so -plugin-opt=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccqCwwFv.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_99094 /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0 -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_99094'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp'
+make[1]: Leaving directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+
+
+
+Parsed C implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed]
+    add: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include]
+  end of search list found
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include] ==> [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed] ==> [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed]
+  collapse include dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/include]
+  implicit include dirs: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed;/opt/cross-pi-gcc/arm-linux-gnueabihf/include]
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(arm-linux-gnueabihf-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_99094/fast && /usr/bin/make  -f CMakeFiles/cmTC_99094.dir/build.make CMakeFiles/cmTC_99094.dir/build]
+  ignore line: [make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -v -o CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc]
+  ignore line: [Target: arm-linux-gnueabihf]
+  ignore line: [Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c c++ fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 8.3.0 (GCC) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  ignore line: [ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/cc1 -quiet -v -isysroot /opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mfloat-abi=hard -mfpu=vfp -mtls-dialect=gnu -marm -march=armv6+fp -auxbase-strip CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccTLaPSW.s]
+  ignore line: [GNU C17 (GCC) version 8.3.0 (arm-linux-gnueabihf)]
+  ignore line: [	compiled by GNU C version 8.4.0  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+  ignore line: []
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [ignoring nonexistent directory "/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/sys-include"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/include-fixed]
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/include]
+  ignore line: [End of search list.]
+  ignore line: [GNU C17 (GCC) version 8.3.0 (arm-linux-gnueabihf)]
+  ignore line: [	compiled by GNU C version 8.4.0  GMP version 6.1.0  MPFR version 3.1.4  MPC version 1.0.3  isl version isl-0.18-GMP]
+  ignore line: []
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [Compiler executable checksum: 0561f2442d77db4a93079578cd778727]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  ignore line: [ /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/as -v -march=armv6 -mfloat-abi=hard -mfpu=vfp -meabi=5 -o CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o /tmp/ccTLaPSW.s]
+  ignore line: [GNU assembler version 2.31.1 (arm-linux-gnueabihf) using BFD version (GNU Binutils) 2.31.1]
+  ignore line: [COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/]
+  ignore line: [LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o' '-c'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  ignore line: [Linking C executable cmTC_99094]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_99094.dir/link.txt --verbose=1]
+  ignore line: [/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -v CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -o cmTC_99094 ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-gcc]
+  ignore line: [COLLECT_LTO_WRAPPER=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper]
+  ignore line: [Target: arm-linux-gnueabihf]
+  ignore line: [Configured with: ../gcc-8.3.0/configure --prefix=/opt/cross-pi-gcc --target=arm-linux-gnueabihf --enable-languages=c c++ fortran --with-arch=armv6 --with-fpu=vfp --with-float=hard --disable-multilib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 8.3.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/]
+  ignore line: [LIBRARY_PATH=/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/:/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib/:/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_99094'  '-mfloat-abi=hard' '-mfpu=vfp' '-mtls-dialect=gnu' '-marm' '-march=armv6+fp']
+  link line: [ /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/collect2 -plugin /opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/liblto_plugin.so -plugin-opt=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccqCwwFv.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot --eh-frame-hdr -dynamic-linker /lib/ld-linux-armhf.so.3 -X -m armelf_linux_eabi -o cmTC_99094 /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0 -L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib -L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o /opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o]
+    arg [/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/collect2] ==> ignore
+    arg [-plugin] ==> ignore
+    arg [/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/opt/cross-pi-gcc/libexec/gcc/arm-linux-gnueabihf/8.3.0/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccqCwwFv.res] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [-plugin-opt=-pass-through=-lc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+    arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+    arg [--sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib/ld-linux-armhf.so.3] ==> ignore
+    arg [-X] ==> ignore
+    arg [-m] ==> ignore
+    arg [armelf_linux_eabi] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_99094] ==> ignore
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o]
+    arg [-L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0] ==> dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0]
+    arg [-L/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib] ==> dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib]
+    arg [-L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib] ==> dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib]
+    arg [-L/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib] ==> dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib]
+    arg [CMakeFiles/cmTC_99094.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o]
+    arg [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o] ==> obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o]
+  collapse obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crt1.o] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crt1.o]
+  collapse obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crti.o] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crti.o]
+  collapse obj [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib/crtn.o] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crtn.o]
+  collapse library dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0] ==> [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0]
+  collapse library dir [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/lib] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib]
+  collapse library dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib]
+  collapse library dir [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib] ==> [/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib]
+  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+  implicit objs: [/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crt1.o;/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crti.o;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtbegin.o;/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/crtend.o;/opt/cross-pi-gcc/arm-linux-gnueabihf/lib/crtn.o]
+  implicit dirs: [/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0;/opt/cross-pi-gcc/arm-linux-gnueabihf/lib;/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/lib;/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot/usr/lib]
+  implicit fwks: []
+
+

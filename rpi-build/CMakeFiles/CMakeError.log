@@ -1,0 +1,60 @@
+Performing C++ SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_a1031/fast && /usr/bin/make  -f CMakeFiles/cmTC_a1031.dir/build.make CMakeFiles/cmTC_a1031.dir/build
+make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a1031.dir/src.cxx.o
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++17 -o CMakeFiles/cmTC_a1031.dir/src.cxx.o -c /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_a1031
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a1031.dir/link.txt --verbose=1
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  CMakeFiles/cmTC_a1031.dir/src.cxx.o -o cmTC_a1031 
+/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: CMakeFiles/cmTC_a1031.dir/src.cxx.o: in function `main':
+src.cxx:(.text+0x40): undefined reference to `pthread_create'
+/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: src.cxx:(.text+0x4c): undefined reference to `pthread_detach'
+/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: src.cxx:(.text+0x58): undefined reference to `pthread_cancel'
+/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: src.cxx:(.text+0x68): undefined reference to `pthread_join'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_a1031.dir/build.make:99: cmTC_a1031] Error 1
+make[1]: Leaving directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:127: cmTC_a1031/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_96dbb/fast && /usr/bin/make  -f CMakeFiles/cmTC_96dbb.dir/build.make CMakeFiles/cmTC_96dbb.dir/build
+make[1]: Entering directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_96dbb.dir/CheckFunctionExists.cxx.o
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot   -DCHECK_FUNCTION_EXISTS=pthread_create -std=gnu++17 -o CMakeFiles/cmTC_96dbb.dir/CheckFunctionExists.cxx.o -c /home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_96dbb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_96dbb.dir/link.txt --verbose=1
+/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  -DCHECK_FUNCTION_EXISTS=pthread_create  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  CMakeFiles/cmTC_96dbb.dir/CheckFunctionExists.cxx.o -o cmTC_96dbb  -lpthreads 
+/opt/cross-pi-gcc/lib/gcc/arm-linux-gnueabihf/8.3.0/../../../../arm-linux-gnueabihf/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_96dbb.dir/build.make:99: cmTC_96dbb] Error 1
+make[1]: Leaving directory '/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:127: cmTC_96dbb/fast] Error 2
+
+
+

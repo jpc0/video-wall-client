@@ -1,5 +1,5 @@
 #include "Texture.h"
-#include <GL/glew.h>
+#include "glad.h"
 
 #include "stb_image.h"
 

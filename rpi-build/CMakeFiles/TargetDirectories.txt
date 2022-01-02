@@ -1,0 +1,9 @@
+/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/client.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/edit_cache.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/CMakeFiles/rebuild_cache.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/libs/Renderer/CMakeFiles/renderer.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/libs/Renderer/CMakeFiles/edit_cache.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/libs/Renderer/CMakeFiles/rebuild_cache.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/libs/glad/CMakeFiles/glad.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/libs/glad/CMakeFiles/edit_cache.dir
+/home/jpc0/devel/git/video-wall-client/rpi-build/libs/glad/CMakeFiles/rebuild_cache.dir
