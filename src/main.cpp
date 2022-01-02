@@ -63,14 +63,15 @@ int main(int argc, char *argv[])
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
 
+        glm::mat4 mvp;
         // proj is the size of the local screen
         glm::mat4 proj = glm::ortho(0.0f, (float)configuration.width, 0.0f, (float)configuration.height, -1.0f, 1.0f);
         // We move the camera to where it should be in relation to the full array of screens
         glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((configuration.width + (configuration.l_bezel + configuration.r_bezel)) * configuration.h_index), 0.0f - (float)((configuration.height + (configuration.t_bezel + configuration.b_bezel)) * configuration.v_index), 0.0f});
 
-        glm::mat4 mvp = proj * view;
-
         shader.SetUniformMat4f("u_MVP", mvp);
+        shader.SetUniformMat4f("u_Proj", proj);
+        shader.SetUniformMat4f("u_View", view);
         va.Unbind();
         vb.Unbind();
         ib.Unbind();

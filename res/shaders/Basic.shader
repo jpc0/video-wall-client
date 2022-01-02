@@ -9,10 +9,12 @@ varying vec3 lightDir;
 varying vec3 outNormal;
 
 uniform mat4 u_MVP;
+uniform mat4 u_Proj;
+uniform mat4 u_View;
 
 void main()
 {
-    gl_Position = u_MVP * vec4(position.xy, 1, 1);
+    gl_Position = u_MVP * u_Proj * u_View * vec4(position.xy, 1, 1);
     gl_TexCoord[0].st = texCoord;
     v_TexCoord = texCoord;
     outNormal = normalize(gl_NormalMatrix * vec3(0,0,1));
