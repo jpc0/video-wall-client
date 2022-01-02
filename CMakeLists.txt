@@ -9,7 +9,11 @@ find_package(Boost 1.67 REQUIRED OPTIONAL_COMPONENTS program_options)
 add_subdirectory(libs/Renderer)
 add_subdirectory(libs/glad)
 
-add_executable(client src/main.cpp src/stbimage.cpp)
+add_executable(client 
+    src/main.cpp 
+    src/stbimage.cpp
+    src/Configuration.cpp
+    )
 target_link_libraries(client 
     glad
     renderer 
