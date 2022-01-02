@@ -2,3 +2,4 @@ build/
 build-rpi/
 .vscode/
 _packages/
+rpi-build/

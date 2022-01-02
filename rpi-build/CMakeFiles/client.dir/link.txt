@@ -1,1 +1,0 @@
-/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-g++ --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot  --sysroot=/opt/cross-pi-gcc/arm-linux-gnueabihf/sysroot CMakeFiles/client.dir/src/main.cpp.o CMakeFiles/client.dir/src/stbimage.cpp.o -o client  libs/glad/libglad.a libs/Renderer/librenderer.a -lSDL2main -lSDL2 -lBoost::program_options -ldl libs/glad/libglad.a 

@@ -1,2 +1,0 @@
-/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-ar qc librenderer.a CMakeFiles/renderer.dir/IndexBuffer.cpp.o CMakeFiles/renderer.dir/Renderer.cpp.o CMakeFiles/renderer.dir/Shader.cpp.o CMakeFiles/renderer.dir/VertexArray.cpp.o CMakeFiles/renderer.dir/VertexBuffer.cpp.o CMakeFiles/renderer.dir/Texture.cpp.o
-/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-ranlib librenderer.a

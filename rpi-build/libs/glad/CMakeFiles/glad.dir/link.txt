@@ -1,2 +1,0 @@
-/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-ar qc libglad.a CMakeFiles/glad.dir/glad.c.o
-/opt/cross-pi-gcc/bin/arm-linux-gnueabihf-ranlib libglad.a
