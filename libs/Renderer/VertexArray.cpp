@@ -2,9 +2,10 @@
 #include "Renderer.h"
 // clang-format off
 #if __APPLE__
-    #define glGenVertexArrays(a, b) (glGenVertexArraysAPPLE(a,b))
-    #define glDeleteVertexArrays(a, b) (glDeleteVertexArraysAPPLE(a,b))
-    #define glBindVertexArray(a, b) (glBindVertexArrayAPPLE(a,b))
+    #define glGenVertexArrays(a, b) (glad_glGenVertexArraysAPPLE(a,b))
+    #define glDeleteVertexArrays(a, b) (glad_glDeleteVertexArraysAPPLE(a,b))
+    #define glBindVertexArray(a, b) (glad_glBindVertexArrayAPPLE(a,b))
+    #define glBindVertexArray(a) (glad_glBindVertexArrayAPPLE(a))
 #endif
 // clang-format on
 
