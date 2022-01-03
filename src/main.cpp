@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         while (!display.ShouldExit())
         {
             using namespace std::chrono_literals;
-            std::this_thread::sleep_for(2000ms);
+            std::this_thread::sleep_for(5ms);
         }
         return 0;
     }
