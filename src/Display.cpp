@@ -96,7 +96,7 @@ void Display::DisplaySingleImage(const Configuration::ConfigData &configuration)
 bool Display::ShouldExit()
 {
     SDL_Event sdl_event;
-    while (SDL_PollEvent(&sdl_event) != 0)
+    if (SDL_PollEvent(&sdl_event) != 0)
     {
         if (sdl_event.type == SDL_QUIT)
             return true;
