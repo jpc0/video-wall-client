@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
             using namespace std::chrono_literals;
             std::this_thread::sleep_for(2000ms);
         }
+        return 0;
     }
     catch (Configuration::Quit &e)
     {
