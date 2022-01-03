@@ -74,7 +74,7 @@ void Display::DisplaySingleImage(const Configuration::ConfigData &configuration)
     texture.Bind();
     shader.SetUniform1i("u_Texture", 0);
 
-    glm::mat4 mvp;
+    glm::mat4 mvp{1.0f};
     // proj is the size of the local screen
     glm::mat4 proj = glm::ortho(0.0f, (float)configuration.width, 0.0f, (float)configuration.height, -1.0f, 1.0f);
     // We move the camera to where it should be in relation to the full array of screens
@@ -96,13 +96,10 @@ void Display::DisplaySingleImage(const Configuration::ConfigData &configuration)
 bool Display::ShouldExit()
 {
     SDL_Event sdl_event;
-    if (SDL_PollEvent(&sdl_event) != 0)
+    while (SDL_PollEvent(&sdl_event) != 0)
     {
         if (sdl_event.type == SDL_QUIT)
             return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
