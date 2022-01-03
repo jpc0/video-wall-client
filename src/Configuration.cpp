@@ -24,16 +24,16 @@ namespace Configuration
 
         boost::program_options::options_description config("Configuration");
         config.add_options()
-            ("l_bezel", boost::program_options::value<int>(&l_bezel)->default_value(0), "left bezel in px")
-            ("r_bezel", boost::program_options::value<int>(&r_bezel)->default_value(0), "right bezel in px")
-            ("t_bezel", boost::program_options::value<int>(&t_bezel)->default_value(0), "top bezel in px")
-            ("b_bezel", boost::program_options::value<int>(&b_bezel)->default_value(0), "bottom bezel in px")
-            ("h_index", boost::program_options::value<int>(&h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
-            ("v_index", boost::program_options::value<int>(&v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
-            ("h_screens", boost::program_options::value<int>(&h_screens)->default_value(0), "Number of screens horizontally")
-            ("v_screens", boost::program_options::value<int>(&v_screens)->default_value(0), "Number of screens vertically")
-            ("width", boost::program_options::value<int>(&width)->default_value(1280), "width of each screen in px")
-            ("height", boost::program_options::value<int>(&height)->default_value(720), "height of each screen in px")
+            ("l_bezel", boost::program_options::value<float>(&l_bezel)->default_value(0), "left bezel in px")
+            ("r_bezel", boost::program_options::value<float>(&r_bezel)->default_value(0), "right bezel in px")
+            ("t_bezel", boost::program_options::value<float>(&t_bezel)->default_value(0), "top bezel in px")
+            ("b_bezel", boost::program_options::value<float>(&b_bezel)->default_value(0), "bottom bezel in px")
+            ("h_index", boost::program_options::value<float>(&h_index)->default_value(0), "horizontal index of the screen, 0 based from bottom left screen")
+            ("v_index", boost::program_options::value<float>(&v_index)->default_value(0), "verticle index of the screen, 0 based from bottom left screen")
+            ("h_screens", boost::program_options::value<float>(&h_screens)->default_value(0), "Number of screens horizontally")
+            ("v_screens", boost::program_options::value<float>(&v_screens)->default_value(0), "Number of screens vertically")
+            ("width", boost::program_options::value<float>(&width)->default_value(1280), "width of each screen in px")
+            ("height", boost::program_options::value<float>(&height)->default_value(720), "height of each screen in px")
             ("image_location", boost::program_options::value<std::string>(&image_location)->default_value(""), "location of default image")
         ;
 
@@ -69,9 +69,6 @@ namespace Configuration
             std::cout << visible << std::endl;
             throw Quit{};
         }
-
-        total_width = (width + l_bezel + r_bezel) * h_screens;
-        total_height = (height + t_bezel + b_bezel) * v_screens;
     }
 
 }

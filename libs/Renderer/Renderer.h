@@ -46,7 +46,7 @@ public:
     SDL_GLContext context;
 
 public:
-    Renderer(Configuration::ConfigData &configuration);
+    Renderer(const Configuration::ConfigData &configuration);
     ~Renderer() = default;
     void Draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader) const;
     void Clear() const;

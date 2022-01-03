@@ -13,6 +13,7 @@ add_executable(client
     src/main.cpp 
     src/stbimage.cpp
     src/Configuration.cpp
+    src/Display.cpp
     )
 target_link_libraries(client 
     glad

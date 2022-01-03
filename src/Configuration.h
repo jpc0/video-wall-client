@@ -19,18 +19,16 @@ namespace Configuration
 
     public:
         std::string config_path;
-        int l_bezel;
-        int r_bezel;
-        int t_bezel;
-        int b_bezel;
-        int h_index;
-        int v_index;
-        int h_screens;
-        int v_screens;
-        int width;
-        int height;
-        int total_width;
-        int total_height;
+        float l_bezel;
+        float r_bezel;
+        float t_bezel;
+        float b_bezel;
+        float h_index;
+        float v_index;
+        float h_screens;
+        float v_screens;
+        float width;
+        float height;
         std::string image_location;
     };
 }

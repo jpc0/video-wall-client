@@ -18,7 +18,7 @@ bool GLLogCall(const char *function, const char *file, int line)
     return true;
 }
 
-Renderer::Renderer(Configuration::ConfigData &configuration)
+Renderer::Renderer(const Configuration::ConfigData &configuration)
 {
     /* Initialize the library */
     if (SDL_Init(SDL_INIT_VIDEO))
