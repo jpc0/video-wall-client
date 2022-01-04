@@ -6,6 +6,7 @@ project(video-wall-client VERSION 0.1.0 LANGUAGES CXX)
 message("${CMAKE_MODULE_PATH}")
 find_package(SDL2 REQUIRED)
 find_package(Boost 1.67 REQUIRED OPTIONAL_COMPONENTS program_options)
+find_package(cppzmq REQUIRED)
 add_subdirectory(libs/Renderer)
 add_subdirectory(libs/glad)
 
@@ -16,6 +17,7 @@ add_executable(client
     src/Display.cpp
     )
 target_link_libraries(client 
+    cppzmq
     glad
     renderer 
     SDL2main
