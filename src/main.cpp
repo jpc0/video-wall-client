@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     try
     {
         Configuration::ConfigData configuration{argc, argv};
-        Display display{configuration};
+        Display::Display display{configuration};
         display.DisplaySingleImage(configuration);
         while (!display.ShouldExit())
         {

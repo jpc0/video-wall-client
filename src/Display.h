@@ -5,27 +5,30 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-class AllScreenArray
+namespace Display
 {
-public:
-    AllScreenArray(const Configuration::ConfigData &configuration);
-    ~AllScreenArray() = default;
-    float GetAspectRatio();
+    class AllScreenArray
+    {
+    public:
+        AllScreenArray(const Configuration::ConfigData &configuration);
+        ~AllScreenArray() = default;
+        float GetAspectRatio();
 
-public:
-    float _total_width;
-    float _total_height;
-};
+    public:
+        float _total_width;
+        float _total_height;
+    };
 
-class Display
-{
-public:
-    Display(const Configuration::ConfigData &configuration);
-    ~Display();
-    void DisplaySingleImage(const Configuration::ConfigData &configuration);
-    bool ShouldExit();
+    class Display
+    {
+    public:
+        Display(const Configuration::ConfigData &configuration);
+        ~Display();
+        void DisplaySingleImage(const Configuration::ConfigData &configuration);
+        bool ShouldExit();
 
-private:
-    Renderer _renderer;
-    AllScreenArray _screen;
-};
+    private:
+        Renderer _renderer;
+        AllScreenArray _screen;
+    };
+}
