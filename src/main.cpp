@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     {
         Configuration::ConfigData configuration{argc, argv};
         Display::Display display{configuration};
-        display.DisplaySingleImage(configuration);
+        display.DisplayDefaultImage();
         while (!display.ShouldExit())
         {
             using namespace std::chrono_literals;

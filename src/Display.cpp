@@ -13,34 +13,49 @@ namespace Display
         return (_total_width / _total_height);
     }
 
-    Display::Display(const Configuration::ConfigData &configuration) : _renderer{configuration}, _screen{configuration}
+    Display::Display(const Configuration::ConfigData &configuration) : _renderer{configuration},
+                                                                       _wall{configuration},
+                                                                       _default_image_location{configuration.image_location}
     {
+        _screen.width = configuration.width;
+        _screen.height = configuration.height;
+        _screen.l_bezel = configuration.l_bezel;
+        _screen.r_bezel = configuration.r_bezel;
+        _screen.t_bezel = configuration.t_bezel;
+        _screen.b_bezel = configuration.b_bezel;
+        _screen.h_index = configuration.h_index;
+        _screen.v_index = configuration.v_index;
+        const std::string vs_source =
+#include "../res/shaders/Basic.shader"
+            ;
+        _shader = new Shader(vs_source, true);
     }
 
     Display::~Display()
     {
+        delete _shader;
         SDL_DestroyWindow(_renderer.window);
         SDL_Quit();
     }
 
-    void Display::DisplaySingleImage(const Configuration::ConfigData &configuration)
+    void Display::DisplaySingleImage(const std::string &image_location)
     {
-        Texture texture(configuration.image_location);
+        Texture texture(image_location);
         // Calculate the scale factor of the image, this will blow the image up to the size of the full array of screens
         // and will correct for aspect ratio
         float scale_factor{1};
-        float total_pixels_ratio = _screen.GetAspectRatio();
+        float total_pixels_ratio = _wall.GetAspectRatio();
         float texture_pixels_ratio{((float)texture.GetWidth() / (float)texture.GetHeight())};
 
         if (total_pixels_ratio > texture_pixels_ratio)
-            scale_factor = _screen._total_height / (float)texture.GetHeight();
+            scale_factor = _wall._total_height / (float)texture.GetHeight();
         else if (total_pixels_ratio == texture_pixels_ratio)
-            scale_factor = _screen._total_height / (float)texture.GetHeight();
+            scale_factor = _wall._total_height / (float)texture.GetHeight();
         else if (total_pixels_ratio < texture_pixels_ratio)
-            scale_factor = _screen._total_width / (float)texture.GetWidth();
+            scale_factor = _wall._total_width / (float)texture.GetWidth();
 
-        float x_origin = ((_screen._total_width - (float)texture.GetWidth() * (float)scale_factor) / 2);
-        float y_origin = ((_screen._total_height - (float)texture.GetHeight() * (float)scale_factor) / 2);
+        float x_origin = ((_wall._total_width - (float)texture.GetWidth() * (float)scale_factor) / 2);
+        float y_origin = ((_wall._total_height - (float)texture.GetHeight() * (float)scale_factor) / 2);
         float x_end = ((float)texture.GetWidth() * (float)scale_factor) + x_origin;
         float y_end = ((float)texture.GetHeight() * (float)scale_factor) + y_origin;
         float x_texture_origin{0.0f};
@@ -68,31 +83,26 @@ namespace Display
         va.AddBuffer(vb, layout);
 
         IndexBuffer ib(indices, 6);
-
-        const std::string vs_source =
-#include "../res/shaders/Basic.shader"
-            ;
-        Shader shader(vs_source, true);
-        shader.Bind();
+        _shader->Bind();
         texture.Bind();
-        shader.SetUniform1i("u_Texture", 0);
+        _shader->SetUniform1i("u_Texture", 0);
 
         glm::mat4 mvp{1.0f};
         // proj is the size of the local screen
-        glm::mat4 proj = glm::ortho(0.0f, (float)configuration.width, 0.0f, (float)configuration.height, -1.0f, 1.0f);
+        glm::mat4 proj = glm::ortho(0.0f, (float)_screen.width, 0.0f, (float)_screen.height, -1.0f, 1.0f);
         // We move the camera to where it should be in relation to the full array of screens
-        glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((configuration.width + (configuration.l_bezel + configuration.r_bezel)) * configuration.h_index), 0.0f - (float)((configuration.height + (configuration.t_bezel + configuration.b_bezel)) * configuration.v_index), 0.0f});
+        glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_screen.width + (_screen.l_bezel + _screen.r_bezel)) * _screen.h_index), 0.0f - (float)((_screen.height + (_screen.t_bezel + _screen.b_bezel)) * _screen.v_index), 0.0f});
 
-        shader.SetUniformMat4f("u_MVP", mvp);
-        shader.SetUniformMat4f("u_Proj", proj);
-        shader.SetUniformMat4f("u_View", view);
+        _shader->SetUniformMat4f("u_MVP", mvp);
+        _shader->SetUniformMat4f("u_Proj", proj);
+        _shader->SetUniformMat4f("u_View", view);
 
         _renderer.Clear();
-        _renderer.Draw(va, ib, shader);
+        _renderer.Draw(va, ib, *_shader);
         va.Unbind();
         vb.Unbind();
         ib.Unbind();
-        shader.Unbind();
+        _shader->Unbind();
         SDL_GL_SwapWindow(_renderer.window);
     }
 
