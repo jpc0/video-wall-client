@@ -29,6 +29,7 @@ namespace Display
 #include "../res/shaders/Basic.shader"
             ;
         _shader = new Shader(vs_source, true);
+        DisplayDefaultImage();
     }
 
     Display::~Display()

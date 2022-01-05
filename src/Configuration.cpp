@@ -35,6 +35,7 @@ namespace Configuration
             ("width", boost::program_options::value<float>(&width)->default_value(1280), "width of each screen in px")
             ("height", boost::program_options::value<float>(&height)->default_value(720), "height of each screen in px")
             ("image_location", boost::program_options::value<std::string>(&image_location)->default_value(""), "location of default image")
+            ("zmq_server", boost::program_options::value<std::string>(&zmq_server)->default_value("tcp://127.0.0.1:7000"), "location of zmq_server")
         ;
 
         boost::program_options::options_description cmdline_options;

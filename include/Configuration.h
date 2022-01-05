@@ -30,5 +30,6 @@ namespace Configuration
         float width;
         float height;
         std::string image_location;
+        std::string zmq_server;
     };
 }
