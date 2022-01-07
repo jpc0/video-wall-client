@@ -16,6 +16,8 @@ add_executable(client
     src/Configuration.cpp
     src/Display.cpp
     src/Platform/Linux/LinuxWindow.cpp
+    src/Layer.cpp
+    src/LayerStack.cpp
     )
 target_link_libraries(client 
     cppzmq
