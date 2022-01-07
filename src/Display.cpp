@@ -26,39 +26,35 @@ namespace Display
         _screen.b_bezel = configuration.b_bezel;
         _screen.h_index = configuration.h_index;
         _screen.v_index = configuration.v_index;
-        const std::string vs_source =
-#include "../res/shaders/Basic.shader"
-            ;
-        _shader = new Shader(vs_source, true);
+
         DisplayDefaultImage();
     }
 
     Display::~Display()
     {
-        delete _shader;
         SDL_Quit();
     }
 
     void Display::DisplaySingleImage(const std::string &image_location)
     {
-        Texture texture(image_location);
+        _current_image.texture = std::make_unique<Texture>(image_location);
         // Calculate the scale factor of the image, this will blow the image up to the size of the full array of screens
         // and will correct for aspect ratio
         float scale_factor{1};
         float total_pixels_ratio = _wall.GetAspectRatio();
-        float texture_pixels_ratio{((float)texture.GetWidth() / (float)texture.GetHeight())};
+        float texture_pixels_ratio{((float)_current_image.texture->GetWidth() / (float)_current_image.texture->GetHeight())};
 
         if (total_pixels_ratio > texture_pixels_ratio)
-            scale_factor = _wall._total_height / (float)texture.GetHeight();
+            scale_factor = _wall._total_height / (float)_current_image.texture->GetHeight();
         else if (total_pixels_ratio == texture_pixels_ratio)
-            scale_factor = _wall._total_height / (float)texture.GetHeight();
+            scale_factor = _wall._total_height / (float)_current_image.texture->GetHeight();
         else if (total_pixels_ratio < texture_pixels_ratio)
-            scale_factor = _wall._total_width / (float)texture.GetWidth();
+            scale_factor = _wall._total_width / (float)_current_image.texture->GetWidth();
 
-        float x_origin = ((_wall._total_width - (float)texture.GetWidth() * (float)scale_factor) / 2);
-        float y_origin = ((_wall._total_height - (float)texture.GetHeight() * (float)scale_factor) / 2);
-        float x_end = ((float)texture.GetWidth() * (float)scale_factor) + x_origin;
-        float y_end = ((float)texture.GetHeight() * (float)scale_factor) + y_origin;
+        float x_origin = ((_wall._total_width - (float)_current_image.texture->GetWidth() * (float)scale_factor) / 2);
+        float y_origin = ((_wall._total_height - (float)_current_image.texture->GetHeight() * (float)scale_factor) / 2);
+        float x_end = ((float)_current_image.texture->GetWidth() * (float)scale_factor) + x_origin;
+        float y_end = ((float)_current_image.texture->GetHeight() * (float)scale_factor) + y_origin;
         float x_texture_origin{0.0f};
         float y_texture_origin{0.0f};
         float x_texture_end{1.0f};
@@ -76,17 +72,23 @@ namespace Display
             0, 1, 2,
             2, 3, 0};
 
-        VertexArray va;
-        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-        VertexBufferLayout layout;
-        layout.Push<float>(2);
-        layout.Push<float>(2);
-        va.AddBuffer(vb, layout);
+        _current_image.va = std::make_unique<VertexArray>();
+        _current_image.vb = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
+        _current_image.layout = std::make_unique<VertexBufferLayout>();
+        _current_image.layout->Push<float>(2);
+        _current_image.layout->Push<float>(2);
+        _current_image.va->AddBuffer(*_current_image.vb, *_current_image.layout);
 
-        IndexBuffer ib(indices, 6);
-        _shader->Bind();
-        texture.Bind();
-        _shader->SetUniform1i("u_Texture", 0);
+        _current_image.ib = std::make_unique<IndexBuffer>(indices, 6);
+
+        const std::string vs_source =
+#include "../res/shaders/Basic.shader"
+            ;
+        _current_image.shader = std::make_unique<Shader>(vs_source, true);
+
+        _current_image.shader->Bind();
+        _current_image.texture->Bind();
+        _current_image.shader->SetUniform1i("u_Texture", 0);
 
         glm::mat4 mvp{1.0f};
         // proj is the size of the local screen
@@ -94,23 +96,22 @@ namespace Display
         // We move the camera to where it should be in relation to the full array of screens
         glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_screen.width + (_screen.l_bezel + _screen.r_bezel)) * _screen.h_index), 0.0f - (float)((_screen.height + (_screen.t_bezel + _screen.b_bezel)) * _screen.v_index), 0.0f});
 
-        _shader->SetUniformMat4f("u_MVP", mvp);
-        _shader->SetUniformMat4f("u_Proj", proj);
-        _shader->SetUniformMat4f("u_View", view);
-
-        _renderer.Clear();
-        _renderer.Draw(va, ib, *_shader);
-        va.Unbind();
-        vb.Unbind();
-        ib.Unbind();
-        _shader->Unbind();
-        _window->OnUpdate();
+        _current_image.shader->SetUniformMat4f("u_MVP", mvp);
+        _current_image.shader->SetUniformMat4f("u_Proj", proj);
+        _current_image.shader->SetUniformMat4f("u_View", view);
+        _current_image.va->Unbind();
+        _current_image.vb->Unbind();
+        _current_image.ib->Unbind();
+        _current_image.shader->Unbind();
     }
 
     bool Display::ShouldExit()
     {
+        _renderer.Clear();
+        _renderer.Draw(*_current_image.va, *_current_image.ib, *_current_image.shader);
+        _window->OnUpdate();
         SDL_Event sdl_event;
-        if (SDL_PollEvent(&sdl_event) != 0)
+        while (SDL_PollEvent(&sdl_event) != 0)
         {
             if (sdl_event.type == SDL_QUIT)
                 return true;
