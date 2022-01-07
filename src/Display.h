@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
 #include "Renderer.h"
+#include "Window.h"
 #include "Configuration.h"
+#include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -41,6 +44,7 @@ namespace Display
         bool ShouldExit();
 
     private:
+        std::unique_ptr<Window> _window;
         Renderer _renderer;
         AllScreenArray _wall;
         Shader *_shader;

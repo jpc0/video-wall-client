@@ -17,6 +17,7 @@ namespace Display
                                                                        _wall{configuration},
                                                                        _default_image_location{configuration.image_location}
     {
+        _window = std::unique_ptr<Window>(Window::Create());
         _screen.width = configuration.width;
         _screen.height = configuration.height;
         _screen.l_bezel = configuration.l_bezel;
@@ -35,7 +36,6 @@ namespace Display
     Display::~Display()
     {
         delete _shader;
-        SDL_DestroyWindow(_renderer.window);
         SDL_Quit();
     }
 
@@ -104,11 +104,11 @@ namespace Display
         vb.Unbind();
         ib.Unbind();
         _shader->Unbind();
-        SDL_GL_SwapWindow(_renderer.window);
     }
 
     bool Display::ShouldExit()
     {
+        _window->OnUpdate();
         SDL_Event sdl_event;
         if (SDL_PollEvent(&sdl_event) != 0)
         {

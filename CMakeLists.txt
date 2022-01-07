@@ -15,6 +15,7 @@ add_executable(client
     src/stbimage.cpp
     src/Configuration.cpp
     src/Display.cpp
+    src/Platform/Linux/LinuxWindow.cpp
     )
 target_link_libraries(client 
     cppzmq
@@ -28,6 +29,7 @@ target_include_directories(client PUBLIC
     ${CMAKE_SOURCE_DIR}/libs/Renderer 
     ${CMAKE_SOURCE_DIR}/include 
     ${SDL_INCLUDE_DIRS} 
+    /usr/local/include
     ${Boost_INCLUDE_DIRS}
     )
 

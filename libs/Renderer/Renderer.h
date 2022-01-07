@@ -23,28 +23,9 @@ void GLClearError();
 
 bool GLLogCall(const char *function, const char *file, int line);
 
-struct INITFAIL : public std::exception
-{
-    const char *what() const throw()
-    {
-        return "Failed to init Video";
-    }
-};
-
-struct WINDOWCREATEFAIL : public std::exception
-{
-    const char *what() const throw()
-    {
-        return "Failed to create window";
-    }
-};
-
 class Renderer
 {
 public:
-    SDL_Window *window;
-    SDL_GLContext context;
-
 public:
     Renderer(const Configuration::ConfigData &configuration);
     ~Renderer() = default;

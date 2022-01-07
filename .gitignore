@@ -3,3 +3,4 @@ build-rpi/
 .vscode/
 _packages/
 rpi-build/
+.DS_Store
