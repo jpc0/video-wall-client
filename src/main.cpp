@@ -26,6 +26,9 @@ int main(int argc, char *argv[])
         sub.connect("tcp://192.168.1.39:5678");
         sub.set(zmq::sockopt::subscribe, "");
         // Main loop
+        Uint32 start_time, frame_time;
+        float fps;
+        start_time = SDL_GetTicks();
         while (!display.ShouldExit())
         {
             zmq::message_t msg;
@@ -39,8 +42,13 @@ int main(int argc, char *argv[])
                 }
             }
 
-            using namespace std::chrono_literals;
-            std::this_thread::sleep_for(5ms);
+            // using namespace std::chrono_literals;
+            // std::this_thread::sleep_for(6ms);
+            frame_time = SDL_GetTicks() - start_time;
+            fps = (frame_time > 0) ? 1000.0f / frame_time : 0.0f;
+            std::cout << "Frame Time: " << frame_time << '\n';
+            std::cout << "FPS: " << fps << '\n';
+            start_time = SDL_GetTicks();
         }
 
         return 0;
