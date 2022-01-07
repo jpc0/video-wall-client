@@ -104,11 +104,11 @@ namespace Display
         vb.Unbind();
         ib.Unbind();
         _shader->Unbind();
+        _window->OnUpdate();
     }
 
     bool Display::ShouldExit()
     {
-        _window->OnUpdate();
         SDL_Event sdl_event;
         if (SDL_PollEvent(&sdl_event) != 0)
         {
