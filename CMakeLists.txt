@@ -16,6 +16,7 @@ add_executable(client
     src/Configuration.cpp
     src/Display.cpp
     src/Platform/Linux/LinuxWindow.cpp
+    src/Platform/OpenGL/OpenGLContext.cpp
     src/Layer.cpp
     src/LayerStack.cpp
     )
@@ -29,7 +30,9 @@ target_link_libraries(client
     ${CMAKE_DL_LIBS})
 target_include_directories(client PUBLIC 
     ${CMAKE_SOURCE_DIR}/libs/Renderer 
-    ${CMAKE_SOURCE_DIR}/include 
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/src/Platform/Linux 
+    ${CMAKE_SOURCE_DIR}/src/Platform/OpenGL 
     ${SDL_INCLUDE_DIRS} 
     /usr/local/include
     ${Boost_INCLUDE_DIRS}

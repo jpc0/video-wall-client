@@ -36,43 +36,35 @@ void LinuxWindow::Init(const WindowProps &props)
     }
 
     {
-        uint32_t window_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP;
+        uint32_t _window_flags = SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_INPUT_FOCUS;
+        _window_flags |= SDL_WINDOW_OPENGL;
         m_Window = SDL_CreateWindow(
             props.Title.c_str(),
             SDL_WINDOWPOS_UNDEFINED,
             SDL_WINDOWPOS_UNDEFINED,
             (int)props.Width,
             (int)props.Height,
-            window_flags);
+            _window_flags);
     }
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-    m_Context = SDL_GL_CreateContext(m_Window);
-    SDL_GL_MakeCurrent(m_Window, m_Context);
-    gladLoadGL();
-    glEnable(GL_TEXTURE_2D);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    m_Context = new OpenGLContext(m_Window);
+    m_Context->Init();
     SetVSync(true);
 }
 
 void LinuxWindow::Shutdown()
 {
     SDL_DestroyWindow(m_Window);
+    delete m_Context;
 }
 
 void LinuxWindow::OnUpdate()
 {
-    SDL_GL_SwapWindow(m_Window);
+    m_Context->SwapBuffers();
 }
 
 void LinuxWindow::SetVSync(bool enabled)
 {
-    if (enabled)
-        SDL_GL_SetSwapInterval(1);
-    else
-        SDL_GL_SetSwapInterval(0);
+    m_Context->SetVsync(enabled);
 
     m_Data.VSync = enabled;
 }

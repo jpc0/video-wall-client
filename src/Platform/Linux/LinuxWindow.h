@@ -1,9 +1,8 @@
 #pragma once
 #include "Window.h"
 #include <iostream>
+#include "OpenGLContext.h"
 #include <SDL2/SDL.h>
-#include "glad.h"
-
 
 class LinuxWindow : public Window
 {
@@ -26,7 +25,7 @@ private:
 
 private:
     SDL_Window *m_Window;
-    SDL_GLContext m_Context;
+    GraphicsContext *m_Context;
 
     struct WindowData
     {
