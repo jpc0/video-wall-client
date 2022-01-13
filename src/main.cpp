@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
         zmq::context_t context;
         zmq::socket_t sub(context, zmq::socket_type::sub);
-        sub.connect("tcp://192.168.1.39:5678");
+        sub.connect(configuration.zmq_server);
         sub.set(zmq::sockopt::subscribe, "");
         // Main loop
         Uint32 start_time, frame_time;
@@ -35,10 +35,19 @@ int main(int argc, char *argv[])
             auto res = sub.recv(msg, zmq::recv_flags::dontwait);
             if (res)
             {
-                json j = json::parse(static_cast<char *>(msg.data()));
-                if (j["command"].get<std::string>() == std::string("display_image"))
+                try
                 {
-                    display.DisplaySingleImage(j["location"]);
+                    json j = json::parse(static_cast<char *>(msg.data()));
+                    if (j["command"].get<std::string>() == std::string("display_image"))
+                    {
+                        display.DisplaySingleImage(j["location"]);
+                    }
+                }
+                catch (nlohmann::detail::parse_error)
+                {
+                    std::cerr << "Error parsing json" << '\n';
+                    std::cerr << "Failed string was: " << static_cast<char *>(msg.data()) << '\n';
+                    continue;
                 }
             }
 
@@ -46,8 +55,8 @@ int main(int argc, char *argv[])
             // std::this_thread::sleep_for(6ms);
             frame_time = SDL_GetTicks() - start_time;
             fps = (frame_time > 0) ? 1000.0f / frame_time : 0.0f;
-            std::cout << "Frame Time: " << frame_time << '\n';
-            std::cout << "FPS: " << fps << '\n';
+            // std::cout << "Frame Time: " << frame_time << '\n';
+            // std::cout << "FPS: " << fps << '\n';
             start_time = SDL_GetTicks();
         }
 
