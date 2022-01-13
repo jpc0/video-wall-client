@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
             {
                 try
                 {
-                    json j = json::parse(static_cast<char *>(msg.data()));
+                    json j = json::parse(msg.to_string());
                     if (j["command"].get<std::string>() == std::string("display_image"))
                     {
                         display.DisplaySingleImage(j["location"]);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
                 catch (nlohmann::detail::parse_error)
                 {
                     std::cerr << "Error parsing json" << '\n';
-                    std::cerr << "Failed string was: " << static_cast<char *>(msg.data()) << '\n';
+                    std::cerr << "Failed string was: " << msg.to_string() << '\n';
                     continue;
                 }
             }
