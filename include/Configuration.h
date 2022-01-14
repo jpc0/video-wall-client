@@ -1,22 +1,14 @@
 #pragma once
 #include <string>
 #include <exception>
+#include "argh.h"
+#include "Yaml.hpp"
+#include <memory>
 
 namespace Configuration
 {
-    struct Quit : public std::exception
-    {
-        const char *what() const throw()
-        {
-            return 0;
-        }
-    };
     class ConfigData
     {
-    public:
-        ConfigData(const int argc, char *argv[]);
-        ~ConfigData() = default;
-
     public:
         std::string config_path;
         float l_bezel;
@@ -31,5 +23,11 @@ namespace Configuration
         float height;
         std::string image_location;
         std::string zmq_server;
+
+    public:
+        ConfigData(int argc, char *argv[]);
+        ~ConfigData();
+
+        void ParseConfigFile();
     };
 }

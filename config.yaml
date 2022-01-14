@@ -1,0 +1,12 @@
+l_bezel: 0
+r_bezel: 0
+t_bezel: 0
+b_bezel: 0
+h_index: 0
+v_index: 0
+h_screens: 1
+v_screens: 1
+width: 1280
+height: 720
+image_location: /home/jpc0/Downloads/test.jpg
+zmq_server: tcp://127.0.0.1:7000

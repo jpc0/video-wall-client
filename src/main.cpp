@@ -62,11 +62,6 @@ int main(int argc, char *argv[])
 
         return 0;
     }
-    catch (Configuration::Quit &e)
-    {
-        return 0;
-    }
-
     catch (INITFAIL &e)
     {
         std::cout << e.what() << std::endl;
