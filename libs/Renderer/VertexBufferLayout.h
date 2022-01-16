@@ -30,14 +30,14 @@ private:
 
 public:
     VertexBufferLayout() : _Stride{0} {}
-    template <typename T>
-    void
-    Push(uint32_t count)
-    {
-        // static_assert(false);
-    }
 
-    inline const std::vector<VertexBufferElement> GetElements() const { return _Elements; }
+    template <typename T>
+    void Push(uint32_t count);
+
+    inline const std::vector<VertexBufferElement> GetElements() const
+    {
+        return _Elements;
+    }
     inline uint32_t GetStride() const { return _Stride; }
 };
 
