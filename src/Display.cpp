@@ -88,7 +88,23 @@ namespace Display
 
         _current_image.shader->Bind();
         _current_image.texture->Bind();
+
         _current_image.shader->SetUniform1i("u_Texture", 0);
+
+        _current_image.shader->SetUniform1f("u_brightness", _screen.brightness);
+        _current_image.shader->SetUniform1f("u_rbrightness", _screen.r_brightness);
+        _current_image.shader->SetUniform1f("u_gbrightness", _screen.g_brightness);
+        _current_image.shader->SetUniform1f("u_bbrightness", _screen.b_brightness);
+
+        _current_image.shader->SetUniform1f("u_contrast", _screen.contrast);
+        _current_image.shader->SetUniform1f("u_rcontrast", _screen.r_contrast);
+        _current_image.shader->SetUniform1f("u_gcontrast", _screen.g_contrast);
+        _current_image.shader->SetUniform1f("u_bcontrast", _screen.b_contrast);
+
+        _current_image.shader->SetUniform1f("u_gamma", _screen.gamma);
+        _current_image.shader->SetUniform1f("u_rgamma", _screen.r_gamma);
+        _current_image.shader->SetUniform1f("u_ggamma", _screen.g_gamma);
+        _current_image.shader->SetUniform1f("u_bgamma", _screen.b_gamma);
 
         glm::mat4 mvp{1.0f};
         // proj is the size of the local screen

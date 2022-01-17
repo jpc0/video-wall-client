@@ -36,8 +36,9 @@ void LinuxWindow::Init(const WindowProps &props)
     }
 
     {
-        uint32_t _window_flags = SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_INPUT_FOCUS;
+        uint32_t _window_flags = SDL_WINDOW_INPUT_FOCUS;
         _window_flags |= SDL_WINDOW_OPENGL;
+        _window_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
         m_Window = SDL_CreateWindow(
             props.Title.c_str(),
             SDL_WINDOWPOS_UNDEFINED,

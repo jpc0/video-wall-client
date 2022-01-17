@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
         zmq::socket_t sub(context, zmq::socket_type::sub);
         sub.connect(configuration.zmq_server);
         sub.set(zmq::sockopt::subscribe, "");
+
         // Main loop
         Uint32 start_time, frame_time;
         float fps;
@@ -42,6 +43,66 @@ int main(int argc, char *argv[])
                     {
                         display.DisplaySingleImage(j["location"]);
                     }
+                    if (j["command"].get<std::string>() == std::string("adjust_color"))
+                    {
+                        if (j["attribute"].get<std::string>() == std::string("brightness"))
+                        {
+                            if (j["channel"].get<std::string>() == std::string("all"))
+                            {
+                                std::cout << display.AdjustBrightness(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("red"))
+                            {
+                                std::cout << display.AdjustBrightnessr(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("green"))
+                            {
+                                std::cout << display.AdjustBrightnessg(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("blue"))
+                            {
+                                std::cout << display.AdjustBrightnessb(j["value"].get<float>()) << '\n';
+                            }
+                        }
+                        if (j["attribute"].get<std::string>() == std::string("contrast"))
+                        {
+                            if (j["channel"].get<std::string>() == std::string("all"))
+                            {
+                                std::cout << display.AdjustContrast(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("red"))
+                            {
+                                std::cout << display.AdjustContrastr(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("green"))
+                            {
+                                std::cout << display.AdjustContrastg(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("blue"))
+                            {
+                                std::cout << display.AdjustContrastb(j["value"].get<float>()) << '\n';
+                            }
+                        }
+                        if (j["attribute"].get<std::string>() == std::string("gamma"))
+                        {
+                            if (j["channel"].get<std::string>() == std::string("all"))
+                            {
+                                std::cout << display.AdjustGamma(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("red"))
+                            {
+                                std::cout << display.AdjustGammar(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("green"))
+                            {
+                                std::cout << display.AdjustGammag(j["value"].get<float>()) << '\n';
+                            }
+                            if (j["channel"].get<std::string>() == std::string("blue"))
+                            {
+                                std::cout << display.AdjustGammab(j["value"].get<float>()) << '\n';
+                            }
+                        }
+                    }
                 }
                 catch (nlohmann::detail::parse_error)
                 {
@@ -51,12 +112,8 @@ int main(int argc, char *argv[])
                 }
             }
 
-            // using namespace std::chrono_literals;
-            // std::this_thread::sleep_for(6ms);
             frame_time = SDL_GetTicks() - start_time;
             fps = (frame_time > 0) ? 1000.0f / frame_time : 0.0f;
-            // std::cout << "Frame Time: " << frame_time << '\n';
-            // std::cout << "FPS: " << fps << '\n';
             start_time = SDL_GetTicks();
         }
 
