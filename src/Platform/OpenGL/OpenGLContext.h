@@ -1,17 +1,16 @@
 #pragma once
 #include "GraphicsContext.h"
-#include <SDL2/SDL.h>
 #include "glad.h"
+#include <GLFW/glfw3.h>
 
 class OpenGLContext : public GraphicsContext
 {
 public:
-    OpenGLContext(SDL_Window *windowHandle);
+    OpenGLContext(GLFWwindow *windowHandle);
     void Init() override;
     void SwapBuffers() override;
     void SetVsync(bool enabled) override;
 
 private:
-    SDL_Window *m_WindowHandle;
-    SDL_GLContext m_Context;
+    GLFWwindow *m_WindowHandle;
 };

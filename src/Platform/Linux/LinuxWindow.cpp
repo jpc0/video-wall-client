@@ -1,6 +1,17 @@
 #include "LinuxWindow.h"
 
-static uint8_t s_SDLInitialized = false;
+static uint8_t s_GLFWInitialized = false;
+
+static void error_callback(int error, const char *description)
+{
+    fprintf(stderr, "GLFW Error: %s\n", description);
+}
+
+static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
 
 Window *Window::Create(const WindowProps &props)
 {
@@ -23,38 +34,35 @@ void LinuxWindow::Init(const WindowProps &props)
     m_Data.Width = props.Width;
     m_Data.Height = props.Height;
 
-    if (!s_SDLInitialized)
+    glfwSetErrorCallback(error_callback);
+
+    if (!s_GLFWInitialized)
     {
-        int success = (SDL_Init(SDL_INIT_VIDEO) == 0);
-        if (!success)
+        if (!glfwInit())
         {
-            std::cout << "Failed to init Video, error: " << SDL_GetError();
-            throw INITFAIL{};
+            exit(EXIT_FAILURE);
         }
 
-        s_SDLInitialized = true;
+        s_GLFWInitialized = true;
     }
 
     {
-        uint32_t _window_flags = SDL_WINDOW_INPUT_FOCUS;
-        _window_flags |= SDL_WINDOW_OPENGL;
-        _window_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-        m_Window = SDL_CreateWindow(
-            props.Title.c_str(),
-            SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED,
+        m_Window = glfwCreateWindow(
             (int)props.Width,
             (int)props.Height,
-            _window_flags);
+            props.Title.c_str(),
+            glfwGetPrimaryMonitor(),
+            nullptr);
     }
     m_Context = new OpenGLContext(m_Window);
     m_Context->Init();
     SetVSync(true);
+    glfwSetKeyCallback(m_Window, key_callback);
 }
 
 void LinuxWindow::Shutdown()
 {
-    SDL_DestroyWindow(m_Window);
+    glfwDestroyWindow(m_Window);
     delete m_Context;
 }
 

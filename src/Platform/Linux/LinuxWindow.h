@@ -2,7 +2,7 @@
 #include "Window.h"
 #include <iostream>
 #include "OpenGLContext.h"
-#include <SDL2/SDL.h>
+#include <GLFW/glfw3.h>
 
 class LinuxWindow : public Window
 {
@@ -24,7 +24,7 @@ private:
     virtual void Shutdown();
 
 private:
-    SDL_Window *m_Window;
+    GLFWwindow *m_Window;
     GraphicsContext *m_Context;
 
     struct WindowData

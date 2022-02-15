@@ -5,7 +5,8 @@
 #include "Window.h"
 #include "Configuration.h"
 #include <memory>
-#include <SDL2/SDL.h>
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 

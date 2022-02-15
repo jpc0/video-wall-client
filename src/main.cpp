@@ -28,8 +28,6 @@ int main(int argc, char *argv[])
 
         // Main loop
         Uint32 start_time, frame_time;
-        float fps;
-        start_time = SDL_GetTicks();
         while (!display.ShouldExit())
         {
             zmq::message_t msg;
@@ -111,10 +109,6 @@ int main(int argc, char *argv[])
                     continue;
                 }
             }
-
-            frame_time = SDL_GetTicks() - start_time;
-            fps = (frame_time > 0) ? 1000.0f / frame_time : 0.0f;
-            start_time = SDL_GetTicks();
         }
 
         return 0;

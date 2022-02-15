@@ -32,7 +32,7 @@ namespace Display
 
     Display::~Display()
     {
-        SDL_Quit();
+        glfwTerminate();
     }
 
     void Display::DisplaySingleImage(const std::string &image_location)
@@ -126,12 +126,7 @@ namespace Display
         _renderer.Clear();
         _renderer.Draw(*_current_image.va, *_current_image.ib, *_current_image.shader);
         _window->OnUpdate();
-        SDL_Event sdl_event;
-        while (SDL_PollEvent(&sdl_event) != 0)
-        {
-            if (sdl_event.type == SDL_QUIT)
-                return true;
-        }
+        glfwPollEvents();
         return false;
     }
 }
