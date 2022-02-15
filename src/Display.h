@@ -66,7 +66,7 @@ namespace Display
         Display(const Configuration::ConfigData &configuration);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
-        bool ShouldExit();
+        void ShouldExit();
 
         inline void DisplayDefaultImage() { DisplaySingleImage(_default_image_location); }
 
@@ -163,12 +163,12 @@ namespace Display
         }
 
     private:
-        std::unique_ptr<Window>
-            _window;
+        Image _current_image;
         Renderer _renderer;
         AllScreenArray _wall;
         std::string _default_image_location;
         Screen _screen;
-        Image _current_image;
+        std::unique_ptr<Window>
+            _window;
     };
 }

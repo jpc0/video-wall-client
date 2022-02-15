@@ -32,7 +32,6 @@ namespace Display
 
     Display::~Display()
     {
-        glfwTerminate();
     }
 
     void Display::DisplaySingleImage(const std::string &image_location)
@@ -121,7 +120,7 @@ namespace Display
         _current_image.shader->Unbind();
     }
 
-    bool Display::ShouldExit()
+    void Display::ShouldExit()
     {
         _renderer.Clear();
         _renderer.Draw(*_current_image.va, *_current_image.ib, *_current_image.shader);
