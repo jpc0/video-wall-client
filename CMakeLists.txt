@@ -3,12 +3,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED)
 project(video-wall-client VERSION 0.1.0 LANGUAGES CXX)
 
-unset(CPPZMQ_BUILD_TESTS)
+set(CPPZMQ_BUILD_TESTS "")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-message("${CMAKE_MODULE_PATH}")
+message("${CPPZMQ_BUILD_TESTS}")
 # find_package(SDL2 REQUIRED)
 # find_package(cppzmq REQUIRED)
 add_subdirectory(vendor/glad)
@@ -32,7 +32,7 @@ add_executable(client
 target_link_libraries(client
     glfw 
     yaml
-    cppzmq
+    cppzmq-static
     glad
     glm
     renderer 
