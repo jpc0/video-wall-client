@@ -27,8 +27,9 @@ int main(int argc, char *argv[])
         sub.set(zmq::sockopt::subscribe, "");
 
         // Main loop
-        while (!display.ShouldExit())
+        while (!glfwWindowShouldClose(glfwGetCurrentContext()))
         {
+            display.ShouldExit();
             zmq::message_t msg;
             auto res = sub.recv(msg, zmq::recv_flags::dontwait);
             if (res)

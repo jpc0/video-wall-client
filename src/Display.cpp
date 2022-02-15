@@ -127,6 +127,5 @@ namespace Display
         _renderer.Draw(*_current_image.va, *_current_image.ib, *_current_image.shader);
         _window->OnUpdate();
         glfwPollEvents();
-        return false;
     }
 }
