@@ -5,8 +5,6 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "signal.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
 #include <exception>
 #include "Configuration.h"
 

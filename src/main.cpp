@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
         sub.set(zmq::sockopt::subscribe, "");
 
         // Main loop
-        Uint32 start_time, frame_time;
         while (!display.ShouldExit())
         {
             zmq::message_t msg;
