@@ -3,12 +3,18 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED)
 project(video-wall-client VERSION 0.1.0 LANGUAGES CXX)
 
+set(CPPZMQ_BUILD_TESTS False)
+
 message("${CMAKE_MODULE_PATH}")
-find_package(SDL2 REQUIRED)
-find_package(cppzmq REQUIRED)
+# find_package(SDL2 REQUIRED)
+# find_package(cppzmq REQUIRED)
+add_subdirectory(vendor/glad)
+add_subdirectory(vendor/yaml)
+add_subdirectory(vendor/libzmq)
+add_subdirectory(vendor/cppzmq)
+add_subdirectory(vendor/glm)
+add_subdirectory(vendor/SDL)
 add_subdirectory(libs/Renderer)
-add_subdirectory(libs/glad)
-add_subdirectory(libs/yaml)
 
 add_executable(client 
     src/main.cpp 
@@ -24,16 +30,16 @@ target_link_libraries(client
     yaml
     cppzmq
     glad
+    glm
     renderer 
     SDL2main
     SDL2 
     ${CMAKE_DL_LIBS})
 target_include_directories(client PUBLIC 
     ${CMAKE_SOURCE_DIR}/libs/Renderer 
-    ${CMAKE_SOURCE_DIR}/libs/yaml 
     ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/src/Platform/Linux 
-    ${CMAKE_SOURCE_DIR}/src/Platform/OpenGL 
+    ${CMAKE_SOURCE_DIR}/src/Platform/Linux
+    ${CMAKE_SOURCE_DIR}/src/Platform/OpenGL
     ${SDL_INCLUDE_DIRS} 
     /usr/local/include
     )
