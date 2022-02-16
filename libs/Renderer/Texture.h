@@ -1,11 +1,13 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include "VideoPlayer.h"
 
 class Texture
 {
 public:
     Texture(const std::string &path);
+    Texture(Frame &frame);
     ~Texture();
 
     void Bind(uint32_t slot = 0) const;

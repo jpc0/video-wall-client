@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <atomic>
+#include "VideoPlayer.h"
 
 namespace Display
 {
@@ -85,6 +86,8 @@ namespace Display
         Display(const Configuration::ConfigData &configuration);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
+        void PlayVideo(Frame &frame, float framerate);
+        void UpdateVideoFrame(Frame &frame);
         void ProcessColour();
         void GenerateQuad();
         void Refresh();
@@ -185,7 +188,7 @@ namespace Display
 
     private:
         Image _current_image;
-        float framerate{0.0f};
+        float _framerate{0.0f};
         Renderer _renderer;
         AllScreenArray _wall;
         std::string _default_image_location;

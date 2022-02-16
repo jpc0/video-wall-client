@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED)
 project(video-wall-client VERSION 0.1.0 LANGUAGES CXX)
 
@@ -32,8 +32,7 @@ add_executable(client
     src/Display.cpp
     src/Platform/Linux/LinuxWindow.cpp
     src/Platform/OpenGL/OpenGLContext.cpp
-    # src/Layer.cpp
-    # src/LayerStack.cpp
+    src/VideoPlayer/VideoPlayer.cpp
     )
 target_link_libraries(client
     glfw 
@@ -51,6 +50,7 @@ target_include_directories(client PUBLIC
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src/Platform/Linux
     ${CMAKE_SOURCE_DIR}/src/Platform/OpenGL
+    ${CMAKE_SOURCE_DIR}/src/VideoPlayer
     ${SDL_INCLUDE_DIRS} 
     /usr/local/include
     )

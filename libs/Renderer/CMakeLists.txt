@@ -8,4 +8,5 @@ target_link_libraries(renderer
 target_include_directories(renderer PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/
     ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/src/VideoPlayer
     /usr/local/include)

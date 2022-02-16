@@ -117,6 +117,19 @@ namespace Display
         GenerateQuad();
     }
 
+    void Display::PlayVideo(Frame &frame, float framerate)
+    {
+        _framerate = framerate;
+        _currentState = PlayState::pVideo;
+        _current_image.texture = std::make_unique<Texture>(frame);
+        GenerateQuad();
+    }
+
+    void Display::UpdateVideoFrame(Frame &frame)
+    {
+        _current_image.texture = std::make_unique<Texture>(frame);
+    }
+
     void Display::ProcessColour()
     {
         _current_image.shader->SetUniform1f("u_brightness", _screen.brightness);
@@ -137,10 +150,6 @@ namespace Display
 
     void Display::Refresh()
     {
-        if (_currentState == PlayState::pImage)
-            ;
-        else if (_currentState == PlayState::pVideo)
-            ;
         _renderer.Clear();
         _renderer.Draw(*_current_image.va, *_current_image.ib, *_current_image.shader);
         _window->OnUpdate();
