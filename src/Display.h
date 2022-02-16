@@ -60,12 +60,19 @@ namespace Display
         float _total_height;
     };
 
+    enum PlayState 
+    {
+        pImage,
+        pVideo,
+    };
+
     class Display
     {
     public:
         Display(const Configuration::ConfigData &configuration);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
+        void ProcessColour(); 
         void ShouldExit();
 
         inline void DisplayDefaultImage() { DisplaySingleImage(_default_image_location); }
@@ -170,5 +177,7 @@ namespace Display
         Screen _screen;
         std::unique_ptr<Window>
             _window;
+        PlayState _currentState;
+        bool _preppingVideo;
     };
 }

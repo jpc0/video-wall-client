@@ -4,6 +4,7 @@
 #include "argh.h"
 #include "Yaml.hpp"
 #include <memory>
+#include <crossguid/guid.hpp>
 
 namespace Configuration
 {
@@ -23,6 +24,7 @@ namespace Configuration
         float height;
         std::string image_location;
         std::string zmq_server;
+        xg::Guid guid;
 
     public:
         ConfigData(int argc, char *argv[]);

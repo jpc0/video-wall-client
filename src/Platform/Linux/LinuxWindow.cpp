@@ -54,6 +54,7 @@ void LinuxWindow::Init(const WindowProps &props)
             glfwGetPrimaryMonitor(),
             nullptr);
     }
+
     glfwSetKeyCallback(m_Window, key_callback);
     m_Context = new OpenGLContext(m_Window);
     m_Context->Init();

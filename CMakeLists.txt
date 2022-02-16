@@ -9,7 +9,9 @@ set(CPPZMQ_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(CROSSGUID_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_LIBRARY_TYPE CACHE STRING "STATIC")
+
 
 message("${CPPZMQ_BUILD_TESTS}")
 # find_package(SDL2 REQUIRED)
@@ -20,6 +22,7 @@ add_subdirectory(vendor/libzmq)
 add_subdirectory(vendor/cppzmq)
 add_subdirectory(vendor/glm)
 add_subdirectory(vendor/glfw)
+add_subdirectory(vendor/crossguid)
 add_subdirectory(libs/Renderer)
 
 add_executable(client 
@@ -29,8 +32,8 @@ add_executable(client
     src/Display.cpp
     src/Platform/Linux/LinuxWindow.cpp
     src/Platform/OpenGL/OpenGLContext.cpp
-    src/Layer.cpp
-    src/LayerStack.cpp
+    # src/Layer.cpp
+    # src/LayerStack.cpp
     )
 target_link_libraries(client
     glfw 
@@ -39,7 +42,8 @@ target_link_libraries(client
     cppzmq-static
     glad
     glm
-    renderer 
+    renderer
+    crossguid
     ${CMAKE_DL_LIBS})
 
 target_include_directories(client PUBLIC 

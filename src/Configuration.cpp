@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <crossguid/guid.hpp>
 
 namespace Configuration
 {
@@ -10,6 +11,12 @@ namespace Configuration
         argh::parser cmdl(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
         cmdl({"-c", "--config"}, "../config.yaml") >> config_path;
         ParseConfigFile();
+        guid = xg::newGuid();
+        if (!guid.isValid())
+        {
+            std::cerr << "Unable to generate GUID" << std::endl;
+            exit(EXIT_FAILURE);
+        }
     }
 
     ConfigData::~ConfigData(){};

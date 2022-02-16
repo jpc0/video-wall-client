@@ -15,9 +15,12 @@ namespace Display
 
     Display::Display(const Configuration::ConfigData &configuration) : _renderer{configuration},
                                                                        _wall{configuration},
-                                                                       _default_image_location{configuration.image_location}
+                                                                       _default_image_location{configuration.image_location},
+                                                                       _currentState{pImage},
+                                                                       _preppingVideo{false}        
     {
-        _window = std::unique_ptr<Window>(Window::Create());
+        WindowProps props{"Video Wall Client",(uint32_t) configuration.width,(uint32_t) configuration.height};
+        _window = std::unique_ptr<Window>(Window::Create(props));
         _screen.width = configuration.width;
         _screen.height = configuration.height;
         _screen.l_bezel = configuration.l_bezel;
@@ -90,6 +93,25 @@ namespace Display
 
         _current_image.shader->SetUniform1i("u_Texture", 0);
 
+        ProcessColour();
+
+        glm::mat4 mvp{1.0f};
+        // proj is the size of the local screen
+        glm::mat4 proj = glm::ortho(0.0f, (float)_screen.width, 0.0f, (float)_screen.height, -1.0f, 1.0f);
+        // We move the camera to where it should be in relation to the full array of screens
+        glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_screen.width + (_screen.l_bezel + _screen.r_bezel)) * _screen.h_index), 0.0f - (float)((_screen.height + (_screen.t_bezel + _screen.b_bezel)) * _screen.v_index), 0.0f});
+
+        _current_image.shader->SetUniformMat4f("u_MVP", mvp);
+        _current_image.shader->SetUniformMat4f("u_Proj", proj);
+        _current_image.shader->SetUniformMat4f("u_View", view);
+        _current_image.va->Unbind();
+        _current_image.vb->Unbind();
+        _current_image.ib->Unbind();
+        _current_image.shader->Unbind();
+    }
+
+    void Display::ProcessColour()
+    {
         _current_image.shader->SetUniform1f("u_brightness", _screen.brightness);
         _current_image.shader->SetUniform1f("u_rbrightness", _screen.r_brightness);
         _current_image.shader->SetUniform1f("u_gbrightness", _screen.g_brightness);
@@ -105,19 +127,7 @@ namespace Display
         _current_image.shader->SetUniform1f("u_ggamma", _screen.g_gamma);
         _current_image.shader->SetUniform1f("u_bgamma", _screen.b_gamma);
 
-        glm::mat4 mvp{1.0f};
-        // proj is the size of the local screen
-        glm::mat4 proj = glm::ortho(0.0f, (float)_screen.width, 0.0f, (float)_screen.height, -1.0f, 1.0f);
-        // We move the camera to where it should be in relation to the full array of screens
-        glm::mat4 view = glm::translate(glm::mat4{1.0f}, glm::vec3{0.0f - (float)((_screen.width + (_screen.l_bezel + _screen.r_bezel)) * _screen.h_index), 0.0f - (float)((_screen.height + (_screen.t_bezel + _screen.b_bezel)) * _screen.v_index), 0.0f});
 
-        _current_image.shader->SetUniformMat4f("u_MVP", mvp);
-        _current_image.shader->SetUniformMat4f("u_Proj", proj);
-        _current_image.shader->SetUniformMat4f("u_View", view);
-        _current_image.va->Unbind();
-        _current_image.vb->Unbind();
-        _current_image.ib->Unbind();
-        _current_image.shader->Unbind();
     }
 
     void Display::ShouldExit()
