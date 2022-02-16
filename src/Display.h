@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <atomic>
 
 namespace Display
 {
@@ -87,9 +88,6 @@ namespace Display
         void ProcessColour();
         void GenerateQuad();
         void Refresh();
-
-        inline void SetVideoPrep() { _preppingVideo = true; }
-        inline void UnSetVideoPrep() { _preppingVideo = false; }
 
         inline void DisplayDefaultImage() { DisplaySingleImage(_default_image_location); }
 
@@ -195,6 +193,8 @@ namespace Display
         std::unique_ptr<Window>
             _window;
         PlayState _currentState;
-        bool _preppingVideo = false;
+
+    public:
+        std::atomic_flag preppingVideo = ATOMIC_FLAG_INIT;
     };
 }
