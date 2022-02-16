@@ -12,6 +12,17 @@
 
 namespace Display
 {
+    struct TexturedQuad
+    {
+        float x_origin;
+        float y_origin;
+        float x_end;
+        float y_end;
+        float x_texture_origin{0.0f};
+        float y_texture_origin{0.0f};
+        float x_texture_end{1.0f};
+        float y_texture_end{1.0f};
+    };
     struct Image
     {
         std::unique_ptr<VertexArray> va;
@@ -21,6 +32,7 @@ namespace Display
         std::unique_ptr<VertexBufferLayout> layout;
         std::unique_ptr<Texture> texture;
     };
+
     struct Screen
     {
         float width;
@@ -60,7 +72,7 @@ namespace Display
         float _total_height;
     };
 
-    enum PlayState 
+    enum PlayState
     {
         pImage,
         pVideo,
@@ -72,8 +84,12 @@ namespace Display
         Display(const Configuration::ConfigData &configuration);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
-        void ProcessColour(); 
-        void ShouldExit();
+        void ProcessColour();
+        void GenerateQuad();
+        void Refresh();
+
+        inline void SetVideoPrep() { _preppingVideo = true; }
+        inline void UnSetVideoPrep() { _preppingVideo = false; }
 
         inline void DisplayDefaultImage() { DisplaySingleImage(_default_image_location); }
 
@@ -171,6 +187,7 @@ namespace Display
 
     private:
         Image _current_image;
+        float framerate{0.0f};
         Renderer _renderer;
         AllScreenArray _wall;
         std::string _default_image_location;
@@ -178,6 +195,6 @@ namespace Display
         std::unique_ptr<Window>
             _window;
         PlayState _currentState;
-        bool _preppingVideo;
+        bool _preppingVideo = false;
     };
 }

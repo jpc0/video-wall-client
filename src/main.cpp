@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         // Main loop
         while (!glfwWindowShouldClose(glfwGetCurrentContext()))
         {
-            display.ShouldExit();
+            display.Refresh();
             zmq::message_t msg;
             auto res = sub.recv(msg, zmq::recv_flags::dontwait);
             if (res)

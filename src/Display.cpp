@@ -16,10 +16,9 @@ namespace Display
     Display::Display(const Configuration::ConfigData &configuration) : _renderer{configuration},
                                                                        _wall{configuration},
                                                                        _default_image_location{configuration.image_location},
-                                                                       _currentState{pImage},
-                                                                       _preppingVideo{false}        
+                                                                       _currentState{pImage}
     {
-        WindowProps props{"Video Wall Client",(uint32_t) configuration.width,(uint32_t) configuration.height};
+        WindowProps props{"Video Wall Client", (uint32_t)configuration.width, (uint32_t)configuration.height};
         _window = std::unique_ptr<Window>(Window::Create(props));
         _screen.width = configuration.width;
         _screen.height = configuration.height;
@@ -37,9 +36,8 @@ namespace Display
     {
     }
 
-    void Display::DisplaySingleImage(const std::string &image_location)
+    void Display::GenerateQuad()
     {
-        _current_image.texture = std::make_unique<Texture>(image_location);
         // Calculate the scale factor of the image, this will blow the image up to the size of the full array of screens
         // and will correct for aspect ratio
         float scale_factor{1};
@@ -57,19 +55,22 @@ namespace Display
         float y_origin = ((_wall._total_height - (float)_current_image.texture->GetHeight() * (float)scale_factor) / 2);
         float x_end = ((float)_current_image.texture->GetWidth() * (float)scale_factor) + x_origin;
         float y_end = ((float)_current_image.texture->GetHeight() * (float)scale_factor) + y_origin;
-        float x_texture_origin{0.0f};
-        float y_texture_origin{0.0f};
-        float x_texture_end{1.0f};
-        float y_texture_end{1.0f};
+
+        TexturedQuad quad{
+            x_origin,
+            y_origin,
+            x_end,
+            y_end,
+        };
 
         // Set the 4 vertices of the image, each vertex is x, y, (texture_x), (texture_y)
         // We are creating a square that has the image on it, the image co-ords are from 0.0 to 1.0
         // the square's co-ords are from 0.0 to the total_width of the array of screens
         float positions[] = {
-            x_origin, y_origin, x_texture_origin, y_texture_origin, // 1
-            x_end, y_origin, x_texture_end, y_texture_origin,       // 2
-            x_end, y_end, x_texture_end, y_texture_end,             // 3
-            x_origin, y_end, x_texture_origin, y_texture_end};      // 4
+            quad.x_origin, quad.y_origin, quad.x_texture_origin, quad.y_texture_origin, // 1
+            quad.x_end, quad.y_origin, quad.x_texture_end, quad.y_texture_origin,       // 2
+            quad.x_end, quad.y_end, quad.x_texture_end, quad.y_texture_end,             // 3
+            quad.x_origin, quad.y_end, quad.x_texture_origin, quad.y_texture_end};      // 4
         uint32_t indices[] = {
             0, 1, 2,
             2, 3, 0};
@@ -82,7 +83,6 @@ namespace Display
         _current_image.va->AddBuffer(*_current_image.vb, *_current_image.layout);
 
         _current_image.ib = std::make_unique<IndexBuffer>(indices, 6);
-
         const std::string vs_source =
 #include "../res/shaders/Basic.shader"
             ;
@@ -110,6 +110,13 @@ namespace Display
         _current_image.shader->Unbind();
     }
 
+    void Display::DisplaySingleImage(const std::string &image_location)
+    {
+        _currentState = PlayState::pImage;
+        _current_image.texture = std::make_unique<Texture>(image_location);
+        GenerateQuad();
+    }
+
     void Display::ProcessColour()
     {
         _current_image.shader->SetUniform1f("u_brightness", _screen.brightness);
@@ -126,12 +133,14 @@ namespace Display
         _current_image.shader->SetUniform1f("u_rgamma", _screen.r_gamma);
         _current_image.shader->SetUniform1f("u_ggamma", _screen.g_gamma);
         _current_image.shader->SetUniform1f("u_bgamma", _screen.b_gamma);
-
-
     }
 
-    void Display::ShouldExit()
+    void Display::Refresh()
     {
+        if (_currentState == PlayState::pImage)
+            ;
+        else if (_currentState == PlayState::pVideo)
+            ;
         _renderer.Clear();
         _renderer.Draw(*_current_image.va, *_current_image.ib, *_current_image.shader);
         _window->OnUpdate();
