@@ -3,6 +3,7 @@
 #include "Renderer.h"
 
 VertexBuffer::VertexBuffer(const void *data, uint32_t size)
+/* Size in bytes */
 {
     glGenBuffers(1, &_RenderID);
     glBindBuffer(GL_ARRAY_BUFFER, _RenderID);

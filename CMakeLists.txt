@@ -3,10 +3,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED)
 project(video-wall-client VERSION 0.1.0 LANGUAGES CXX)
 
-set(CPPZMQ_BUILD_TESTS "")
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(ZMQ_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(CPPZMQ_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_LIBRARY_TYPE CACHE STRING "STATIC")
 
 message("${CPPZMQ_BUILD_TESTS}")
 # find_package(SDL2 REQUIRED)
@@ -32,13 +35,15 @@ add_executable(client
 target_link_libraries(client
     glfw 
     yaml
+    libzmq-static
     cppzmq-static
     glad
     glm
     renderer 
     ${CMAKE_DL_LIBS})
+
 target_include_directories(client PUBLIC 
-    ${CMAKE_SOURCE_DIR}/libs/Renderer 
+    # ${CMAKE_SOURCE_DIR}/libs/Renderer 
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src/Platform/Linux
     ${CMAKE_SOURCE_DIR}/src/Platform/OpenGL
