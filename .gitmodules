@@ -10,3 +10,6 @@
 [submodule "vendor/glfw"]
 	path = vendor/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "vendor/crossguid"]
+	path = vendor/crossguid
+	url = https://github.com/graeme-hill/crossguid.git
