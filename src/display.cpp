@@ -28,8 +28,8 @@ namespace Display
 
         m_window = SDL_CreateWindow(
             "Video Wall Client", 
-            SDL_WINDOWPOS_UNDEFINED_DISPLAY(1), 
-            SDL_WINDOWPOS_UNDEFINED_DISPLAY(1), 
+            SDL_WINDOWPOS_UNDEFINED, 
+            SDL_WINDOWPOS_UNDEFINED, 
             static_cast<int>(configuration.width), 
             static_cast<int>(configuration.height), SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_PRESENTVSYNC);
