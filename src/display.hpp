@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include <SFML/Graphics.hpp>
 #include "Configuration.hpp"
-
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 namespace Display
 {
     struct Screen
@@ -37,13 +37,15 @@ namespace Display
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
         void GenerateQuad();
-        void Refresh(sf::RenderWindow &window);
+        void Refresh(Configuration::ConfigData &configuration);
 
         inline void DisplayDefaultImage() { DisplaySingleImage(m_default_image_location); }
     private:
+        SDL_Window *m_window;
+        SDL_Renderer *m_renderer;
         std::string m_current_image_location;
-        sf::Texture m_current_image;
-        sf::Sprite m_current_display;
+        SDL_Texture *m_current_image;
+        SDL_Rect m_current_display;
         AllScreenArray m_wall;
         std::string m_default_image_location;
         Screen m_screen;

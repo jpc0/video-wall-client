@@ -1,6 +1,7 @@
 find_package(fmt CONFIG)
 find_package(spdlog CONFIG)
-find_package(SFML COMPONENTS window graphics network audio REQUIRED)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 find_package(cppzmq)
 add_executable(client main.cpp Configuration.cpp display.cpp)
 target_link_libraries(
@@ -9,7 +10,8 @@ target_link_libraries(
     project_warnings
     fmt::fmt
     spdlog::spdlog
-    sfml-graphics
+    SDL2
+    SDL2_image
     crossguid
     yaml
     cppzmq-static)

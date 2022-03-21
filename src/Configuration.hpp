@@ -25,6 +25,7 @@ namespace Configuration
         std::string image_location;
         std::string zmq_server;
         xg::Guid guid;
+        bool ShouldQuit;
 
     public:
         ConfigData(int argc, char *argv[]);

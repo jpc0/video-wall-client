@@ -17,6 +17,7 @@ namespace Configuration
             std::cerr << "Unable to generate GUID" << std::endl;
             exit(EXIT_FAILURE);
         }
+        ShouldQuit = false;
     }
 
     ConfigData::~ConfigData(){};

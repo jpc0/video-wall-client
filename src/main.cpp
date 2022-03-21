@@ -1,17 +1,17 @@
 #include <spdlog/spdlog.h>
-#include <SFML/Graphics.hpp>
 #include "display.hpp"
 #include <vector>
 #include <numeric>
 #include <zmq.hpp>
 #include "json.hpp"
+#include <SDL2/SDL.h>
 
 using json = nlohmann::json;
 int main(int argc, char *argv[])
 {
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_VideoInit(nullptr);
     Configuration::ConfigData configuration{argc, argv};
-    sf::RenderWindow window(sf::VideoMode(static_cast<unsigned int>(configuration.width), static_cast<unsigned int>(configuration.height)), "Video Wall Client", sf::Style::Default);
-    window.setVerticalSyncEnabled(true);
     Display::Display display{configuration};
 
     zmq::context_t context;
@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
     sub.connect(configuration.zmq_server);
     sub.set(zmq::sockopt::subscribe, "");
 
-    while (window.isOpen())
+    while (!configuration.ShouldQuit)
     {
-        display.Refresh(window);
+        display.Refresh(configuration);
         zmq::message_t msg;
             auto res = sub.recv(msg, zmq::recv_flags::dontwait);
             if (res)
@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
                 }
             }
     }
-    
+
+    SDL_Quit();
     return EXIT_SUCCESS;
 
 }
