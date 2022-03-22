@@ -28,8 +28,8 @@ namespace Display
 
         m_window = SDL_CreateWindow(
             "Video Wall Client", 
-            SDL_WINDOWPOS_UNDEFINED, 
-            SDL_WINDOWPOS_UNDEFINED, 
+            SDL_WINDOWPOS_UNDEFINED_DISPLAY(0), 
+            SDL_WINDOWPOS_UNDEFINED_DISPLAY(0), 
             static_cast<int>(configuration.width), 
             static_cast<int>(configuration.height), SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_PRESENTVSYNC);
@@ -84,24 +84,8 @@ namespace Display
         GenerateQuad();
     }
 
-    void Display::Refresh(Configuration::ConfigData &configuration)
+    void Display::Refresh()
     {
-        SDL_Event event;
-        while (SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-                case SDL_QUIT:
-                    configuration.ShouldQuit = true;
-                    break;
-                case SDL_KEYDOWN:
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        configuration.ShouldQuit = true;
-                    break;
-                default:
-                    break;
-            }
-        }
         SDL_RenderClear(m_renderer);
         SDL_RenderCopy(m_renderer, m_current_image, nullptr, &m_current_display);
         SDL_RenderPresent(m_renderer);

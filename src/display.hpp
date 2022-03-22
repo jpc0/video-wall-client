@@ -37,7 +37,7 @@ namespace Display
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
         void GenerateQuad();
-        void Refresh(Configuration::ConfigData &configuration);
+        void Refresh();
 
         inline void DisplayDefaultImage() { DisplaySingleImage(m_default_image_location); }
     private:
