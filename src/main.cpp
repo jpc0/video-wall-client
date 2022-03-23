@@ -6,6 +6,7 @@
 #include <zmq.hpp>
 #include "json.hpp"
 #include <SDL2/SDL.h>
+#include "Video.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
     Configuration::ConfigData configuration{argc, argv};
     Display::Display display{configuration};
     Messaging::Messaging messaging_handler(configuration); 
+    Video::Video video{};
     bool shouldQuit = false;
    
     while (!shouldQuit)
@@ -35,9 +37,9 @@ int main(int argc, char *argv[])
                     break;
                 default:
                     if (event.type == messaging_handler.displaySingleImage)
-                        display.DisplaySingleImage(std::bit_cast<const char*>(event.user.data1));
+                       display.DisplaySingleImage(std::bit_cast<const char*>(event.user.data1));
                     if (event.type == messaging_handler.displayDefaultImage)
-                        display.DisplayDefaultImage();
+                       display.DisplayDefaultImage();
                     break;
             }
         }

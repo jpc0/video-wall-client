@@ -45,7 +45,8 @@ namespace Display
         SDL_Renderer *m_renderer;
         std::string m_current_image_location;
         SDL_Texture *m_current_image;
-        SDL_Rect m_current_display;
+        std::unique_ptr<SDL_Rect> m_source_cropping = nullptr;
+        std::unique_ptr<SDL_Rect> m_current_display;
         AllScreenArray m_wall;
         std::string m_default_image_location;
         Screen m_screen;

@@ -47,6 +47,7 @@ namespace Display
 
     void Display::GenerateQuad()
     {
+
         float scale_factor{0};
         float total_pixels_ratio = m_wall.GetAspectRatio();
         int imgW;
@@ -60,14 +61,16 @@ namespace Display
         else if (total_pixels_ratio < texture_pixels_ratio)
             scale_factor = m_wall._total_width/ static_cast<float>(imgW);
 
-        m_current_display.w = static_cast<int>(static_cast<float>(imgW) * scale_factor);
-        m_current_display.h = static_cast<int>(static_cast<float>(imgH) * scale_factor);
+        if (m_current_display == nullptr)
+            m_current_display = std::make_unique<SDL_Rect>();
+        m_current_display->w = static_cast<int>(static_cast<float>(imgW) * scale_factor);
+        m_current_display->h = static_cast<int>(static_cast<float>(imgH) * scale_factor);
 
 
-        m_current_display.x = static_cast<int>(0.0f - static_cast<float>(((m_screen.width + (m_screen.l_bezel + m_screen.r_bezel)) * m_screen.h_index)));
-        m_current_display.y = static_cast<int>(0.0f - static_cast<float>(((m_screen.height + (m_screen.t_bezel + m_screen.b_bezel)) * m_screen.v_index)));
-        m_current_display.x += static_cast<int>((m_wall._total_width - static_cast<float>(m_current_display.w))/2.0f);
-        m_current_display.y += static_cast<int>((m_wall._total_height - static_cast<float>(m_current_display.h))/2.0f);
+        m_current_display->x = static_cast<int>(0.0f - static_cast<float>(((m_screen.width + (m_screen.l_bezel + m_screen.r_bezel)) * m_screen.h_index)));
+        m_current_display->y = static_cast<int>(0.0f - static_cast<float>(((m_screen.height + (m_screen.t_bezel + m_screen.b_bezel)) * m_screen.v_index)));
+        m_current_display->x += static_cast<int>((m_wall._total_width - static_cast<float>(m_current_display->w))/2.0f);
+        m_current_display->y += static_cast<int>((m_wall._total_height - static_cast<float>(m_current_display->h))/2.0f);
     }
 
     void Display::DisplaySingleImage(const std::string &image_location)
@@ -87,7 +90,7 @@ namespace Display
     void Display::Refresh()
     {
         SDL_RenderClear(m_renderer);
-        SDL_RenderCopy(m_renderer, m_current_image, nullptr, &m_current_display);
+        SDL_RenderCopy(m_renderer, m_current_image, m_source_cropping.get(), m_current_display.get());
         SDL_RenderPresent(m_renderer);
     }
 }

@@ -2,8 +2,9 @@ find_package(fmt CONFIG)
 find_package(spdlog CONFIG)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-find_package(cppzmq)
-add_executable(client main.cpp Configuration.cpp display.cpp Messaging.cpp)
+find_package(cppzmq REQUIRED)
+find_package(ffmpeg REQUIRED)
+add_executable(client main.cpp Configuration.cpp display.cpp Messaging.cpp Video.cpp)
 target_link_libraries(
     client
     PRIVATE project_options
@@ -14,4 +15,8 @@ target_link_libraries(
     SDL2_image
     crossguid
     yaml
-    cppzmq-static)
+    cppzmq-static
+    avformat
+    avcodec
+    swscale
+    avutil)
