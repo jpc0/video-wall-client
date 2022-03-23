@@ -63,6 +63,11 @@ namespace Video
                 // to create an SDL_Rect for writing which is the information
                 // we do not care about in pFrame->data
                 spdlog::info("Pixel format is: {}", pCodecContext->pix_fmt);
+                spdlog::info("Top crop is: {}", pFrame->crop_top);
+                spdlog::info("Bottom crop is: {}", pFrame->crop_bottom);
+                spdlog::info("Left crop is: {}", pFrame->crop_left);
+                spdlog::info("Right crop is: {}", pFrame->crop_right);
+
             }
             av_packet_unref(pPacket);
         }

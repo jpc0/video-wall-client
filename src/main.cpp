@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     Configuration::ConfigData configuration{argc, argv};
     Display::Display display{configuration};
     Messaging::Messaging messaging_handler(configuration); 
-    Video::Video video{};
+    // Video::Video video{};
     bool shouldQuit = false;
    
     while (!shouldQuit)
