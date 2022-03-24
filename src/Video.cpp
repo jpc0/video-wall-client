@@ -9,6 +9,13 @@ namespace Video
         // member function, we will be pushing the frames into a queue that will be
         // read by the display class to display the videos with the correct time
         // base and concidering VSYNC, all of this code will likely happen in it's own thread
+        // The idea here is that we will go all the way to before we start generating
+        // frames in the main thread. We will then spawn a thread to generate all the frames
+        // and stick them into a queue.
+        // We will send an event with a pointer to the queue to signal to display to
+        // start displaying the video the moment we have encoded a single frame
+        // hopefully we don't have memory issues here, otherwise we will probably
+        // just restrict the queue size and block once the queue is full 
         AVFormatContext *pFormatContext = avformat_alloc_context();
 
         if (avformat_open_input(&pFormatContext, "/home/jpc0/Downloads/bigbun.mp4", nullptr, nullptr) != 0)
