@@ -4,7 +4,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(cppzmq REQUIRED)
 find_package(ffmpeg REQUIRED)
-add_executable(client main.cpp Configuration.cpp display.cpp Messaging.cpp Video.cpp)
+add_executable(client main.cpp Configuration.cpp display.cpp Messaging.cpp Video.cpp Util.cpp)
 target_link_libraries(
     client
     PRIVATE project_options

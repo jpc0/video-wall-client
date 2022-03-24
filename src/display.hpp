@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <map>
+
 #include "Configuration.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -30,12 +32,29 @@ namespace Display
         float _total_height;
     };
 
+    struct VideoFrame
+    {
+        int width;
+        int height;
+        uint8_t *data;
+        int *line_length;
+        int pixel_format;
+    };
+
+    std::map<int, int> const pixel_format_mapping{
+        { -1 , SDL_PIXELFORMAT_UNKNOWN},
+        {0, SDL_PIXELFORMAT_IYUV},
+        {2, SDL_PIXELFORMAT_RGB24} 
+    };
+    
     class Display
     {
     public:
         explicit Display(const Configuration::ConfigData &configuration);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
+        void PrepVideo(int pixel_format, int width, int height);
+        void BeginVideo();
         void GenerateQuad();
         void Refresh();
 

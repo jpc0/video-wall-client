@@ -12,12 +12,13 @@ extern "C"{
 #include <cstdlib>
 #include <cstring>
 #include <cinttypes>
-
+#include "Util.hpp"
 namespace Video
 {
     class Video
     {
     public:
+        dkml::locked_queue frame_queue;
         Video();
     };
 }

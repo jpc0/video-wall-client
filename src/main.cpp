@@ -12,10 +12,10 @@ int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_VideoInit(nullptr);
+    // Video::Video video{};
     Configuration::ConfigData configuration{argc, argv};
     Display::Display display{configuration};
     Messaging::Messaging messaging_handler(configuration); 
-    // Video::Video video{};
     bool shouldQuit = false;
    
     while (!shouldQuit)
