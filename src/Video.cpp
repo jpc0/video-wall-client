@@ -94,7 +94,7 @@ namespace Video
             av_packet_unref(pPacket);
 
         }
-
+        frame_queue.push(nullptr);
         avformat_close_input(&pFormatContext);
         av_packet_free(&pPacket);
         avcodec_free_context(&pCodecContext);
@@ -102,7 +102,11 @@ namespace Video
         {
             AVFrame *pFrame = std::bit_cast<AVFrame *>(frame_queue.pop());
             if (pFrame == 0)
+            {
+                spdlog::info("End of video reached");
                 break;
+            }
+            spdlog::info("Freeing frame: {}", pFrame->best_effort_timestamp);
             av_frame_free(&pFrame);
         }
     }
