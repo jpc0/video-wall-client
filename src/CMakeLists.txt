@@ -4,11 +4,14 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(cppzmq REQUIRED)
 find_package(ffmpeg REQUIRED)
-add_executable(client main.cpp Configuration.cpp display.cpp Messaging.cpp Video.cpp Util.cpp)
+add_executable(client main.cpp Configuration.cpp display.cpp Messaging.cpp Video.cpp)
 target_link_libraries(
     client
     PRIVATE project_options
-    project_warnings
+    project_warnings)
+
+target_link_system_libraries(
+    client PRIVATE
     fmt::fmt
     spdlog::spdlog
     SDL2
@@ -19,4 +22,5 @@ target_link_libraries(
     avformat
     avcodec
     swscale
-    avutil)
+    avutil
+)
