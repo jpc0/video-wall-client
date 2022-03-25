@@ -60,12 +60,12 @@ namespace Display
 
         inline void DisplayDefaultImage() { DisplaySingleImage(m_default_image_location); }
     private:
-        SDL_Window *m_window;
-        SDL_Renderer *m_renderer;
+        SDL_Window *m_window = nullptr;
+        SDL_Renderer *m_renderer = nullptr;
         std::string m_current_image_location;
-        SDL_Texture *m_current_image;
+        SDL_Texture *m_current_image = nullptr;
         std::unique_ptr<SDL_Rect> m_source_cropping = nullptr;
-        std::unique_ptr<SDL_Rect> m_current_display;
+        std::unique_ptr<SDL_Rect> m_current_display = nullptr;
         AllScreenArray m_wall;
         std::string m_default_image_location;
         Screen m_screen;
