@@ -13,8 +13,25 @@ extern "C"{
 #include <cstring>
 #include <cinttypes>
 #include "Util.hpp"
+#include "display.hpp"
 namespace Video
 {
+    enum EventType
+    {
+        None = 0,
+        PlayVideo
+    };
+    
+    class PlayVideoEvent
+    {
+
+    };
+    union Event
+    {
+        EventType type;
+        PlayVideoEvent playvideo;
+    };
+
     class Video
     // We should create a video class on startup that then blocks while waiting
     // for a play_video event, it is going to be rather important that we in fact
@@ -23,8 +40,14 @@ namespace Video
     // generic over types
     {
     public:
-        dkml::blocking_queue<void *> frame_queue;
         Video();
+        dkml::blocking_queue<Event> EventQueue;
+    };
+
+    class VideoPlayback{
+    public:
+        void PlaybackVideo(const std::string &VideoLocation); 
+        dkml::blocking_queue<Display::VideoFrame*> frame_queue;
     };
 }
 

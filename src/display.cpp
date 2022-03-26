@@ -34,6 +34,8 @@ namespace Display
             static_cast<int>(configuration.height), SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_PRESENTVSYNC);
         SDL_ShowCursor(SDL_DISABLE);
+        m_source_cropping = nullptr;
+        m_current_image = nullptr;
         DisplayDefaultImage();
     }
 
@@ -77,7 +79,6 @@ namespace Display
     {
         if (m_current_image)
             SDL_DestroyTexture(m_current_image);
-        m_current_image = nullptr;
         SDL_Surface *img = IMG_Load(image_location.c_str()); 
         m_current_image = SDL_CreateTextureFromSurface(m_renderer, img);
         SDL_FreeSurface(img);
