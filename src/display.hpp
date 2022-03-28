@@ -36,7 +36,7 @@ namespace Display
 
     struct VideoFrame
     {
-        void * underlying_frametypeptr;
+        void *underlying_frametypeptr;
         uint8_t** data;
         int *line_length;
     };
@@ -53,7 +53,7 @@ namespace Display
         PixelFormat format;
         int Width;
         int Height;
-        dkml::blocking_queue<VideoFrame*> Queue;
+        dkml::blocking_queue<VideoFrame> *Queue;
     };
 
     static std::map<PixelFormat, SDL_PixelFormatEnum> const PixelFormatMapping{

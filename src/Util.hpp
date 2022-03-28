@@ -26,7 +26,7 @@ namespace dkml
             queue.pop();
             return value;
         }
-        int push(T value)
+        int push(const T &value)
         {
             bool queue_empty;
             {

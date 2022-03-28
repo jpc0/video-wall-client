@@ -14,24 +14,50 @@ extern "C"{
 #include <cinttypes>
 #include "Util.hpp"
 #include "display.hpp"
+#include <thread>
+
 namespace Video
 {
+    void freeFrame(AVFrame *pFrame);
+    void freeFormatContext(AVFormatContext *pFormatContext);
+    void freeCodecContext(AVCodecContext *pCodecContext);
+    void freePacket(AVPacket *pPacket);
+
     enum EventType
     {
         None = 0,
-        PlayVideo
+        PlayVideo,
+        FreeFrame
     };
     
-    class PlayVideoEvent
+    struct PlayVideoEvent
     {
-
+        int Type = EventType::PlayVideo;
+        const char* VideoLocation;
     };
+
+    struct freeFrameEvent
+    {
+        int Type = EventType::FreeFrame;
+        void *frameptr;
+    };
+
     union Event
     {
         EventType type;
         PlayVideoEvent playvideo;
+        freeFrameEvent freeframe;
     };
-
+   
+    class VideoPlayback{
+    public:
+        explicit VideoPlayback(const char* VideoLocation);
+        void PlaybackVideo(); 
+        dkml::blocking_queue<Display::VideoFrame> frame_queue;
+    private:
+        std::string m_VideoLocation;
+        std::jthread playbackThread;
+    };
     class Video
     // We should create a video class on startup that then blocks while waiting
     // for a play_video event, it is going to be rather important that we in fact
@@ -41,14 +67,12 @@ namespace Video
     {
     public:
         Video();
+        void GetVideo();
+        VideoPlayback currentvideo;  
         dkml::blocking_queue<Event> EventQueue;
+        bool videoend = false;
     };
 
-    class VideoPlayback{
-    public:
-        void PlaybackVideo(const std::string &VideoLocation); 
-        dkml::blocking_queue<Display::VideoFrame*> frame_queue;
-    };
 }
 
 #endif
