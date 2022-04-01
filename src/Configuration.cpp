@@ -9,7 +9,7 @@ namespace Configuration
     ConfigData::ConfigData(const int argc, char *argv[])
     {
         argh::parser cmdl(argc, argv, argh::parser::PREFER_PARAM_FOR_UNREG_OPTION);
-        cmdl({"-c", "--config"}, "../../config.yaml") >> config_path;
+        cmdl({"-c", "--config"}, "../config.yaml") >> config_path;
         ParseConfigFile();
         guid = xg::newGuid();
         if (!guid.isValid())

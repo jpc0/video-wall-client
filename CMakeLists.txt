@@ -43,7 +43,37 @@ project_options(
 
 add_subdirectory(vendor/yaml)
 add_subdirectory(vendor/crossguid)
-add_subdirectory(src)
+
+find_package(fmt CONFIG)
+find_package(spdlog CONFIG)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(cppzmq REQUIRED)
+find_package(ffmpeg REQUIRED)
+add_executable(client src/main.cpp src/Configuration.cpp src/display.cpp src/Messaging.cpp src/Video.cpp)
+target_include_directories(
+    client 
+    PRIVATE "${CMAKE_SOURCE_DIR}/vendor/WnLSL/include"
+    )
+target_link_libraries(
+    client
+    PRIVATE project_options
+    project_warnings)
+
+target_link_system_libraries(
+    client PRIVATE
+    fmt::fmt
+    spdlog::spdlog
+    SDL2
+    SDL2_image
+    crossguid
+    yaml
+    cppzmq-static
+    avformat
+    avcodec
+    swscale
+    avutil
+)
 
 install( TARGETS client DESTINATION bin)
 install( FILES ${CMAKE_SOURCE_DIR}/config.yaml DESTINATION /etc/${PROJECT_NAME})

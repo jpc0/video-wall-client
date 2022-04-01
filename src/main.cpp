@@ -1,4 +1,5 @@
 #include <spdlog/spdlog.h>
+#include <chrono>
 #include "display.hpp"
 #include "Messaging.hpp"
 #include <vector>
@@ -17,7 +18,7 @@ int main(int argc, char *argv[])
     Display::Display display{configuration};
     Messaging::Messaging messaging_handler(configuration); 
     bool shouldQuit = false;
-   
+    auto start_time = std::chrono::high_resolution_clock().now();
     while (!shouldQuit)
     {
         SDL_Event event;
@@ -40,12 +41,15 @@ int main(int argc, char *argv[])
                        display.DisplaySingleImage(std::bit_cast<const char*>(event.user.data1));
                     if (event.type == messaging_handler.displayDefaultImage)
                        display.DisplayDefaultImage();
+                    // if (event.type == video.videoReady)
+                    //    display.PrepVideo(std::bit_cast<Display::VideoType*>(event.user.data1));
                     break;
             }
         }
 
         display.Refresh();
         messaging_handler.handle_message();
+        auto this_frame = std::chrono::high_resolution_clock().now() - start_time;
     }
 
     SDL_Quit();

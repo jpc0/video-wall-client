@@ -12,9 +12,9 @@ extern "C"{
 #include <cstdlib>
 #include <cstring>
 #include <cinttypes>
-#include "Util.hpp"
 #include "display.hpp"
 #include <thread>
+#include "WnLSL/queues/ringbuffer_queue.hpp"
 
 namespace Video
 {
@@ -51,12 +51,13 @@ namespace Video
    
     class VideoPlayback{
     public:
-        explicit VideoPlayback(const char* VideoLocation);
+        explicit VideoPlayback(const char* VideoLocation, uint32_t videoReadyEvent);
         void PlaybackVideo(); 
-        dkml::blocking_queue<Display::VideoFrame> frame_queue;
+        std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>> frame_queue = 
+            std::make_shared<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>>();
     private:
         std::string m_VideoLocation;
-        std::jthread playbackThread;
+        uint32_t videoReady;
     };
     class Video
     // We should create a video class on startup that then blocks while waiting
@@ -67,10 +68,10 @@ namespace Video
     {
     public:
         Video();
-        void GetVideo();
-        VideoPlayback currentvideo;  
-        dkml::blocking_queue<Event> EventQueue;
+        WnLSL::blocking_rb_queue<Event> EventQueue;
         bool videoend = false;
+        uint32_t videoReady;
+        
     };
 
 }

@@ -2,6 +2,11 @@
 #include <spdlog/spdlog.h>
 namespace Display
 {
+    void destroyTexture(SDL_Texture *texture)
+    {
+        SDL_DestroyTexture(texture);
+    }
+
     AllScreenArray::AllScreenArray(const Configuration::ConfigData &configuration)
     {
         _total_width = static_cast<float>((configuration.width + configuration.l_bezel + configuration.r_bezel) * configuration.h_screens);
@@ -13,7 +18,8 @@ namespace Display
         return (_total_width / _total_height);
     }
 
-     Display::Display(const Configuration::ConfigData &configuration) :
+    Display::Display(const Configuration::ConfigData &configuration) :
+                m_current_image{nullptr, &destroyTexture},
                 m_wall{configuration},
                 m_default_image_location{configuration.image_location}
     {
@@ -41,7 +47,6 @@ namespace Display
 
     Display::~Display()
     {
-        SDL_DestroyTexture(m_current_image);
         SDL_DestroyRenderer(m_renderer);
         SDL_DestroyWindow(m_window);
     }
@@ -54,7 +59,7 @@ namespace Display
         float total_pixels_ratio = m_wall.GetAspectRatio();
         int imgW;
         int imgH;
-        SDL_QueryTexture(m_current_image, nullptr, nullptr, &imgW, &imgH);
+        SDL_QueryTexture(m_current_image.get(), nullptr, nullptr, &imgW, &imgH);
         float texture_pixels_ratio = static_cast<float>(imgW)/static_cast<float>(imgH);
         if (total_pixels_ratio > texture_pixels_ratio)
             scale_factor =  m_wall._total_height/ static_cast<float>(imgH);
@@ -77,10 +82,8 @@ namespace Display
 
     void Display::DisplaySingleImage(const std::string &image_location)
     {
-        if (m_current_image)
-            SDL_DestroyTexture(m_current_image);
-        SDL_Surface *img = IMG_Load(image_location.c_str()); 
-        m_current_image = SDL_CreateTextureFromSurface(m_renderer, img);
+        SDL_Surface *img = IMG_Load(image_location.c_str());
+        m_current_image.reset(SDL_CreateTextureFromSurface(m_renderer, img));
         SDL_FreeSurface(img);
         if (!m_current_image)
             exit(EXIT_FAILURE);
@@ -90,8 +93,65 @@ namespace Display
 
     void Display::Refresh()
     {
+        if (m_playingVideo)
+            GetFrame();
         SDL_RenderClear(m_renderer);
-        SDL_RenderCopy(m_renderer, m_current_image, m_source_cropping.get(), m_current_display.get());
+        SDL_RenderCopy(m_renderer, m_current_image.get(), m_source_cropping.get(), m_current_display.get());
         SDL_RenderPresent(m_renderer);
+    }
+
+    void Display::PrepVideo(VideoType *Video)
+    {
+        spdlog::debug("Asked to Prepare Video");
+        m_current_image.reset(
+            SDL_CreateTexture(
+                m_renderer, 
+                SDL_PIXELFORMAT_IYUV, //FFMPEG sends us IYUV data not YV12
+                SDL_TEXTUREACCESS_STREAMING, 
+                Video->Width, 
+                Video->Height
+                )
+            );
+        m_VideoFrameQueue = Video->Queue;
+        m_playingVideo = true;
+        delete Video;
+        GenerateQuad();
+    }
+
+    void Display::GetFrame()
+    {
+        spdlog::debug("Getting Video frame and displaying it");
+        auto pFrame = *m_VideoFrameQueue->dequeue();
+        assert(pFrame != nullptr);
+        spdlog::debug("Reading frame number: {}", pFrame->framenumber);
+        if (pFrame->ended)
+        {
+            m_playingVideo = false;
+            m_VideoFrameQueue.reset();
+            DisplayDefaultImage();
+        }
+        else
+        {
+            auto data = *pFrame->data.get();
+
+            // SDL will be passing us a pointer to the data that we will
+            // memcpy our data into
+            void *pixels = nullptr;
+            int linesize = 0;
+            SDL_LockTexture(
+                m_current_image.get(),
+                nullptr,
+                &pixels,
+                &linesize
+            );
+            // We already ensured about getting the correct memory layout before
+            // we sent the vector here
+            SDL_memcpy(
+                pixels,
+                data.data(),
+                data.size()
+            );
+            SDL_UnlockTexture(m_current_image.get());
+        }
     }
 }

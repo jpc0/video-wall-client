@@ -2,14 +2,17 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 #include "Configuration.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "Util.hpp"
+#include "WnLSL/queues/ringbuffer_queue.hpp"
 namespace Display
 {
+    void destroyTexture(SDL_Texture *texture);
+
     struct Screen
     {
         int width;
@@ -36,9 +39,11 @@ namespace Display
 
     struct VideoFrame
     {
-        void *underlying_frametypeptr;
-        uint8_t** data;
-        int *line_length;
+        std::shared_ptr<std::vector<uint8_t>> data;
+        int width;
+        int height;
+        bool ended = false;
+        int framenumber;
     };
 
     enum PixelFormat
@@ -53,7 +58,7 @@ namespace Display
         PixelFormat format;
         int Width;
         int Height;
-        dkml::blocking_queue<VideoFrame> *Queue;
+        std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<VideoFrame>>> Queue;
     };
 
     static std::map<PixelFormat, SDL_PixelFormatEnum> const PixelFormatMapping{
@@ -72,16 +77,19 @@ namespace Display
         void BeginVideo();
         void GenerateQuad();
         void Refresh();
+        void GetFrame();
         inline void DisplayDefaultImage() { DisplaySingleImage(m_default_image_location); }
     private:
         SDL_Window *m_window;
         SDL_Renderer *m_renderer;
         std::string m_current_image_location;
-        SDL_Texture *m_current_image;
+        std::unique_ptr<SDL_Texture, decltype(&destroyTexture)> m_current_image;
         std::unique_ptr<SDL_Rect> m_source_cropping;
         std::unique_ptr<SDL_Rect> m_current_display;
         AllScreenArray m_wall;
         std::string m_default_image_location;
         Screen m_screen;
+        bool m_playingVideo = false;
+        std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<VideoFrame>>> m_VideoFrameQueue =  nullptr;
     }; 
 } // namespace Display
