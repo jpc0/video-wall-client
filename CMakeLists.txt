@@ -50,6 +50,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(cppzmq REQUIRED)
 find_package(ffmpeg REQUIRED)
+find_package(nlohmann_json)
 add_executable(client src/main.cpp src/Configuration.cpp src/display.cpp src/Messaging.cpp src/Video.cpp)
 target_include_directories(
     client 
@@ -73,6 +74,7 @@ target_link_system_libraries(
     avcodec
     swscale
     avutil
+    nlohmann_json::nlohmann_json
 )
 
 install( TARGETS client DESTINATION bin)

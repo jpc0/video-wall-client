@@ -5,20 +5,20 @@
 #include <zmq.hpp>
 #include <SDL2/SDL.h>
 #include "Configuration.hpp"
-#include "json.hpp"
+#include <nlohmann/json.hpp>
 #include "display.hpp"
 #include <vector>
 #include <thread>
+#include <spdlog/spdlog.h>
 
 namespace Messaging
 {
     class Messaging
     {
         public:
-            uint32_t playVideo;
             explicit Messaging(const Configuration::ConfigData &configuration, const CustomMessages &customMessages);
             void stopThread();
-            static void handle_message(uint32_t displaySingleImage, uint32_t displayDefaultImage);
+            void handle_message(uint32_t displaySingleImage, uint32_t displayDefaultImage);
         private:
             zmq::context_t m_context;
             zmq::socket_t m_sub;

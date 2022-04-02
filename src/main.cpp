@@ -5,7 +5,6 @@
 #include <vector>
 #include <numeric>
 #include <zmq.hpp>
-#include "json.hpp"
 #include <SDL2/SDL.h>
 #include "Video.hpp"
 #include "main.hpp"
