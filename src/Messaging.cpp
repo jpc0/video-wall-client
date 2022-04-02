@@ -3,24 +3,26 @@
 
 namespace Messaging {
 
-Messaging::Messaging(const Configuration::ConfigData &configuration) {
+Messaging::Messaging(const Configuration::ConfigData &configuration, const CustomMessages &customMessages)
+ {
     m_sub = zmq::socket_t(m_context, zmq::socket_type::sub);
     m_sub.connect(configuration.zmq_server);
     m_sub.set(zmq::sockopt::subscribe, "");
-    displaySingleImage = SDL_RegisterEvents(m_NUM_EVENTS);
-    displayDefaultImage = displaySingleImage +1;
-    playVideo = displaySingleImage +2;
-
+    m_messageHandler = std::jthread{&Messaging::handle_message,
+        customMessages.displaySingleImage,
+        customMessages.displayDefaultImage
+        };
     }
 
-
-
-void Messaging::handle_message()
+void Messaging::stopThread()
 {
+}
 
-using json = nlohmann::json;
+void Messaging::handle_message(uint32_t displaySingleImage, uint32_t displayDefaultImage)
+{
+    using json = nlohmann::json;
     zmq::message_t msg;
-    auto res = m_sub.recv(msg, zmq::recv_flags::dontwait);
+    auto res = m_sub.recv(msg, zmq::recv_flags::none);
     if (res)
     {
         try

@@ -18,7 +18,7 @@ namespace Display
         return (_total_width / _total_height);
     }
 
-    Display::Display(const Configuration::ConfigData &configuration) :
+    Display::Display(const Configuration::ConfigData &configuration, const CustomMessages &customMessage) :
                 m_current_image{nullptr, &destroyTexture},
                 m_wall{configuration},
                 m_default_image_location{configuration.image_location}

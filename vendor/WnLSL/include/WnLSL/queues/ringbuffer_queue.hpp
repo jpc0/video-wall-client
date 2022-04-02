@@ -18,11 +18,11 @@ namespace WnLSL
     // accomodate 16 int values. 2^4 = 16
     //
     // All operations on this queue is blocking
-    template <class T, int Exponent = 4>
+    template <class T, int Exponent = 4, int ARRAYSIZE = 16>
     class blocking_rb_queue
     {
         unsigned int bitmask = (1u << Exponent) - 1;
-        std::array<T, static_cast<long unsigned int>(pow(2, Exponent))> buffer{};
+        std::array<T, static_cast<long unsigned int>(ARRAYSIZE)> buffer{};
         unsigned int read{0};
         unsigned int write{0};
         std::atomic_flag isFull;

@@ -38,9 +38,9 @@ namespace Video
         currentvideo.PlaybackVideo();
     }
 
-    Video::Video()
+    Video::Video(const CustomMessages &customMessages)
+        : videoReady{customMessages.videoReady}
     {
-        videoReady = SDL_RegisterEvents(1);
         std::jthread t1(&playVideo, "/home/jpc0/Downloads/bigbun.mp4", videoReady);
         t1.detach();
     }

@@ -8,15 +8,24 @@
 #include "json.hpp"
 #include <SDL2/SDL.h>
 #include "Video.hpp"
+#include "main.hpp"
+
+constexpr int m_NUM_EVENTS = 3;
 
 int main(int argc, char *argv[])
 {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_VideoInit(nullptr);
-    // Video::Video video{};
+    uint32_t CustomEventStart = SDL_RegisterEvents(m_NUM_EVENTS);
+    CustomMessages customMessages{
+        CustomEventStart,
+        CustomEventStart +1,
+        CustomEventStart +2
+    };
+    // Video::Video video{customMessages};
     Configuration::ConfigData configuration{argc, argv};
-    Display::Display display{configuration};
-    Messaging::Messaging messaging_handler(configuration); 
+    Display::Display display{configuration, customMessages};
+    Messaging::Messaging messaging_handler(configuration, customMessages); 
     bool shouldQuit = false;
     auto start_time = std::chrono::high_resolution_clock().now();
     while (!shouldQuit)
@@ -37,18 +46,18 @@ int main(int argc, char *argv[])
                     }
                     break;
                 default:
-                    if (event.type == messaging_handler.displaySingleImage)
-                       display.DisplaySingleImage(std::bit_cast<const char*>(event.user.data1));
-                    if (event.type == messaging_handler.displayDefaultImage)
+                    if (event.type == customMessages.displaySingleImage)
+                       display.DisplaySingleImage(reinterpret_cast<const char*>(event.user.data1));
+                    if (event.type == customMessages.displayDefaultImage)
                        display.DisplayDefaultImage();
                     // if (event.type == video.videoReady)
-                    //    display.PrepVideo(std::bit_cast<Display::VideoType*>(event.user.data1));
+                    //    display.PrepVideo(reinterpret_cast<Display::VideoType*>(event.user.data1));
                     break;
             }
         }
 
         display.Refresh();
-        messaging_handler.handle_message();
+        // messaging_handler.handle_message();
         auto this_frame = std::chrono::high_resolution_clock().now() - start_time;
     }
 

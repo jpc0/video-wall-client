@@ -9,6 +9,8 @@
 #include <SDL2/SDL_image.h>
 
 #include "WnLSL/queues/ringbuffer_queue.hpp"
+#include "main.hpp"
+
 namespace Display
 {
     void destroyTexture(SDL_Texture *texture);
@@ -70,7 +72,7 @@ namespace Display
     class Display
     {
     public:
-        explicit Display(const Configuration::ConfigData &configuration);
+        explicit Display(const Configuration::ConfigData &configuration, const CustomMessages &customMessage);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
         void PrepVideo(VideoType *Video);
