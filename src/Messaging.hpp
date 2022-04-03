@@ -20,7 +20,7 @@ namespace Messaging
             void stopThread();
             void handle_message(uint32_t displaySingleImage, uint32_t displayDefaultImage);
         private:
-            zmq::context_t m_context;
+            zmq::context_t m_context{};
             zmq::socket_t m_sub;
             std::jthread m_messageHandler;
     };

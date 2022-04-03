@@ -18,7 +18,7 @@ namespace Display
         return (_total_width / _total_height);
     }
 
-    Display::Display(const Configuration::ConfigData &configuration, const CustomMessages &customMessage) :
+    Display::Display(const Configuration::ConfigData &configuration, [[ maybe_unused ]] const CustomMessages &customMessage) :
                 m_current_image{nullptr, &destroyTexture},
                 m_wall{configuration},
                 m_default_image_location{configuration.image_location}
@@ -86,8 +86,10 @@ namespace Display
         m_current_image.reset(SDL_CreateTextureFromSurface(m_renderer, img));
         SDL_FreeSurface(img);
         if (!m_current_image)
+        {
+            spdlog::info("Failed to read image at: {}", image_location);
             exit(EXIT_FAILURE);
-        
+        }
         GenerateQuad();
     }
 

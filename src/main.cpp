@@ -36,12 +36,13 @@ int main(int argc, char *argv[])
             {
                 case SDL_QUIT:
                     shouldQuit = true;
+                    messaging_handler.stopThread();
                     break;
                 case SDL_KEYDOWN:
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                     {
                     shouldQuit = true;
-                    
+                    messaging_handler.stopThread();
                     }
                     break;
                 default:
