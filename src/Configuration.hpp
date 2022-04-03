@@ -2,7 +2,7 @@
 #include <string>
 #include <exception>
 #include "argh.h"
-#include "Yaml.hpp"
+#include "yaml/Yaml.hpp"
 #include <memory>
 #include <crossguid/guid.hpp>
 

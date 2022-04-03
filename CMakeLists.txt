@@ -11,6 +11,8 @@ FetchContent_Declare(_project_options URL https://github.com/cpp-best-practices/
 FetchContent_MakeAvailable(_project_options)
 include(${_project_options_SOURCE_DIR}/Index.cmake)
 
+include(build/conanbuildinfo.cmake)
+
 project(
     video_wall_client
     VERSION 0.0.1
@@ -46,20 +48,27 @@ add_subdirectory(vendor/crossguid)
 
 find_package(fmt CONFIG)
 find_package(spdlog CONFIG)
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(cppzmq REQUIRED)
-find_package(ffmpeg REQUIRED)
-find_package(nlohmann_json)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_image CONFIG REQUIRED)
+find_package(cppzmq CONFIG REQUIRED)
+find_package(ffmpeg CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(argh CONFIG REQUIRED)
 add_executable(client src/main.cpp src/Configuration.cpp src/display.cpp src/Messaging.cpp src/Video.cpp)
 target_include_directories(
     client 
     PRIVATE "${CMAKE_SOURCE_DIR}/vendor/WnLSL/include"
     )
+message("${CONAN_INCLUDE_DIRS_ARGH}")
 target_link_libraries(
     client
     PRIVATE project_options
     project_warnings)
+
+target_include_system_directories(
+    client PRIVATE
+    ${CONAN_INCLUDE_DIRS_ARGH}
+)
 
 target_link_system_libraries(
     client PRIVATE
@@ -69,11 +78,8 @@ target_link_system_libraries(
     SDL2_image
     crossguid
     yaml
-    cppzmq-static
-    avformat
-    avcodec
-    swscale
-    avutil
+    cppzmq::cppzmq
+    ffmpeg::ffmpeg
     nlohmann_json::nlohmann_json
 )
 
