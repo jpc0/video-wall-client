@@ -308,13 +308,13 @@ namespace Yaml
         * @breif Check if iterator is equal to other iterator.
         *
         */
-        bool operator == (const Iterator & it);
+        bool operator == (const Iterator & it) const;
 
         /**
         * @breif Check if iterator is not equal to other iterator.
         *
         */
-        bool operator != (const Iterator & it);
+        bool operator != (const Iterator & it) const;
 
     private:
 
@@ -366,6 +366,7 @@ namespace Yaml
         */
         ~ConstIterator();
 
+
         /**
         * @breif Get node of iterator.
         *        First pair item is the key of map value, empty if type is sequence.
@@ -377,25 +378,25 @@ namespace Yaml
         * @breif Post-increment operator.
         *
         */
-        ConstIterator & operator ++ (int);
+        ConstIterator & operator ++ ();
 
         /**
         * @breif Post-decrement operator.
         *
         */
-        ConstIterator & operator -- (int);
+        ConstIterator & operator -- ();
 
         /**
         * @breif Check if iterator is equal to other iterator.
         *
         */
-        bool operator == (const ConstIterator & it);
+        bool operator == (const ConstIterator & it) const;
 
         /**
         * @breif Check if iterator is not equal to other iterator.
         *
         */
-        bool operator != (const ConstIterator & it);
+        bool operator != (const ConstIterator & it) const;
 
     private:
 

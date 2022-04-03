@@ -65,8 +65,8 @@ namespace Yaml
     static Yaml::Node        g_NoneNode;
 
     // Global function definitions. Implemented at end of this source file.
-    static std::string ExceptionMessage(const std::string & message, ReaderLine & line);
-    static std::string ExceptionMessage(const std::string & message, ReaderLine & line, const size_t errorPos);
+    static std::string ExceptionMessage(const std::string & message, ReaderLine const &line);
+    static std::string ExceptionMessage(const std::string & message, ReaderLine const &line, const size_t errorPos);
     static std::string ExceptionMessage(const std::string & message, const size_t errorLine, const size_t errorPos);
     static std::string ExceptionMessage(const std::string & message, const size_t errorLine, const std::string & data);
 
@@ -150,22 +150,22 @@ namespace Yaml
             }
         }
 
-        virtual const std::string & GetData() const
+        virtual const std::string & GetData() const override
         {
             return g_EmptyString;
         }
 
-        virtual bool SetData(const std::string & data)
+        virtual bool SetData(const std::string & data) override
         {
             return false;
         }
 
-        virtual size_t GetSize() const
+        virtual size_t GetSize() const override
         {
             return m_Sequence.size();
         }
 
-        virtual Node * GetNode(const size_t index)
+        virtual Node * GetNode(const size_t index) override
         {
             auto it = m_Sequence.find(index);
             if(it != m_Sequence.end())
@@ -175,12 +175,12 @@ namespace Yaml
             return nullptr;
         }
 
-        virtual Node * GetNode(const std::string & key)
+        virtual Node * GetNode(const std::string & key) override
         {
             return nullptr;
         }
 
-        virtual Node * Insert(const size_t index)
+        virtual Node * Insert(const size_t index) override
         {
             if(m_Sequence.size() == 0)
             {
@@ -214,7 +214,7 @@ namespace Yaml
             return pNode;
         }
 
-        virtual Node * PushFront()
+        virtual Node * PushFront() override
         {
             for(auto it = m_Sequence.cbegin(); it != m_Sequence.cend(); it++)
             {
@@ -226,7 +226,7 @@ namespace Yaml
             return pNode;
         }
 
-        virtual Node * PushBack()
+        virtual Node * PushBack() override
         {
             size_t index = 0;
             if(m_Sequence.size())
@@ -241,7 +241,7 @@ namespace Yaml
             return pNode;
         }
 
-        virtual void Erase(const size_t index)
+        virtual void Erase(const size_t index) override
         {
             auto it = m_Sequence.find(index);
             if(it == m_Sequence.end())
@@ -252,7 +252,7 @@ namespace Yaml
             m_Sequence.erase(index);
         }
 
-        virtual void Erase(const std::string & key)
+        virtual void Erase(const std::string & key) override
         {
         }
 
@@ -273,27 +273,27 @@ namespace Yaml
             }
         }
 
-        virtual const std::string & GetData() const
+        virtual const std::string & GetData() const override
         {
             return g_EmptyString;
         }
 
-        virtual bool SetData(const std::string & data)
+        virtual bool SetData(const std::string & data) override
         {
             return false;
         }
 
-        virtual size_t GetSize() const
+        virtual size_t GetSize() const override
         {
             return m_Map.size();
         }
 
-        virtual Node * GetNode(const size_t index)
+        virtual Node * GetNode(const size_t index) override
         {
             return nullptr;
         }
 
-        virtual Node * GetNode(const std::string & key)
+        virtual Node * GetNode(const std::string & key) override
         {
             auto it = m_Map.find(key);
             if(it == m_Map.end())
@@ -305,26 +305,26 @@ namespace Yaml
             return it->second;
         }
 
-        virtual Node * Insert(const size_t index)
+        virtual Node * Insert(const size_t index) override
         {
             return nullptr;
         }
 
-        virtual Node * PushFront()
+        virtual Node * PushFront() override
         {
             return nullptr;
         }
 
-        virtual Node * PushBack()
+        virtual Node * PushBack() override
         {
             return nullptr;
         }
 
-        virtual void Erase(const size_t index)
+        virtual void Erase(const size_t index) override
         {
         }
 
-        virtual void Erase(const std::string & key)
+        virtual void Erase(const std::string & key) override
         {
             auto it = m_Map.find(key);
             if(it == m_Map.end())
@@ -348,52 +348,52 @@ namespace Yaml
         {
         }
 
-        virtual const std::string & GetData() const
+        virtual const std::string & GetData() const override
         {
             return m_Value;
         }
 
-        virtual bool SetData(const std::string & data)
+        virtual bool SetData(const std::string & data) override
         {
             m_Value = data;
             return true;
         }
 
-        virtual size_t GetSize() const
+        virtual size_t GetSize() const override
         {
             return 0;
         }
 
-        virtual Node * GetNode(const size_t index)
+        virtual Node * GetNode(const size_t index) override
         {
             return nullptr;
         }
 
-        virtual Node * GetNode(const std::string & key)
+        virtual Node * GetNode(const std::string & key) override
         {
             return nullptr;
         }
 
-        virtual Node * Insert(const size_t index)
+        virtual Node * Insert(const size_t index) override
         {
             return nullptr;
         }
 
-        virtual Node * PushFront()
+        virtual Node * PushFront() override
         {
             return nullptr;
         }
 
-        virtual Node * PushBack()
+        virtual Node * PushBack() override
         {
             return nullptr;
         }
 
-        virtual void Erase(const size_t index)
+        virtual void Erase(const size_t index) override
         {
         }
 
-        virtual void Erase(const std::string & key)
+        virtual void Erase(const std::string & key) override
         {
         }
 
@@ -497,26 +497,26 @@ namespace Yaml
 
     public:
 
-        virtual Node::eType GetType() const
+        virtual Node::eType GetType() const override
         {
             return Node::SequenceType;
         }
 
-        virtual void InitBegin(SequenceImp * pSequenceImp)
+        virtual void InitBegin(SequenceImp * pSequenceImp) override
         {
             m_Iterator = pSequenceImp->m_Sequence.begin();
         }
 
-        virtual void InitEnd(SequenceImp * pSequenceImp)
+        virtual void InitEnd(SequenceImp * pSequenceImp) override
         {
             m_Iterator = pSequenceImp->m_Sequence.end();
         }
 
-        virtual void InitBegin(MapImp * pMapImp)
+        virtual void InitBegin(MapImp * pMapImp) override
         {
         }
 
-        virtual void InitEnd(MapImp * pMapImp)
+        virtual void InitEnd(MapImp * pMapImp) override
         {
         }
 
@@ -534,25 +534,25 @@ namespace Yaml
 
     public:
 
-        virtual Node::eType GetType() const
+        virtual Node::eType GetType() const override
         {
             return Node::MapType;
         }
 
-        virtual void InitBegin(SequenceImp * pSequenceImp)
+        virtual void InitBegin(SequenceImp * pSequenceImp) override
         {
         }
 
-        virtual void InitEnd(SequenceImp * pSequenceImp)
+        virtual void InitEnd(SequenceImp * pSequenceImp) override
         {
         }
 
-        virtual void InitBegin(MapImp * pMapImp)
+        virtual void InitBegin(MapImp * pMapImp) override
         {
             m_Iterator = pMapImp->m_Map.begin();
         }
 
-        virtual void InitEnd(MapImp * pMapImp)
+        virtual void InitEnd(MapImp * pMapImp) override
         {
             m_Iterator = pMapImp->m_Map.end();
         }
@@ -571,26 +571,26 @@ namespace Yaml
 
     public:
 
-        virtual Node::eType GetType() const
+        virtual Node::eType GetType() const override
         {
             return Node::SequenceType;
         }
 
-        virtual void InitBegin(SequenceImp * pSequenceImp)
+        virtual void InitBegin(SequenceImp * pSequenceImp) override
         {
             m_Iterator = pSequenceImp->m_Sequence.begin();
         }
 
-        virtual void InitEnd(SequenceImp * pSequenceImp)
+        virtual void InitEnd(SequenceImp * pSequenceImp) override
         {
             m_Iterator = pSequenceImp->m_Sequence.end();
         }
 
-        virtual void InitBegin(MapImp * pMapImp)
+        virtual void InitBegin(MapImp * pMapImp) override
         {
         }
 
-        virtual void InitEnd(MapImp * pMapImp)
+        virtual void InitEnd(MapImp * pMapImp) override
         {
         }
 
@@ -608,25 +608,25 @@ namespace Yaml
 
     public:
 
-        virtual Node::eType GetType() const
+        virtual Node::eType GetType() const override
         {
             return Node::MapType;
         }
 
-        virtual void InitBegin(SequenceImp * pSequenceImp)
+        virtual void InitBegin(SequenceImp * pSequenceImp) override
         {
         }
 
-        virtual void InitEnd(SequenceImp * pSequenceImp)
+        virtual void InitEnd(SequenceImp * pSequenceImp) override
         {
         }
 
-        virtual void InitBegin(MapImp * pMapImp)
+        virtual void InitBegin(MapImp * pMapImp) override
         {
             m_Iterator = pMapImp->m_Map.begin();
         }
 
-        virtual void InitEnd(MapImp * pMapImp)
+        virtual void InitEnd(MapImp * pMapImp) override
         {
             m_Iterator = pMapImp->m_Map.end();
         }
@@ -766,7 +766,7 @@ namespace Yaml
         return *this;
     }
 
-    bool Iterator::operator == (const Iterator & it)
+    bool Iterator::operator == (const Iterator & it) const
     {
         if(m_Type != it.m_Type)
         {
@@ -788,7 +788,7 @@ namespace Yaml
         return false;
     }
 
-    bool Iterator::operator != (const Iterator & it)
+    bool Iterator::operator != (const Iterator & it) const
     {
         return !(*this == it);
     }
@@ -887,7 +887,7 @@ namespace Yaml
         return { g_EmptyString, g_NoneNode};
     }
 
-    ConstIterator & ConstIterator::operator ++ (int dummy)
+    ConstIterator & ConstIterator::operator ++ ()
     {
         switch(m_Type)
         {
@@ -903,7 +903,7 @@ namespace Yaml
         return *this;
     }
 
-    ConstIterator & ConstIterator::operator -- (int dummy)
+    ConstIterator & ConstIterator::operator -- ()
     {
         switch(m_Type)
         {
@@ -919,7 +919,7 @@ namespace Yaml
         return *this;
     }
 
-    bool ConstIterator::operator == (const ConstIterator & it)
+    bool ConstIterator::operator == (const ConstIterator & it) const
     {
         if(m_Type != it.m_Type)
         {
@@ -941,7 +941,7 @@ namespace Yaml
         return false;
     }
 
-    bool ConstIterator::operator != (const ConstIterator & it)
+    bool ConstIterator::operator != (const ConstIterator & it) const
     {
         return !(*this == it);
     }
@@ -1376,7 +1376,7 @@ namespace Yaml
                 //Print();
                 ParseRoot(root);
             }
-            catch(Exception e)
+            catch(Exception &e)
             {
                 root.Clear();
                 throw;
@@ -1384,15 +1384,6 @@ namespace Yaml
         }
 
     private:
-
-        /**
-        * @breif Copy constructor.
-        *
-        */
-        ParseImp(const ParseImp & copy)
-        {
-
-        }
 
         /**
         * @breif Read all lines.
@@ -1692,9 +1683,11 @@ namespace Yaml
         * @return true if scalar search should continue, else false.
         *
         */
-        void PostProcessScalarLine(std::list<ReaderLine *>::iterator & it)
+        void PostProcessScalarLine(std::list<ReaderLine *>::iterator &it)
         {
-            ReaderLine * pLine = *it;
+            // There is no way to ensure this iterator is valid for dereferncing
+            // this throws a possible dereference warning
+            ReaderLine *pLine = *it;
             pLine->Type = Node::ScalarType;
 
             size_t parentOffset = pLine->Offset;
@@ -2034,99 +2027,6 @@ namespace Yaml
         }
 
         /**
-        * @breif Debug printing.
-        *
-        */
-        void Print()
-        {
-            for (auto it = m_Lines.begin(); it != m_Lines.end(); it++)
-            {
-
-                ReaderLine * pLine = *it;
-
-                // Print type
-                if (pLine->Type == Node::SequenceType)
-                {
-                    std::cout << "seq ";
-                }
-                else if (pLine->Type == Node::MapType)
-                {
-                    std::cout << "map ";
-                }
-                else if (pLine->Type == Node::ScalarType)
-                {
-                    std::cout << "sca ";
-                }
-                else
-                {
-                    std::cout << "    ";
-                }
-
-                // Print flags
-                if (pLine->GetFlag(ReaderLine::FoldedScalarFlag))
-                {
-                    std::cout << "f";
-                }
-                else
-                {
-                    std::cout << "-";
-                }
-                if (pLine->GetFlag(ReaderLine::LiteralScalarFlag))
-                {
-                    std::cout << "l";
-                }
-                else
-                {
-                    std::cout << "-";
-                }
-                if (pLine->GetFlag(ReaderLine::ScalarNewlineFlag))
-                {
-                    std::cout << "n";
-                }
-                else
-                {
-                    std::cout << "-";
-                }
-                if (pLine->NextLine == nullptr)
-                {
-                    std::cout << "e";
-                }
-                else
-                {
-                    std::cout << "-";
-                }
-
-
-                std::cout << "| ";
-                std::cout << pLine->No << " ";
-                std::cout << std::string(pLine->Offset, ' ');
-
-                if (pLine->Type == Node::ScalarType)
-                {
-                    std::string scalarValue = pLine->Data;
-                    for (size_t i = 0; (i = scalarValue.find("\n", i)) != std::string::npos;)
-                    {
-                        scalarValue.replace(i, 1, "\\n");
-                        i += 2;
-                    }
-                    std::cout << scalarValue << std::endl;
-                }
-                else if (pLine->Type == Node::MapType)
-                {
-                    std::cout << pLine->Data + ":" << std::endl;
-                }
-                else if (pLine->Type == Node::SequenceType)
-                {
-                    std::cout << "-" << std::endl;
-                }
-                else
-                {
-                    std::cout << "> UNKOWN TYPE <" << std::endl;
-                }
-            }
-        }
-
-        /**
         * @breif Clear all read lines.
         *
         */
@@ -2251,7 +2151,7 @@ namespace Yaml
             pImp->Parse(root, stream);
             delete pImp;
         }
-        catch (const Exception e)
+        catch (const Exception &e)
         {
             delete pImp;
             throw;
@@ -2347,7 +2247,7 @@ namespace Yaml
         {
             case Node::SequenceType:
             {
-                for(auto it = node.Begin(); it != node.End(); it++)
+                for(auto it = node.Begin(); it != node.End(); ++it)
                 {
                     const Node & value = (*it).second;
                     if(value.IsNone())
@@ -2370,7 +2270,7 @@ namespace Yaml
             case Node::MapType:
             {
                 size_t count = 0;
-                for(auto it = node.Begin(); it != node.End(); it++)
+                for(auto it = node.Begin(); it != node.End(); ++it)
                 {
                     const Node & value = (*it).second;
                     if(value.IsNone())
@@ -2509,12 +2409,12 @@ namespace Yaml
 
 
     // Static function implementations
-    std::string ExceptionMessage(const std::string & message, ReaderLine & line)
+    std::string ExceptionMessage(const std::string &message, ReaderLine const &line)
     {
         return message + std::string(" Line ") + std::to_string(line.No) + std::string(": ") + line.Data;
     }
 
-    std::string ExceptionMessage(const std::string & message, ReaderLine & line, const size_t errorPos)
+    std::string ExceptionMessage(const std::string &message, ReaderLine const &line, const size_t errorPos)
     {
         return message + std::string(" Line ") + std::to_string(line.No) + std::string(" column ") + std::to_string(errorPos + 1) + std::string(": ") + line.Data;
     }
@@ -2603,7 +2503,7 @@ namespace Yaml
         }
 
         size_t currentQuoteIndex = 0;
-        std::pair<size_t, size_t> currentQuote = {0, 0};
+        [[ maybe_unused ]] std::pair<size_t, size_t> currentQuote = {0, 0};
 
         while(currentQuoteIndex < quotes.size())
         {
@@ -2710,7 +2610,7 @@ namespace Yaml
         switch(type)
         {
         case Node::SequenceType:
-            for(auto it = from.Begin(); it != from.End(); it++)
+            for(auto it = from.Begin(); it != from.End(); ++it)
             {
                 const Node & currentNode = (*it).second;
                 Node & newNode = to.PushBack();
@@ -2718,7 +2618,7 @@ namespace Yaml
             }
             break;
         case Node::MapType:
-            for(auto it = from.Begin(); it != from.End(); it++)
+            for(auto it = from.Begin(); it != from.End(); ++it)
             {
                 const Node & currentNode = (*it).second;
                 Node & newNode = to[(*it).first];
