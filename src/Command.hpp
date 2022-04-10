@@ -11,12 +11,12 @@
 #include <thread>
 #include <spdlog/spdlog.h>
 
-namespace Messaging
+namespace Command
 {
-    class Messaging
+    class Command
     {
         public:
-            explicit Messaging(const Configuration::ConfigData &configuration, const CustomMessages &customMessages);
+            explicit Command(const Configuration::ConfigData &configuration, const CustomMessages &customMessages);
             void stopThread();
             void handle_message(uint32_t displaySingleImage, uint32_t displayDefaultImage);
         private:

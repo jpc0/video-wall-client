@@ -1,20 +1,20 @@
-#include "Messaging.hpp"
+#include "Command.hpp"
 
-namespace Messaging
+namespace Command
 {
 
-    Messaging::Messaging(const Configuration::ConfigData &configuration, const CustomMessages &customMessages)
+    Command::Command(const Configuration::ConfigData &configuration, const CustomMessages &customMessages)
     {
         m_sub = zmq::socket_t(m_context, zmq::socket_type::sub);
         m_sub.connect(configuration.zmq_server);
         m_sub.set(zmq::sockopt::subscribe, "");
-        m_messageHandler = std::jthread{&Messaging::handle_message,
+        m_messageHandler = std::jthread{&Command::handle_message,
                                         this,
                                         customMessages.displaySingleImage,
                                         customMessages.displayDefaultImage};
     }
 
-    void Messaging::stopThread()
+    void Command::stopThread()
     {
         // FIXME: WE need to implement a better way to exit the context, maybe
         // look at a zmq poller
@@ -29,7 +29,7 @@ namespace Messaging
     }
 
     
-    void Messaging::handle_message(uint32_t displaySingleImage, [[ maybe_unused ]] uint32_t displayDefaultImage)
+    void Command::handle_message(uint32_t displaySingleImage, [[ maybe_unused ]] uint32_t displayDefaultImage)
     {
         while (true) {
             using json = nlohmann::json;

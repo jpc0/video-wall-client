@@ -1,7 +1,7 @@
 #include <spdlog/spdlog.h>
 #include <chrono>
 #include "display.hpp"
-#include "Messaging.hpp"
+#include "Command.hpp"
 #include <vector>
 #include <numeric>
 #include <zmq.hpp>
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     // Video::Video video{customMessages};
     Configuration::ConfigData configuration{argc, argv};
     Display::Display display{configuration, customMessages};
-    Messaging::Messaging messaging_handler(configuration, customMessages); 
+    Command::Command messaging_handler(configuration, customMessages); 
     bool shouldQuit = false;
     auto start_time = std::chrono::high_resolution_clock().now();
     while (!shouldQuit)
