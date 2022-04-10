@@ -54,7 +54,14 @@ find_package(cppzmq CONFIG REQUIRED)
 find_package(ffmpeg CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(argh CONFIG REQUIRED)
-add_executable(client src/main.cpp src/Configuration.cpp src/display.cpp src/Messaging.cpp src/Video.cpp)
+add_executable(client 
+    src/main.cpp 
+    src/Configuration.cpp 
+    src/display.cpp 
+    src/Command.cpp 
+    src/Video.cpp
+    src/MessageHandler/MessageHandler.cpp
+    )
 target_include_directories(
     client 
     PRIVATE "${CMAKE_SOURCE_DIR}/vendor/WnLSL/include"
