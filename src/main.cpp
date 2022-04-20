@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include "Video.hpp"
 #include "main.hpp"
+#include "MessageHandler/MessageHandler.hpp"
 
 constexpr int m_NUM_EVENTS = 3;
 
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
         CustomEventStart +1,
         CustomEventStart +2
     };
+    [[ maybe_unused ]] MessageHandler messageHandler{};
     // Video::Video video{customMessages};
     Configuration::ConfigData configuration{argc, argv};
     Display::Display display{configuration, customMessages};
@@ -57,6 +59,7 @@ int main(int argc, char *argv[])
         }
 
         display.Refresh();
+        messageHandler.handleMessages();
         // messaging_handler.handle_message();
         auto this_frame = std::chrono::high_resolution_clock().now() - start_time;
     }

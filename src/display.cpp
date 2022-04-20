@@ -21,7 +21,8 @@ namespace Display
     Display::Display(const Configuration::ConfigData &configuration, [[ maybe_unused ]] const CustomMessages &customMessage) :
                 m_current_image{nullptr, &destroyTexture},
                 m_wall{configuration},
-                m_default_image_location{configuration.image_location}
+                m_default_image_location{configuration.image_location},
+                messageHandle{MessageHandler::registerReceiver(Destination::DisplayMessage)}
     {
         m_screen.width = configuration.width;
         m_screen.height = configuration.height;

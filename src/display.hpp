@@ -10,6 +10,7 @@
 
 #include "WnLSL/queues/ringbuffer_queue.hpp"
 #include "main.hpp"
+#include "MessageHandler/MessageHandler.hpp"
 
 namespace Display
 {
@@ -93,5 +94,6 @@ namespace Display
         Screen m_screen;
         bool m_playingVideo = false;
         std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<VideoFrame>>> m_VideoFrameQueue =  nullptr;
+        std::shared_ptr<MessageQueue> messageHandle = nullptr;
     }; 
 } // namespace Display
