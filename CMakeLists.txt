@@ -11,8 +11,6 @@ FetchContent_Declare(_project_options URL https://github.com/cpp-best-practices/
 FetchContent_MakeAvailable(_project_options)
 include(${_project_options_SOURCE_DIR}/Index.cmake)
 
-include(build/conanbuildinfo.cmake)
-
 project(
     video_wall_client
     VERSION 0.0.1
@@ -30,7 +28,7 @@ project_options(
     # ENABLE_COVERAGE
     # ENABLE_SANITIZER_ADDRESS
     # ENABLE_SANITIZER_LEAK
-    ENABLE_SANITIZER_UNDEFINED_BEHAVIOR
+    # ENABLE_SANITIZER_UNDEFINED_BEHAVIOR
     # ENABLE_SANITIZER_THREAD
     # ENABLE_SANITIZER_MEMORY
     # ENABLE_PCH
@@ -68,9 +66,12 @@ target_include_directories(
     )
 message("${CONAN_INCLUDE_DIRS_ARGH}")
 target_link_libraries(
-    client
-    PRIVATE project_options
-    project_warnings)
+        client
+        PRIVATE project_options
+        SDL2::SDL2
+        SDL2_image::SDL2_image
+        argh::argh
+        project_warnings)
 
 target_include_system_directories(
     client PRIVATE
@@ -81,8 +82,6 @@ target_link_system_libraries(
     client PRIVATE
     fmt::fmt
     spdlog::spdlog
-    SDL2
-    SDL2_image
     crossguid
     yaml
     cppzmq::cppzmq
