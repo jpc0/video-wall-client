@@ -14,9 +14,16 @@ JSON encoded data
 ## Build - Required Packages
 
 Please make sure the following packages are installed on your system:
-- Boost (at least version 1.67)
-- ZeroMQ
+- FFMPEG
+  - avcodec-dev
+  - avformat-dev
+  - avfilter-dev
+  - swscale-dev
+  - avutil-dev
 - SDL2
+  - sdl2-dev
+- SDL2_image
+  - sdl2_image-dev
 
 Reasonable recent source files for these packages are included in the vendor
 folder if you need to build them from source however it is strongly recommended
