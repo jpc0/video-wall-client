@@ -46,7 +46,7 @@ add_subdirectory(vendor/crossguid)
 
 find_package(fmt CONFIG)
 find_package(spdlog CONFIG)
-find_package(SDL2 CONFIG REQUIRED)
+# find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(cppzmq CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
@@ -67,8 +67,11 @@ message("${CONAN_INCLUDE_DIRS_ARGH}")
 target_link_libraries(
         client
         PRIVATE project_options
-        SDL2::SDL2
-        SDL2_image::SDL2_image
+        # SDL2::SDL2
+        # SDL2_image::SDL2_image
+        SDL2main
+        SDL2
+        SDL2_image
         argh::argh
         avcodec
         avfilter
