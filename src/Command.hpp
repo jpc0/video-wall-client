@@ -10,6 +10,7 @@
 #include <vector>
 #include <thread>
 #include <spdlog/spdlog.h>
+#include "MessageHandler/MessageHandler.hpp"
 
 namespace Command
 {
@@ -18,11 +19,12 @@ namespace Command
         public:
             explicit Command(const Configuration::ConfigData &configuration, const CustomMessages &customMessages);
             void stopThread();
-            void handle_message(uint32_t displaySingleImage, uint32_t displayDefaultImage);
+            void handle_message();
         private:
             zmq::context_t m_context{};
             zmq::socket_t m_sub;
             std::thread m_messageHandler;
+            std::shared_ptr<MessageQueue> CommandQueue;
     };
 }
 

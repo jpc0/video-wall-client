@@ -1,9 +1,6 @@
-#include <spdlog/spdlog.h>
 #include <chrono>
 #include "display.hpp"
 #include "Command.hpp"
-#include <vector>
-#include <numeric>
 #include <zmq.hpp>
 #include <SDL2/SDL.h>
 #include "Video.hpp"
@@ -14,8 +11,16 @@ constexpr int m_NUM_EVENTS = 3;
 
 int main(int argc, char *argv[])
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_VideoInit(nullptr);
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+      spdlog::info("Failed to initialize SDL: \n{}", SDL_GetError());
+      exit(EXIT_FAILURE);
+    }
+    if (SDL_VideoInit(nullptr) < 0)
+    {
+      spdlog::info("Failed to initialize SDL Video Engine: \n{}", SDL_GetError());
+      exit(EXIT_FAILURE);
+    }
     uint32_t CustomEventStart = SDL_RegisterEvents(m_NUM_EVENTS);
     CustomMessages customMessages{
         CustomEventStart,
@@ -28,7 +33,8 @@ int main(int argc, char *argv[])
     Display::Display display{configuration, customMessages};
     Command::Command messaging_handler(configuration, customMessages); 
     bool shouldQuit = false;
-    auto start_time = std::chrono::high_resolution_clock().now();
+    auto start_time = std::chrono::high_resolution_clock::now();
+    std::shared_ptr<MessageQueue> DisplayQueue = MessageHandler::registerReceiver(Destination::DisplayMessage);
     while (!shouldQuit)
     {
         SDL_Event event;
@@ -57,11 +63,11 @@ int main(int argc, char *argv[])
                     break;
             }
         }
-
+        if (auto msg = DisplayQueue->receive())
+          display.DisplaySingleImage(msg.value().message);
         display.Refresh();
-        messageHandler.handleMessages();
-        // messaging_handler.handle_message();
-        auto this_frame = std::chrono::high_resolution_clock().now() - start_time;
+        MessageHandler::handleMessages();
+        auto this_frame = std::chrono::high_resolution_clock::now() - start_time;
     }
 
     SDL_Quit();
