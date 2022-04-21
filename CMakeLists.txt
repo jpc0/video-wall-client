@@ -11,6 +11,10 @@ FetchContent_Declare(_project_options URL https://github.com/cpp-best-practices/
 FetchContent_MakeAvailable(_project_options)
 include(${_project_options_SOURCE_DIR}/Index.cmake)
 
+FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+        GIT_TAG 6ea2dec23c3df14ac3b27b7d2d6bbff0cb7ba1b0)
+FetchContent_MakeAvailable(cpr)
+
 project(
     video_wall_client
     VERSION 0.0.1
@@ -46,7 +50,6 @@ add_subdirectory(vendor/crossguid)
 
 find_package(fmt CONFIG)
 find_package(spdlog CONFIG)
-# find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(cppzmq CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
@@ -59,31 +62,26 @@ add_executable(client
     src/Video.cpp
     src/MessageHandler/MessageHandler.cpp
     )
+
 target_include_directories(
     client 
     PRIVATE "${CMAKE_SOURCE_DIR}/vendor/WnLSL/include"
     )
+
 message("${CONAN_INCLUDE_DIRS_ARGH}")
 target_link_libraries(
         client
         PRIVATE project_options
-        # SDL2::SDL2
-        # SDL2_image::SDL2_image
         SDL2main
         SDL2
         SDL2_image
         argh::argh
         avcodec
         avfilter
+        avformat
         swscale
         avutil
-        avformat
         project_warnings)
-
-target_include_system_directories(
-    client PRIVATE
-    ${CONAN_INCLUDE_DIRS_ARGH}
-)
 
 target_link_system_libraries(
     client PRIVATE
@@ -93,6 +91,7 @@ target_link_system_libraries(
     yaml
     cppzmq::cppzmq
     nlohmann_json::nlohmann_json
+    cpr::cpr
 )
 
 install( TARGETS client DESTINATION bin)
