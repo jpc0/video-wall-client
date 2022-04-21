@@ -20,7 +20,7 @@ namespace Configuration
         ShouldQuit = false;
     }
 
-    ConfigData::~ConfigData(){};
+    ConfigData::~ConfigData(){}
 
     void ConfigData::ParseConfigFile()
     {

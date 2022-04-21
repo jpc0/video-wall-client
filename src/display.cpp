@@ -39,7 +39,17 @@ namespace Display
             SDL_WINDOWPOS_UNDEFINED_DISPLAY(0), 
             static_cast<int>(configuration.width), 
             static_cast<int>(configuration.height), SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL);
+        if (m_window == nullptr)
+        {
+          spdlog::info("{}", SDL_GetError());
+          exit(EXIT_FAILURE);
+        }
         m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_PRESENTVSYNC);
+        if (m_renderer == nullptr)
+        {
+          spdlog::info("{}", SDL_GetError());
+          exit(EXIT_FAILURE);
+        }
         SDL_ShowCursor(SDL_DISABLE);
         m_source_cropping = nullptr;
         m_current_image = nullptr;
