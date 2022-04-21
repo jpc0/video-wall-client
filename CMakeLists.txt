@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
 SET(CMAKE_CXX_EXTENSIONS OFF)
 
@@ -49,7 +49,6 @@ find_package(spdlog CONFIG)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(cppzmq CONFIG REQUIRED)
-find_package(ffmpeg CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(argh CONFIG REQUIRED)
 add_executable(client 
@@ -57,7 +56,7 @@ add_executable(client
     src/Configuration.cpp 
     src/display.cpp 
     src/Command.cpp 
-    src/Video.cpp
+    # src/Video.cpp
     src/MessageHandler/MessageHandler.cpp
     )
 target_include_directories(
@@ -71,6 +70,11 @@ target_link_libraries(
         SDL2::SDL2
         SDL2_image::SDL2_image
         argh::argh
+        avcodec
+        avfilter
+        swscale
+        avutil
+        avformat
         project_warnings)
 
 target_include_system_directories(
@@ -85,7 +89,6 @@ target_link_system_libraries(
     crossguid
     yaml
     cppzmq::cppzmq
-    ffmpeg::ffmpeg
     nlohmann_json::nlohmann_json
 )
 

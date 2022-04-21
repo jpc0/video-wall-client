@@ -6,6 +6,7 @@
 #include <cmath>
 #include <optional>
 #include <atomic>
+#include <condition_variable>
 
 // The atomic queue was quicker in testing for SPSC usage, however it is important
 // to keep in mind that the atomic queue will not work for MP or MC workloads
@@ -25,8 +26,10 @@ namespace WnLSL
         std::array<T, static_cast<long unsigned int>(ARRAYSIZE)> buffer{};
         unsigned int read{0};
         unsigned int write{0};
-        std::atomic_flag isFull;
-        std::atomic_flag isEmpty;
+        std::atomic<bool> isFull;
+        std::condition_variable fullWait;
+        std::atomic<bool> isEmpty;
+        std::condition_variable emptyWait;
         // This is a pretty efficient spinlock implementation but in testing it
         // does look like the mutex is winning out, from some research modern
         // mutexes infact behave as a spinlock in situations where there is a
@@ -51,18 +54,20 @@ namespace WnLSL
         {
             for (;;)
             {
-                isFull.wait(true); // Not strictly needed but prevents a busy loop
-                std::scoped_lock lock(rw_lock);
-                if (isFull.test())
+                std::unique_lock lock(rw_lock);
+                if (isFull)
+                    {
+                    fullWait.wait(lock);
                     continue;
+                    }
                 buffer[write++ & bitmask] = item;
-                if (isEmpty.test())
+                if (isEmpty)
                 {
-                    isEmpty.clear();
-                    isEmpty.notify_all();
+                    isEmpty.exchange(false);
+                    emptyWait.notify_all();
                 }
                 if (this->is_full())
-                    isFull.test_and_set();
+                    isFull.exchange(true);
                 return true;
             }
         }
@@ -73,18 +78,21 @@ namespace WnLSL
         {
             for (;;)
             {
-                isEmpty.wait(true); // Not strictly needed but prevents a busy loop
-                std::scoped_lock lock(rw_lock);
-                if (isEmpty.test())
-                    continue;
-                if (isFull.test())
+                std::unique_lock lock(rw_lock);
+                if (isEmpty)
+                    {
+                        emptyWait.wait(lock);
+                        continue;
+                    }
+
+                if (isFull)
                 {
-                    isFull.clear();
-                    isFull.notify_all();
+                    isFull.exchange(false);
+                    fullWait.notify_all();
                 }
                 if (this->is_empty())
                 {
-                    isEmpty.test_and_set();
+                    isEmpty.exchange(true);
                     continue;
                 }
                 return buffer[(read++) & bitmask];
@@ -125,27 +133,27 @@ namespace WnLSL
     public:
         bool enqueue(const T &val)
         {
-            auto const writeIdx = writeIdx_.load(std::memory_order::relaxed);
+            auto const writeIdx = writeIdx_.load(std::memory_order::memory_order_relaxed);
             auto nextWriteIdx = writeIdx + 1;
             if (nextWriteIdx == readIdxCached_)
             {
-                readIdxCached_ = readIdx_.load(std::memory_order::acquire);
+                readIdxCached_ = readIdx_.load(std::memory_order::memory_order_acquire);
                 if (nextWriteIdx == readIdxCached_)
                 {
                     return false;
                 }
             }
             data_[writeIdx & bitmask] = val;
-            writeIdx_.store(nextWriteIdx, std::memory_order::release);
+            writeIdx_.store(nextWriteIdx, std::memory_order::memory_order_release);
             return true;
         }
 
         std::optional<T> dequeue()
         {
-            auto const readIdx = readIdx_.load(std::memory_order::relaxed);
+            auto const readIdx = readIdx_.load(std::memory_order::memory_order_relaxed);
             if (readIdx == writeIdxCached_)
             {
-                writeIdxCached_ = writeIdx_.load(std::memory_order::acquire);
+                writeIdxCached_ = writeIdx_.load(std::memory_order::memory_order_acquire);
                 if (readIdx == writeIdxCached_)
                 {
                     return {};
@@ -153,7 +161,7 @@ namespace WnLSL
             }
             T val = data_[readIdx & bitmask];
             auto nextReadIdx = readIdx + 1;
-            readIdx_.store(nextReadIdx, std::memory_order::release);
+            readIdx_.store(nextReadIdx, std::memory_order::memory_order_release);
             return val;
         }
     };

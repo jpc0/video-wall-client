@@ -41,7 +41,7 @@ namespace Video
     Video::Video(const CustomMessages &customMessages)
         : videoReady{customMessages.videoReady}
     {
-        std::jthread t1(&playVideo, "/home/jpc0/Downloads/bigbun.mp4", videoReady);
+        std::thread t1(&playVideo, "/home/jpc0/Downloads/bigbun.mp4", videoReady);
         t1.detach();
     }
 
@@ -99,7 +99,7 @@ namespace Video
         {SDL_memset(&event, 0, sizeof(event));
         event.type = videoReady;
         event.user.code = 1;
-        event.user.data1 = std::bit_cast<void *>(videoinfo);
+        event.user.data1 = reinterpret_cast<void *>(videoinfo);
         event.user.data2 = 0;
         SDL_PushEvent(&event);}
         

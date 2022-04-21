@@ -9,7 +9,8 @@ std::shared_ptr<MessageQueue> MessageHandler::registerReceiver(Destination desti
         return result->queue;
 
     std::shared_ptr<MessageQueue> messageQueue = std::make_shared<MessageQueue>();
-    destinations.emplace_back(destination, messageQueue);
+    DestinationT dest{destination, messageQueue};
+    destinations.push_back(dest);
     return messageQueue;
 }
 
