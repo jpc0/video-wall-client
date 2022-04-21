@@ -94,11 +94,17 @@ namespace Display
     void Display::DisplaySingleImage(const std::string &image_location)
     {
         SDL_Surface *img = IMG_Load(image_location.c_str());
+        if (img == nullptr)
+        {
+          spdlog::info("Failed to read image at: {}", image_location);
+          spdlog::info("{}", SDL_GetError());
+          exit(EXIT_FAILURE);
+        }
         m_current_image.reset(SDL_CreateTextureFromSurface(m_renderer, img));
         SDL_FreeSurface(img);
         if (!m_current_image)
         {
-            spdlog::info("Failed to read image at: {}", image_location);
+            spdlog::info("{}", SDL_GetError());
             exit(EXIT_FAILURE);
         }
         GenerateQuad();
