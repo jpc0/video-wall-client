@@ -56,7 +56,7 @@ add_executable(client
     src/Configuration.cpp 
     src/display.cpp 
     src/Command.cpp 
-    # src/Video.cpp
+    src/Video.cpp
     src/MessageHandler/MessageHandler.cpp
     )
 target_include_directories(

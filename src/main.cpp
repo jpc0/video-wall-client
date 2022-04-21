@@ -6,7 +6,7 @@
 #include <numeric>
 #include <zmq.hpp>
 #include <SDL2/SDL.h>
-// #include "Video.hpp"
+#include "Video.hpp"
 #include "main.hpp"
 #include "MessageHandler/MessageHandler.hpp"
 

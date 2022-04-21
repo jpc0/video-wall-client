@@ -143,12 +143,15 @@ namespace Video
                             // The second half of the array is just padded with 0s
                             &pFrame->data[2][((pFrame->linesize[2]/2)*(pFrame->height))-1] // -1 because arrays count from 0
                             );
-                        auto frame = std::make_shared<Display::VideoFrame>(
+                        Display::VideoFrame framet{
                             data,
                             pFrame->width,
                             pFrame->height,
                             false,
-                            pFrame->best_effort_timestamp
+                            static_cast<int>(pFrame->best_effort_timestamp)
+                        };
+                        auto frame = std::make_shared<Display::VideoFrame>(
+                            framet
                         );
                         frame_queue->enqueue(frame);
                     }
@@ -157,12 +160,15 @@ namespace Video
             av_packet_unref(pPacket.get());
 
         }
-        auto frame = std::make_shared<Display::VideoFrame>(
+        Display::VideoFrame framet{
             nullptr,
             0,
             0,
             true,
             -1
+        };
+        auto frame = std::make_shared<Display::VideoFrame>(
+            framet
         );
         frame_queue->enqueue(frame);
     }
