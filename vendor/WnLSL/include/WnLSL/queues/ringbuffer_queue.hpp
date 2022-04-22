@@ -26,9 +26,9 @@ namespace WnLSL
         std::array<T, static_cast<long unsigned int>(ARRAYSIZE)> buffer{};
         unsigned int read{0};
         unsigned int write{0};
-        std::atomic<bool> isFull;
+        std::atomic<bool> isFull{};
         std::condition_variable fullWait;
-        std::atomic<bool> isEmpty;
+        std::atomic<bool> isEmpty{};
         std::condition_variable emptyWait;
         // This is a pretty efficient spinlock implementation but in testing it
         // does look like the mutex is winning out, from some research modern
@@ -37,12 +37,12 @@ namespace WnLSL
         //
         // WnLSL::spinlock rw_lock;
         std::mutex rw_lock;
-        bool is_empty() const
+        [[nodiscard]] bool is_empty() const
         {
             return write == read;
         }
 
-        bool is_full() const
+        [[nodiscard]] bool is_full() const
         {
             return ((write + 1) & bitmask) == (read & bitmask);
         }
