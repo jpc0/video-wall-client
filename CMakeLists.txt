@@ -50,7 +50,6 @@ add_subdirectory(vendor/crossguid)
 
 find_package(fmt CONFIG)
 find_package(spdlog CONFIG)
-find_package(SDL2_image CONFIG REQUIRED)
 find_package(cppzmq CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(argh CONFIG REQUIRED)
