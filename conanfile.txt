@@ -7,6 +7,7 @@ cppzmq/4.8.1
 nlohmann_json/3.10.5
 argh/1.3.1
 zlib/1.2.12
+cpr/1.8.1
 
 [generators]
 cmake_find_package_multi
