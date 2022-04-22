@@ -1,5 +1,6 @@
 #include "Video.hpp"
 #include <iostream>
+#include <utility>
 #include "display.hpp"
 extern "C"{
     #include <libswscale/swscale.h>
@@ -30,27 +31,15 @@ namespace Video
         av_packet_free(&pPacket);
     }
 
-    void playVideo(const char* videolocation, uint32_t videoReady)
-    {
-        std::this_thread::sleep_for(std::chrono::duration<int>{10});
-        VideoPlayback currentvideo{videolocation, videoReady};
-        currentvideo.PlaybackVideo();
-    }
-
-    Video::Video(const CustomMessages &customMessages)
-        : videoReady{customMessages.videoReady}
-    {
-        std::thread t1(&playVideo, "/home/jpc0/Downloads/bigbun.mp4", videoReady);
-        t1.detach();
-    }
-
-    VideoPlayback::VideoPlayback(const char* VideoLocation, uint32_t videoReadyEvent)
-        : m_VideoLocation{VideoLocation}
-        , videoReady{videoReadyEvent}
+    Video::Video(std::string VideoLocation, std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>> FrameQueue)
+        :
+        m_VideoLocation{std::move(VideoLocation)},
+        VideoQueue{MessageHandler::registerReceiver(Destination::VideoMessage)},
+        frame_queue{std::move(FrameQueue)}
     {
     }
 
-    void VideoPlayback::PlaybackVideo()
+    void Video::PlaybackVideo()
     {
         std::unique_ptr<AVFormatContext, decltype(&freeFormatContext)> FormatContext(avformat_alloc_context(), &freeFormatContext);
         AVFormatContext *pFormatContext = FormatContext.get();
@@ -84,23 +73,20 @@ namespace Video
         if(pCodecParams == nullptr || pCodec == nullptr)
             exit(EXIT_FAILURE); // We have no context or codec information
 
-        // We are never going to be owning this pointer, no point in using smart
-        // pointers until we redesign the event system
-        auto *videoinfo = new Display::VideoType{
-            Display::PixelFormat::YUV,
-            pCodecParams->width,
-            pCodecParams->height,
-            frame_queue
-            };
+        nlohmann::json videoinfo
+        {
+          { "PixelFormat", Display::PixelFormat::YUV },
+          { "Width", pCodecParams->width },
+          { "Height", pCodecParams->height },
+        };
+        VideoQueue->send({
+          Destination::DisplayMessage,
+          {
+            {"Command", "VideoInfo"},
+            {"Data", videoinfo}
+          }
+        });
 
-        SDL_Event event;
-        {SDL_memset(&event, 0, sizeof(event));
-        event.type = videoReady;
-        event.user.code = 1;
-        event.user.data1 = reinterpret_cast<void *>(videoinfo);
-        event.user.data2 = nullptr;
-        SDL_PushEvent(&event);}
-        
         std::unique_ptr<AVCodecContext, decltype(&freeCodecContext)> pCodecContext(avcodec_alloc_context3(pCodec), &freeCodecContext);
         avcodec_parameters_to_context(pCodecContext.get(), pCodecParams);
         avcodec_open2(pCodecContext.get(), pCodec, nullptr);
@@ -141,34 +127,28 @@ namespace Video
                             // The second half of the array is just padded with 0s
                             &pFrame->data[2][((pFrame->linesize[2]/2)*(pFrame->height))-1] // -1 because arrays count from 0
                             );
-                        Display::VideoFrame framet{
+                        Display::VideoFrame frame_{
                             data,
                             pFrame->width,
                             pFrame->height,
                             false,
                             static_cast<int>(pFrame->best_effort_timestamp)
                         };
-                        auto frame = std::make_shared<Display::VideoFrame>(
-                            framet
-                        );
-                        frame_queue->enqueue(frame);
+                        frame_queue->enqueue(std::make_shared<Display::VideoFrame>(frame_));
                     }
                 }
             }
             av_packet_unref(pPacket.get());
 
         }
-        Display::VideoFrame framet{
+        Display::VideoFrame frame_{
             nullptr,
             0,
             0,
             true,
             -1
         };
-        auto frame = std::make_shared<Display::VideoFrame>(
-            framet
-        );
-        frame_queue->enqueue(frame);
+        frame_queue->enqueue(std::make_shared<Display::VideoFrame>(frame_));
     }
 
 

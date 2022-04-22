@@ -60,7 +60,19 @@ int main(int argc, char *argv[])
             }
         }
         if (auto msg = DisplayQueue->receive())
-          display.DisplaySingleImage(msg.value().message);
+        {
+          if (msg.value().message["Command"].get<std::string>() == std::string("ImagePath"))
+            display.DisplaySingleImage(msg.value().message["Data"].get<std::string>());
+          else if (msg.value().message["Command"].get<std::string>() == std::string("VideoInfo"))
+          {
+            Display::VideoType videoinfo{
+              msg.value().message["Data"]["PixelFormat"],
+              msg.value().message["Data"]["Width"],
+              msg.value().message["Data"]["Height"],
+            };
+            display.PrepVideo(videoinfo);
+          }
+        }
         display.Refresh();
         MessageHandler::handleMessages();
     }

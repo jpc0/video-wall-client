@@ -2,6 +2,7 @@
 #define VIDEO_HPP
 
 #include <spdlog/spdlog.h>
+#include "MessageHandler/MessageHandler.hpp"
 
 extern "C"{
 #include <libavcodec/avcodec.h>
@@ -12,10 +13,15 @@ extern "C"{
 #include <cstdlib>
 #include <cstring>
 #include <cinttypes>
-#include "display.hpp"
 #include <thread>
 #include "WnLSL/queues/ringbuffer_queue.hpp"
 #include "main.hpp"
+#include <nlohmann/json.hpp>
+
+namespace Display
+{
+  class VideoFrame;
+}
 
 namespace Video
 {
@@ -24,50 +30,16 @@ namespace Video
     void freeCodecContext(AVCodecContext *pCodecContext);
     void freePacket(AVPacket *pPacket);
 
-    enum EventType
-    {
-        PlayVideo = 1,
-        FreeFrame
-    };
-    
-    struct PlayVideoEvent
-    {
-        int Type = EventType::PlayVideo;
-        const char* VideoLocation;
-    };
-
-    struct freeFrameEvent
-    {
-        int Type = EventType::FreeFrame;
-        void *frameptr;
-    };
-
-    union Event
-    {
-        EventType type;
-        PlayVideoEvent playvideo;
-        freeFrameEvent freeframe;
-    };
-   
-    class VideoPlayback{
-    public:
-        explicit VideoPlayback(const char* VideoLocation, uint32_t videoReadyEvent);
-        void PlaybackVideo(); 
-        std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>> frame_queue = 
-            std::make_shared<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>>();
-    private:
-        std::string m_VideoLocation;
-        uint32_t videoReady;
-    };
     class Video
     {
-    private:
-        const uint32_t videoReady;
     public:
-        explicit Video(const CustomMessages &customMessages);
-        WnLSL::blocking_rb_queue<Event> EventQueue;
+        Video(std::string VideoLocation, std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>> FrameQueue);
+        void PlaybackVideo(); 
+    private:
+        std::string m_VideoLocation;
+        std::shared_ptr<MessageQueue> VideoQueue;
+        std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<Display::VideoFrame>>> frame_queue;
     };
-
 }
 
 #endif

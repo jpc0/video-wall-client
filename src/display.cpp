@@ -1,5 +1,7 @@
 #include "display.hpp"
 #include <spdlog/spdlog.h>
+
+#include <utility>
 namespace Display
 {
     void destroyTexture(SDL_Texture *texture)
@@ -23,6 +25,7 @@ namespace Display
                 m_wall{configuration},
                 m_default_image_location{configuration.image_location},
                 m_screen{},
+                m_VideoFrameQueue{std::make_shared<WnLSL::blocking_rb_queue<std::shared_ptr<VideoFrame>>>()},
                 messageHandle{MessageHandler::registerReceiver(Destination::DisplayMessage)}
     {
         m_screen.width = configuration.width;
@@ -118,7 +121,17 @@ namespace Display
         SDL_RenderPresent(m_renderer);
     }
 
-    void Display::PrepVideo(VideoType *Video)
+    void Display::BeginVideo(const std::string& VideoLocation)
+    {
+      m_videothread = std::thread([VideoLocation, this]
+        {
+          Video::Video video(VideoLocation, m_VideoFrameQueue);
+          video.PlaybackVideo();
+        });
+      m_videothread.detach();
+    }
+
+    void Display::PrepVideo(const VideoType& Video)
     {
         spdlog::debug("Asked to Prepare Video");
         m_current_image.reset(
@@ -126,13 +139,11 @@ namespace Display
                 m_renderer, 
                 SDL_PIXELFORMAT_IYUV, //FFMPEG sends us IYUV data not YV12
                 SDL_TEXTUREACCESS_STREAMING, 
-                Video->Width, 
-                Video->Height
+                Video.Width,
+                Video.Height
                 )
             );
-        m_VideoFrameQueue = Video->Queue;
         m_playingVideo = true;
-        delete Video;
         GenerateQuad();
     }
 
@@ -140,7 +151,7 @@ namespace Display
     {
         spdlog::debug("Getting Video frame and displaying it");
         auto pFrame = *m_VideoFrameQueue->dequeue();
-        assert(pFrame != nullptr);
+        // assert(pFrame != nullptr);
         spdlog::debug("Reading frame number: {}", pFrame->framenumber);
         if (pFrame->ended)
         {

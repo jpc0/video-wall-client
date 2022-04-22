@@ -12,6 +12,9 @@
 #include "main.hpp"
 #include "MessageHandler/MessageHandler.hpp"
 
+#include <thread>
+#include "Video.hpp"
+
 namespace Display
 {
     void destroyTexture(SDL_Texture *texture);
@@ -61,7 +64,6 @@ namespace Display
         PixelFormat format;
         int Width;
         int Height;
-        std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<VideoFrame>>> Queue;
     };
 
     static std::map<PixelFormat, SDL_PixelFormatEnum> const PixelFormatMapping{
@@ -76,8 +78,8 @@ namespace Display
         explicit Display(const Configuration::ConfigData &configuration, const CustomMessages &customMessage);
         ~Display();
         void DisplaySingleImage(const std::string &image_location);
-        void PrepVideo(VideoType *Video);
-        void BeginVideo();
+        void PrepVideo(const VideoType& Video);
+        void BeginVideo(const std::string& VideoLocation);
         void GenerateQuad();
         void Refresh();
         void GetFrame();
@@ -95,5 +97,6 @@ namespace Display
         bool m_playingVideo = false;
         std::shared_ptr<WnLSL::blocking_rb_queue<std::shared_ptr<VideoFrame>>> m_VideoFrameQueue =  nullptr;
         std::shared_ptr<MessageQueue> messageHandle = nullptr;
+        std::thread m_videothread;
     }; 
 } // namespace Display

@@ -107,7 +107,7 @@ namespace Command
                         }
                         CommandQueue->send({
                           Destination::DisplayMessage,
-                          local_path
+                          {{"Command", "ImagePath"}, {"Data", local_path}}
                         });
                     }
                     continue;
