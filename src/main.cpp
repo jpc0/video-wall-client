@@ -1,4 +1,3 @@
-#include <chrono>
 #include "display.hpp"
 #include "Command.hpp"
 #include <zmq.hpp>
@@ -31,7 +30,6 @@ int main(int argc, char *argv[])
     Display::Display display{configuration, customMessages};
     Command::Command messaging_handler(configuration);
     bool shouldQuit = false;
-    auto start_time = std::chrono::high_resolution_clock::now();
     std::shared_ptr<MessageQueue> DisplayQueue = MessageHandler::registerReceiver(Destination::DisplayMessage);
     while (!shouldQuit)
     {

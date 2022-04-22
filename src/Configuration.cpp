@@ -1,5 +1,4 @@
 #include "Configuration.hpp"
-#include <fstream>
 #include <string>
 #include <iostream>
 #include <crossguid/guid.hpp>
