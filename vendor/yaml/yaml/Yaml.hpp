@@ -296,13 +296,13 @@ namespace Yaml
         * @breif Post-increment operator.
         *
         */
-        Iterator & operator ++ (int);
+        const Yaml::Iterator  operator ++ (int);
 
         /**
         * @breif Post-decrement operator.
         *
         */
-        Iterator & operator -- (int);
+        const Yaml::Iterator operator -- (int);
 
         /**
         * @breif Check if iterator is equal to other iterator.
