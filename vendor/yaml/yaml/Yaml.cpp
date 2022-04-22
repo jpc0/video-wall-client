@@ -2279,7 +2279,7 @@ namespace Yaml
 
 
                     useLevel = false;
-                    if(!value.IsScalar() || (value.IsScalar() && config.MapScalarNewline))
+                    if(!value.IsScalar() || config.MapScalarNewline)
                     {
                         useLevel = true;
                         stream << "\n";
