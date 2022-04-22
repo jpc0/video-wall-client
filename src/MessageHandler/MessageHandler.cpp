@@ -6,16 +6,12 @@ std::shared_ptr<MessageQueue> MessageHandler::registerReceiver(Destination desti
     {
     case Destination::CommandMessage:
       return CommandQueue;
-      break;
     case Destination::VideoMessage:
       return VideoQueue;
-      break;
     case Destination::DisplayMessage:
       return DisplayQueue;
-      break;
     case Destination::UnknownMessage:
       return UnknownQueue;
-      break;
     default:
       return nullptr;
     }

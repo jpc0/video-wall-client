@@ -33,7 +33,7 @@ namespace Display
     public:
         explicit AllScreenArray(const Configuration::ConfigData &configuration);
         ~AllScreenArray() = default;
-        float GetAspectRatio() const;
+         [[ nodiscard ]] float GetAspectRatio() const;
 
     public:
         float _total_width;

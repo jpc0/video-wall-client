@@ -1,14 +1,13 @@
 #include "Command.hpp"
-#include <sys/stat.h>
 #include <filesystem>
 #include "cpr/cpr.h"
 
 namespace Command
 {
 
-    Command::Command(const Configuration::ConfigData &configuration, const CustomMessages &customMessages)
+    Command::Command(const Configuration::ConfigData &configuration)
+          : CommandQueue{MessageHandler::registerReceiver(Destination::CommandMessage)}
     {
-        CommandQueue = MessageHandler::registerReceiver(Destination::CommandMessage);
         m_sub = zmq::socket_t(m_context, zmq::socket_type::sub);
         m_sub.connect(configuration.zmq_server);
         m_sub.set(zmq::sockopt::subscribe, "");
@@ -103,7 +102,7 @@ namespace Command
                         if (!std::filesystem::exists(local_path))
                         {
                           cpr::Response r = cpr::Get(cpr::Url{location});
-                          std::fstream s{local_path, s.binary | s.trunc | s.out};
+                          std::fstream s{local_path, std::fstream::binary | std::fstream::trunc | std::fstream::out};
                           s.write(r.text.data(), r.downloaded_bytes);
                         }
                         CommandQueue->send({

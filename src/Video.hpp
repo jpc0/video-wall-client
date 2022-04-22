@@ -26,8 +26,7 @@ namespace Video
 
     enum EventType
     {
-        None = 0,
-        PlayVideo,
+        PlayVideo = 1,
         FreeFrame
     };
     

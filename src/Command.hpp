@@ -17,7 +17,7 @@ namespace Command
     class Command
     {
         public:
-            explicit Command(const Configuration::ConfigData &configuration, const CustomMessages &customMessages);
+            explicit Command(const Configuration::ConfigData &configuration);
             void stopThread();
             void handle_message();
         private:

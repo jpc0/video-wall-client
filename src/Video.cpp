@@ -1,7 +1,6 @@
 #include "Video.hpp"
 #include <iostream>
 #include "display.hpp"
-#include <type_traits>
 extern "C"{
     #include <libswscale/swscale.h>
 }
@@ -68,8 +67,7 @@ namespace Video
 
         for (auto i = 0; i < static_cast<int>(pFormatContext->nb_streams); ++i)
         {
-            const AVCodecParameters *pLocalCodecParams = nullptr;
-            pLocalCodecParams = pFormatContext->streams[i]->codecpar;
+            const AVCodecParameters *pLocalCodecParams = pFormatContext->streams[i]->codecpar;
             const AVCodec *pLocalCodec = avcodec_find_decoder(pLocalCodecParams->codec_id);
 
             if (pLocalCodecParams->codec_type == AVMEDIA_TYPE_VIDEO)
@@ -88,7 +86,7 @@ namespace Video
 
         // We are never going to be owning this pointer, no point in using smart
         // pointers until we redesign the event system
-        Display::VideoType *videoinfo = new Display::VideoType{
+        auto *videoinfo = new Display::VideoType{
             Display::PixelFormat::YUV,
             pCodecParams->width,
             pCodecParams->height,
@@ -100,7 +98,7 @@ namespace Video
         event.type = videoReady;
         event.user.code = 1;
         event.user.data1 = reinterpret_cast<void *>(videoinfo);
-        event.user.data2 = 0;
+        event.user.data2 = nullptr;
         SDL_PushEvent(&event);}
         
         std::unique_ptr<AVCodecContext, decltype(&freeCodecContext)> pCodecContext(avcodec_alloc_context3(pCodec), &freeCodecContext);

@@ -3,7 +3,6 @@
 #include "Command.hpp"
 #include <zmq.hpp>
 #include <SDL2/SDL.h>
-#include "Video.hpp"
 #include "main.hpp"
 #include "MessageHandler/MessageHandler.hpp"
 
@@ -28,10 +27,9 @@ int main(int argc, char *argv[])
         CustomEventStart +2
     };
     [[ maybe_unused ]] MessageHandler messageHandler{};
-    // Video::Video video{customMessages};
     Configuration::ConfigData configuration{argc, argv};
     Display::Display display{configuration, customMessages};
-    Command::Command messaging_handler(configuration, customMessages); 
+    Command::Command messaging_handler(configuration);
     bool shouldQuit = false;
     auto start_time = std::chrono::high_resolution_clock::now();
     std::shared_ptr<MessageQueue> DisplayQueue = MessageHandler::registerReceiver(Destination::DisplayMessage);
@@ -67,7 +65,6 @@ int main(int argc, char *argv[])
           display.DisplaySingleImage(msg.value().message);
         display.Refresh();
         MessageHandler::handleMessages();
-        auto this_frame = std::chrono::high_resolution_clock::now() - start_time;
     }
 
     SDL_Quit();

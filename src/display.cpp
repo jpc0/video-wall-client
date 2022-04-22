@@ -22,6 +22,7 @@ namespace Display
                 m_current_image{nullptr, &destroyTexture},
                 m_wall{configuration},
                 m_default_image_location{configuration.image_location},
+                m_screen{},
                 messageHandle{MessageHandler::registerReceiver(Destination::DisplayMessage)}
     {
         m_screen.width = configuration.width;
@@ -66,17 +67,15 @@ namespace Display
     void Display::GenerateQuad()
     {
 
-        float scale_factor{0};
+        float scale_factor;
         float total_pixels_ratio = m_wall.GetAspectRatio();
         int imgW;
         int imgH;
         SDL_QueryTexture(m_current_image.get(), nullptr, nullptr, &imgW, &imgH);
         float texture_pixels_ratio = static_cast<float>(imgW)/static_cast<float>(imgH);
-        if (total_pixels_ratio > texture_pixels_ratio)
-            scale_factor =  m_wall._total_height/ static_cast<float>(imgH);
-        else if (total_pixels_ratio == texture_pixels_ratio)
+        if (total_pixels_ratio >= texture_pixels_ratio)
             scale_factor = m_wall._total_height/ static_cast<float>(imgH);
-        else if (total_pixels_ratio < texture_pixels_ratio)
+        else
             scale_factor = m_wall._total_width/ static_cast<float>(imgW);
 
         if (m_current_display == nullptr)
@@ -151,7 +150,7 @@ namespace Display
         }
         else
         {
-            auto data = *pFrame->data.get();
+            auto data = *pFrame->data;
 
             // SDL will be passing us a pointer to the data that we will
             // memcpy our data into
